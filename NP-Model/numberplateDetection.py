@@ -1,4 +1,10 @@
+import string
+import matplotlib.pyplot as plt
+import easyocr
+from IPython.display import Image
 import cv2
+from pylab import rcParams
+import numpy as np
 
 harcascade = "model/haarcascade_russian_plate_number.xml"
 
@@ -9,6 +15,11 @@ cap.set(4, 480) #height
 
 min_area = 500
 count = 0
+
+# OCR
+reader = easyocr.Reader(['en'])
+
+
 
 while True:
     success, img = cap.read()
@@ -33,9 +44,31 @@ while True:
     cv2.imshow("Result", img)
 
     if cv2.waitKey(1) & 0xFF == ord('s'):
-        cv2.imwrite("plates/scaned_img_" + str(count) + ".jpg", img_roi)
+        # // clearing Image
+        R, G, B = cv2.split(img_roi)
+
+        output1_R = cv2.equalizeHist(R)
+        output1_G = cv2.equalizeHist(G)
+        output1_B = cv2.equalizeHist(B)
+
+        equ = cv2.merge((output1_R, output1_G, output1_B))
+        # equ = cv2.equalizeHist(img_roi)
+        # blur = cv2.GaussianBlur(equ, (5, 5), 1)
+        th2 = 50 # this threshold might vary!
+        equ[equ>=th2] = 255
+        equ[equ<th2]  = 0
+
+
+        cv2.imwrite("plates/scaned_img_" + str(count) + ".jpg", equ)
         cv2.rectangle(img, (0,200), (640,300), (0,255,0), cv2.FILLED)
         cv2.putText(img, "Plate Saved", (150, 265), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 0, 255), 2)
+        concatstringg='./plates/scaned_img_'+ str(count) + ".jpg"
+        output = reader.readtext(concatstringg)
+        outputNumber = open("./OCRText.txt", "a")
+        outputText=(output[0][1] + "  -  ")
+        outputNumber.write(outputText)
+        outputNumber.close()
+        print(output[0][1])
         cv2.imshow("Results",img)
         cv2.waitKey(500)
         count += 1
