@@ -1,75 +1,66 @@
-import string
 import matplotlib.pyplot as plt
 import easyocr
-from IPython.display import Image
 import cv2
-from pylab import rcParams
-import numpy as np
-
-harcascade = "model/haarcascade_russian_plate_number.xml"
-
-cap = cv2.VideoCapture(0)
-
-cap.set(3, 640) # width
-cap.set(4, 480) #height
-
-min_area = 500
-count = 0
-
-# OCR
-reader = easyocr.Reader(['en'])
 
 
+def initialize_camera(width, height):
+    cap = cv2.VideoCapture(0)
+    cap.set(3, width)  # Set width
+    cap.set(4, height)  # Set height
+    return cap
 
-while True:
-    success, img = cap.read()
-
-    plate_cascade = cv2.CascadeClassifier(harcascade)
+def detect_license_plate(img, min_area=500):
+    plate_cascade = cv2.CascadeClassifier("model/haarcascade_russian_plate_number.xml")
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
     plates = plate_cascade.detectMultiScale(img_gray, 1.1, 4)
 
-    for (x,y,w,h) in plates:
+    for (x, y, w, h) in plates:
         area = w * h
-
         if area > min_area:
-            cv2.rectangle(img, (x,y), (x+w, y+h), (0,255,0), 2)
-            cv2.putText(img, "Number Plate", (x,y-5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 255), 2)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            cv2.putText(img, "Number Plate", (x, y - 5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (255, 0, 255), 2)
+            img_roi = img[y: y + h, x:x + w]
+            return img_roi
+    return None
 
-            img_roi = img[y: y+h, x:x+w]
-            cv2.imshow("ROI", img_roi)
+def process_and_read_plate(img, count, reader):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    bfilter = cv2.bilateralFilter(gray, 11, 17, 17)  # Noise reduction
+    cv2.imwrite(f"plates/scaned_img_{count}.jpg", bfilter)
 
+    concatstringg = f'./plates/scaned_img_{count}.jpg'
+    output = reader.readtext(concatstringg)
 
-    
-    cv2.imshow("Result", img)
+    output_number = open("./OCRText.txt", "a")
+    output_text = f'{output[0][1]}  -  '
+    output_number.write(output_text)
+    output_number.close()
 
-    if cv2.waitKey(1) & 0xFF == ord('s'):
-        # // clearing Image
-        R, G, B = cv2.split(img_roi)
+    print(output[0][1])
+    return img
 
-        output1_R = cv2.equalizeHist(R)
-        output1_G = cv2.equalizeHist(G)
-        output1_B = cv2.equalizeHist(B)
+def main():
+    cap = initialize_camera(640, 480)
+    count = 0
+    reader = easyocr.Reader(['en'])
 
-        equ = cv2.merge((output1_R, output1_G, output1_B))
-        # equ = cv2.equalizeHist(img_roi)
-        # blur = cv2.GaussianBlur(equ, (5, 5), 1)
-        th2 = 50 # this threshold might vary!
-        equ[equ>=th2] = 255
-        equ[equ<th2]  = 0
+    while True:
+        success, img = cap.read()
 
+        detected_plate = detect_license_plate(img)
 
-        cv2.imwrite("plates/scaned_img_" + str(count) + ".jpg", equ)
-        cv2.rectangle(img, (0,200), (640,300), (0,255,0), cv2.FILLED)
-        cv2.putText(img, "Plate Saved", (150, 265), cv2.FONT_HERSHEY_COMPLEX_SMALL, 2, (0, 0, 255), 2)
-        concatstringg='./plates/scaned_img_'+ str(count) + ".jpg"
-        output = reader.readtext(concatstringg)
-        outputNumber = open("./OCRText.txt", "a")
-        outputText=(output[0][1] + "  -  ")
-        outputNumber.write(outputText)
-        outputNumber.close()
-        print(output[0][1])
-        cv2.imshow("Results",img)
-        cv2.waitKey(500)
-        count += 1
+        if detected_plate is not None:
+            processed_img = process_and_read_plate(detected_plate, count, reader)
+            cv2.imshow("Results", processed_img)
+            cv2.waitKey(500)  # Adjust this delay if needed
 
+        cv2.imshow("Result", img)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    main()
