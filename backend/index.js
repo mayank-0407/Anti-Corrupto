@@ -15,6 +15,12 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
+app.get('/dashboard',(req, res)=>{
+  console.log(req.user);
+  res.send('dashboard');
+})
+
+
 const port = 3000;
 
 app.listen(port, () => {
