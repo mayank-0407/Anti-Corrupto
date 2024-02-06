@@ -166,8 +166,7 @@ const generateRefreshToken = (data) => {
 };
 
 const logOutController = async (req, res) => {
-	console.log(req.params.id);
-	console.log("in logout");
+
 	try {
 		if (!req.params.id) {
 			return res.status(400).json({ error: "session not available" });
@@ -188,7 +187,6 @@ const logOutController = async (req, res) => {
 				sessionToken: req.params.id,
 			},
 		});
-		console.log("alfter logout");
 		return res.status(200).json({ message: "Logged out successfully" });
 	} catch (e) {
 		return res
@@ -207,12 +205,10 @@ const generateSessionToken = () => {
 
 const checkValidSession = async (req, res) => {
 	const sessionId  = req.params.id;
-	console.log("id1: ",sessionId);
 	try {
 		const thisSession = await prisma.Session.findUnique({
 			where: { sessionToken:  sessionId },
 		});
-		console.log("isession: ",thisSession);
 		if (thisSession) return res.status(200).json({success:"Is Logged In"});
 		return res.status(401).json({error:"Not Logged In"});
 	} catch (e) {
@@ -222,19 +218,15 @@ const checkValidSession = async (req, res) => {
 
 const getUserDetails = async (req, res) => {
 	const sessionId  = req.params.id;
-	console.log("Backend Session id ; ",sessionId);
-	console.log("request from front end ");
 	try {
 		const thisSession = await prisma.Session.findUnique({
 			where: { sessionToken:  sessionId },
 		});
-		console.log(thisSession)
 		const thisUser = await prisma.User.findUnique({
 			where : {
 				id:thisSession.userId
 			}
 		});
-		console.log(thisUser)
 		if(thisUser)
 			return res.status(200).send(thisUser);
 		else
