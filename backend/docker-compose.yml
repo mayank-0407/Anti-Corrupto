@@ -3,7 +3,7 @@ version: '3.1'
 services:
   postgres:
     image: postgres:10
-    container_name: capstone_container
+    container_name: capstone_postgres
     ports:
       - "5432:5432"
     environment:
@@ -13,7 +13,17 @@ services:
     networks:
       - newnetwork
 
-      
+  node_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: capstone_node_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - newnetwork
 
 networks:
   newnetwork:
