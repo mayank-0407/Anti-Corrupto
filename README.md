@@ -13,3 +13,4 @@ Here we make our pre final year project
 - npm i
 - npx expo start
 - a (for android)
+- i (for ios)
