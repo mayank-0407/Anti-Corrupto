@@ -1,25 +1,25 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const prisma = require('./db/prisma');
 const authRouter = require('./routers/authRouter');
+const vehicleRouter = require('./routers/vehicleRouter');
+const challanRouter = require('./routers/challanRouter');
+const insuranceRouter = require('./routers/insuranceRouter');
+const repairRouter = require('./routers/repairRouter');
 const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
 const app = express();
 
-app.use(cookieParser())
 app.use(bodyParser.json());
 dotenv.config();
-app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/dashboard',(req, res)=>{
-  console.log(req.user);
-  res.send('dashboard');
-})
-
+app.use('/auth', authRouter);
+app.use('/', vehicleRouter);
+app.use('/', challanRouter);
+app.use('/', insuranceRouter);
+app.use('/', repairRouter);
 
 const port = 3000;
 
