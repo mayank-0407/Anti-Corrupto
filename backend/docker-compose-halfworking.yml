@@ -1,0 +1,29 @@
+version: '3.9'
+
+services:
+  backend:
+    container_name: backend
+    image: backend
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - 3000:3000
+      - 5555:5555
+    environment:
+      - DATABASE_URL=postgres://postgres:123@localhost:5432/capstone
+  db:
+    container_name: db
+    image: postgres:12
+    # restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: capstone
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
