@@ -2,13 +2,20 @@ import React from "react";
 import { Button, Navbar } from "@material-tailwind/react";
 import Header from "./Navbar";
 import Slider from "./Slide";
+import ReactDOM from "react-dom";
 
 function Traffic() {
   function addVehicle() {
     const imga = prompt(`provide Image`);
     const noPlate = prompt(`enter number plate`);
     const typ = prompt(`enter type of vehicle`);
-    document.getElementById("ve").append(<Slider imge={imga} vehicles={typ} />);
+    const newV = <Slider imge={imga} vehicles={typ} />;
+
+    const tempDiv = document.createElement("div");
+    ReactDOM.render(newV, tempDiv);
+
+    // Append the rendered Slider component to the element with id "ve"
+    document.getElementById("ve").appendChild(tempDiv.firstChild);
   }
   return (
     <>
