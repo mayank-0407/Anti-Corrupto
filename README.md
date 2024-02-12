@@ -1,8 +1,8 @@
 # Capstone-Anti-Corruption-TTF
 
-Here we make our pre-final year project
+Here we make our pre final year project
 
-# How to Run the Backend
+# How to Run Backend
 - npm i
 - docker-compose up
 - npx prisma migrate dev
@@ -12,4 +12,4 @@ Here we make our pre-final year project
 # How to Run Mobile Frontend
 - npm i
 - npx expo start
-- a (for Android)
+- a (for android)
