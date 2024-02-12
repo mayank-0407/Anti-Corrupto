@@ -11,6 +11,7 @@ import Dashboard from "./Pages/Dashboard.jsx";
 import Log from "./Components/Log.jsx";
 import Traffic from "./Components/Traffic.jsx";
 import { StrictMode } from "react";
+import ChallanNDocs from "./Components/ChallanNDocs.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/traffic",
         element: <Traffic />,
+      },
+      {
+        path: "/challananddocs",
+        element: <ChallanNDocs />,
       },
     ],
   },

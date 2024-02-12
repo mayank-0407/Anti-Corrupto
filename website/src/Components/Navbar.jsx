@@ -32,6 +32,7 @@ import {
   TagIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+import { Avatar } from "./Avatar";
 
 const navListMenuItems = [
   {
@@ -181,6 +182,16 @@ function NavList() {
           Contact Us
         </ListItem>
       </Typography>
+      <Typography
+        as="a"
+        variant="small"
+        color="blue-gray"
+        className="font-medium"
+      >
+        <ListItem className="flex items-center gap-2 py-2 pr-4">
+          <Avatar />
+        </ListItem>
+      </Typography>
     </List>
   );
 }
@@ -212,7 +223,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className="sticky z-50 top-0">
+    <div className="sticky z-10 top-0">
       <Navbar className="mx-auto ">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Link to="/dashboard">
