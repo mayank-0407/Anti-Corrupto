@@ -3,7 +3,6 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/auth";
 
 export const signUpUser = async (userData) => {
-	console.log(userData);
 	try {
 		const response = await axios.post(`${API_URL}/signup`, userData);
 		return response.data;
@@ -13,7 +12,6 @@ export const signUpUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
-	console.log("apiLogin:", userData);
 	try {
 		const response = await axios.post(`${API_URL}/login`, userData);
 		return response.data;
@@ -23,7 +21,6 @@ export const loginUser = async (userData) => {
 };
 
 export const logoutUser = async (sessionToken) => {
-	console.log("apiLogin:", sessionToken);
 	try {
 		const response = await axios.post(`${API_URL}/logout/${sessionToken}`);
 		if (response.status == 200) return true;
@@ -34,7 +31,6 @@ export const logoutUser = async (sessionToken) => {
 };
 
 export const isSessionValid = async (sessionId) => {
-	console.log(sessionId);
 	try {
 		const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
 		if (response.status == 200) {
