@@ -7,8 +7,14 @@ import {
 	View,
 	Button,
 	TouchableOpacity,
+	Modal,
 } from "react-native";
-import { Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
+import {
+	Ionicons,
+	MaterialIcons,
+	AntDesign,
+	Feather,
+} from "@expo/vector-icons";
 // import Card from "../Components/card";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
@@ -18,9 +24,10 @@ import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 
-export default function HomePage({ route, navigation }) {
+export default function HomePage({ navigation }) {
 	const [myuser, setmyuser] = useState("");
-	const sessionToken = route.params.userId;
+	// const sessionToken = route.params.userId;
+
 	const handleLogout = async () => {
 		try {
 			const loggedOut = await logoutUser(sessionToken);
@@ -39,6 +46,7 @@ export default function HomePage({ route, navigation }) {
 		const getMyUser = async () => {
 			try {
 				const getusertemp = await fetchUserDetails(sessionToken);
+				console.log("in use effect");
 				setmyuser(getusertemp.data);
 			} catch (e) {
 				console.log(e);
@@ -86,49 +94,52 @@ export default function HomePage({ route, navigation }) {
 
 			<FadedView>
 				<View className="flex-1">
-					<View className="p-4 pt-16 flex-row justify-between ">
-						<View className="flex-row justify-between">
-							<Image
+					<View className="p-4 pt-12 flex-row justify-between items-center ">
+						<View className="flex-row justify-between items-center">
+							{/* <Image
 								source={require("../assets/Images/Emblem_of_India.png")}
 								className="w-[12%] h-[100%]"
-								tintColor={"white"}
+								tintColor={"#0062f5"}
+							/> */}
+							<Ionicons
+								name="person-circle-outline"
+								size={26}
+								color={"white"}
+								style={{ marginRight: 6 }}
 							/>
-							<Text className="text-white ml-[-12] text-lg text-center font-bold">
+
+							<Text className="text-white text-lg text-center font-bold">
 								Anti Corruptō
 							</Text>
 						</View>
-						{/* 
-							<Button
-								title="logout"
-								color={"white"}
-								onPress={() => {
-									handleLogout();
-								}}
-							/> */}
 
-						<View className="flex-row justify-between">
+						<View className="flex-row justify-between items-center">
 							<MaterialIcons
 								name="qr-code-scanner"
 								size={24}
-								color="white"
+								color={"white"}
 								style={{ padding: 2, paddingHorizontal: 8 }}
 							/>
-							<Ionicons
-								name="language"
+							<Feather
+								name="bell"
 								size={24}
-								color="white"
+								color={"white"}
 								style={{ padding: 2, paddingHorizontal: 8 }}
 							/>
 							<AntDesign
 								name="search1"
 								size={24}
-								color="white"
+								color={"white"}
 								style={{ padding: 2, paddingHorizontal: 8, paddingRight: 0 }}
 							/>
 						</View>
 					</View>
 
-					<ScrollView showsVerticalScrollIndicator="false" className="flex-1 ">
+					<ScrollView
+						showsVerticalScrollIndicator={false}
+						fadingEdgeLength={777}
+						className="flex-1"
+					>
 						<View className=" p-1 ml-4 ">
 							<Text className="text-white text-xl font-bold  pb-1">
 								Welcome, {myuser.name}
@@ -136,7 +147,11 @@ export default function HomePage({ route, navigation }) {
 						</View>
 
 						<View className=" mt-4 z-0 ">
-							<ScrollView horizontal={true} className="px-3">
+							<ScrollView
+								horizontal={true}
+								showsHorizontalScrollIndicator={false}
+								className="px-3"
+							>
 								<Card width={300} height={150} className="mr-3 ">
 									<Card.Section
 										content={[{ text: "chalaan 1", text70: true, white: true }]}
@@ -340,7 +355,7 @@ export default function HomePage({ route, navigation }) {
 										/>
 										<Text>My Activity</Text>
 									</TouchableOpacity>
-									<TouchableOpacity className="border p-3 rounded-3xl flex-row justify-center items-center">
+									<TouchableOpacity className="border p-3 mr-6 rounded-3xl flex-row justify-center items-center">
 										<Ionicons
 											name="language"
 											size={18}

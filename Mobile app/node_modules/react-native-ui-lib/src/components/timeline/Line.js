@@ -1,0 +1,54 @@
+import React, { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
+import View from "../view";
+import Dash from "../dash";
+import { LineTypes } from "./types";
+const LINE_WIDTH = 2;
+const ENTRY_POINT_HEIGHT = 2;
+const Line = React.memo(props => {
+  const {
+    type,
+    color = 'transparent',
+    entry,
+    top,
+    style,
+    width = LINE_WIDTH
+  } = props;
+  const solidLineStyle = useMemo(() => {
+    return [style, styles.line, {
+      width,
+      backgroundColor: color
+    }];
+  }, [color, style, width]);
+  const dashedLineStyle = useMemo(() => {
+    return [style, styles.line];
+  }, [style]);
+  const renderStartPoint = () => {
+    if (entry) {
+      return <View style={[styles.entryPoint, {
+        backgroundColor: color
+      }]} />;
+    }
+  };
+  const renderLine = () => {
+    if (type === LineTypes.DASHED) {
+      return <Dash vertical color={color} containerStyle={dashedLineStyle} />;
+    }
+    return <View style={solidLineStyle} />;
+  };
+  return <>
+      {top && renderStartPoint()}
+      {renderLine()}
+      {!top && renderStartPoint()}
+    </>;
+});
+export default Line;
+const styles = StyleSheet.create({
+  entryPoint: {
+    width: 12,
+    height: ENTRY_POINT_HEIGHT
+  },
+  line: {
+    overflow: 'hidden'
+  }
+});

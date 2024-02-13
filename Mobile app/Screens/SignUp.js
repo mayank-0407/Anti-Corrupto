@@ -82,6 +82,7 @@ export default function SignUpPage({ navigation }) {
 				}}
 				validationSchema={PasswordSchema}
 				onSubmit={(values) => {
+					// console.log(values);
 					handleSubmit(values);
 				}}
 			>
@@ -225,6 +226,7 @@ export default function SignUpPage({ navigation }) {
 									<PrimaryButton
 										onPress={() => {
 											handleSubmit();
+											console.log({ errors });
 											navigation.navigate("Login");
 										}}
 									>
