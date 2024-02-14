@@ -223,7 +223,7 @@ export default function Header() {
   }, []);
 
   return (
-    <div className="sticky z-10 top-0">
+    <div className="sticky z-50 top-0">
       <Navbar className="mx-auto ">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Link to="/dashboard">
