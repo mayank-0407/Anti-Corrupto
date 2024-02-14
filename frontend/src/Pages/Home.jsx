@@ -1,8 +1,9 @@
 import React from 'react';
-import Navbar from '../components/Navbar';
-import Carousel from '../components/Carousel';
-import Updates from '../components/Updates';
-import ServiceIcon from '../components/Services';
+import Navbar from '../components/home/Navbar';
+import Carousel from '../components/home/Carousel';
+import Updates from '../components/home/Updates';
+import ServiceIcon from '../components/home/Services';
+import Sidebar from '../components/ui/Sidebar';
 
 const Home = () => {
 
@@ -25,6 +26,8 @@ const Home = () => {
       </div>
       
     </div>
+
+    
   );
 };
 
