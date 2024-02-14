@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./Navbar";
+import { AllDocs } from "./AllDocs";
 
 function ChallanNDocs() {
   return (
@@ -35,7 +36,9 @@ function ChallanNDocs() {
             />
           </div>
         </div>
-        <div></div>
+        <div className="m-10 mt-20">
+          <AllDocs />
+        </div>
       </div>
     </>
   );
