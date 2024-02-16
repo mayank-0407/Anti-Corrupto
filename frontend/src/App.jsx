@@ -1,11 +1,15 @@
-import React from 'react';
-import Home from './Pages/Home';
+import React from "react";
+import Home from "./Pages/Home";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { images } from "./assets/images";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
+import Dashboard from "./Pages/Dashboard";
+import VehiclesPage from "./Pages/Traffic/VehiclesPage";
+import ViewVehicle from "./Pages/Traffic/ViewVehicle";
+import VehicleChallan from "./Pages/Traffic/VehicleChallan";
 
 export default function App() {
   return (
@@ -18,6 +22,18 @@ export default function App() {
       </Routes>
       <Routes>
         <Route path="/signup" element={<Signup />} />
+      </Routes>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+      <Routes>
+        <Route path="/dashboard/vehicle" element={<VehiclesPage />} />
+      </Routes>
+      <Routes>
+        <Route path="/dashboard/vehicle/view" element={<ViewVehicle />} />
+      </Routes>
+      <Routes>
+        <Route path="/dashboard/vehicle/challan" element={<VehicleChallan />} />
       </Routes>
     </BrowserRouter>
   );

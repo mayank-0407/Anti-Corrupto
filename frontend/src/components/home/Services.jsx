@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Services() {
   function ServiceIcon({ iconSrc, title }) {
@@ -15,7 +16,9 @@ function Services() {
   }
   return (
     <div className="flex flex-wrap justify-center space-x-2">
-      <ServiceIcon iconSrc="./home/traffic.png" title="Traffic" />
+      <Link to="/dashboard/vehicle">
+        <ServiceIcon iconSrc="./home/traffic.png" title="Traffic" />
+      </Link>
       <ServiceIcon iconSrc="./home/land.jpg" title="Land Registeration" />
       <ServiceIcon iconSrc="./home/fund.png" title="Public Funding" />
       <ServiceIcon iconSrc="./home/tendor.png" title="Public Tendors" />
