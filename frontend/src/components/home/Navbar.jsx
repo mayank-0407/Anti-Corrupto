@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { BsFillPersonLinesFill } from 'react-icons/bs'; // Assuming this is the user icon
 import Sidebar, { SidebarItem } from '../ui/Sidebar';
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const sidebarRef = useRef(null);
 
@@ -40,9 +42,9 @@ const Navbar = () => {
         </div> */}
 
         <div className="flex items-center px-10">
-          <button className="px-4 py-2 bg-purple-600 rounded-md mr-4 hover:bg-purple-700">Login</button>
+          <button onClick={() => navigate("/login")} className="px-4 py-2 bg-purple-600 rounded-md mr-4 hover:bg-purple-700">Login</button>
           <span className=" mx-1 text-purple-600">|</span>
-          <button className="px-4 py-2 text-purple-600 rounded-md hover:bg-gray-700">Signup</button>
+          <button onClick={() => navigate("/signup")} className="px-4 py-2 text-purple-600 rounded-md hover:bg-gray-700">Signup</button>
         </div>
 
         <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
 
 const Carousel = () => {
@@ -29,11 +29,19 @@ const Carousel = () => {
     setSlide((slide) => (slide === 0 ? data.slides.length - 1 : slide - 1));
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, []); 
+
   return (
-    <div className="relative flex justify-center items-center w-screen h-[400px]">
+    <div className="relative flex justify-center items-center w-screen h-[400px] transition-all duration-500">
       <BsArrowLeftCircleFill
         onClick={prevSlide}
-        className="absolute left-1 arrow arrow-left text-white w-8 bg-color- h-8"
+        className="absolute left-1 arrow arrow-left text-white w-8 bg-color- h-8 opacity-50 hover:opacity-100"
       />
       {data.slides.map((item, idx) => (
         <img
@@ -45,7 +53,7 @@ const Carousel = () => {
       ))}
       <BsArrowRightCircleFill
         onClick={nextSlide}
-        className="absolute right-1 arrow arrow-right text-white w-8 h-8"
+        className="absolute right-1 arrow arrow-right text-white w-8 h-8 opacity-50 hover:opacity-100"
       />
       <span className="absolute bottom-1 flex">
         {data.slides.map((_, idx) => (

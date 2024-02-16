@@ -1,4 +1,4 @@
-import React from 'react';
+himport React from 'react';
 
 const Footer = () => {
   return (

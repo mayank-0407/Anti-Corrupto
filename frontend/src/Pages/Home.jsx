@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/home/Navbar";
 import Carousel from "../components/home/Carousel";
 import Updates from "../components/home/Updates";
+import ConnectToApp from "../components/home/ConnectToApp";
 import ServiceIcon from "../components/home/Services";
 import Sidebar from "../components/ui/Sidebar";
 import Footer from "../components/footer";
@@ -16,11 +17,17 @@ const Home = () => {
         <Carousel />
       </div>
       <Updates />
-      <div className="mx-[100px] my-5">
-        <h1 className="text-center text-4xl font-bold mt-2 font-3xl">
-          Services
-        </h1>
-        <ServiceIcon />
+      <div className="bg-slate-50">
+        <div className="mx-[100px] my-5 py-5 ">
+          <h1 className="text-center text-4xl font-bold mt-2 font-3xl pb-4">
+            Services
+          </h1>
+          <ServiceIcon />
+        </div>
+      </div>
+
+      <div className="mt-10">
+        <ConnectToApp />
       </div>
 
       <div classname="mt-10">
