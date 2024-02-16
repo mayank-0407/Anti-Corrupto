@@ -27,10 +27,10 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-white py-4 w-screen">
+    <div className="bg-blue-950 text-white py-4 w-screen">
       <div className="container mx-auto flex justify-between items-center relative">
         <div className="flex items-center px-10">
-          <img src="/logo.png" alt="Logo" className="h-8 mr-4" />
+          <img src="/Logo_1.png" alt="Logo" className="h-8 mr-4" />
           <span className="text-xl font-semibold"></span>
         </div>
         
@@ -49,7 +49,7 @@ const Navbar = () => {
           <button onClick={toggleSidebar}><BsFillPersonLinesFill className="text-white text-2xl" /></button>
           {isSidebarOpen && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={handleOutsideClick}>
-              <div ref={sidebarRef} className="absolute top-0 right-0 bg-white w-64 shadow-lg h-full overflow-y-auto">
+              <div ref={sidebarRef} className="absolute top-0 right-0 bg-white w-64 shadow-lg h-full overflow-y-auto transform transition-transform duration-300 ease-in-out">
                 <Sidebar>
                   <SidebarItem text="Logout" onClick={handleLogout} />
                   <SidebarItem text="Services" onClick={handleServices} />

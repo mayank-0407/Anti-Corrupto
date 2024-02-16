@@ -7,15 +7,15 @@ const Carousel = () => {
   const data = {
     slides: [
       {
-        src: "login.jpg",
-        alt: "Image 1 for carousel"
-      },
-      {
-        src: "login.jpg",
+        src: "./home/anti_2.jpg",
         alt: "Image 2 for carousel"
       },
       {
-        src: "login.jpg",
+        src: "./home/anti_1.jpg",
+        alt: "Image 1 for carousel"
+      },
+      {
+        src: "./home/anti_3.png",
         alt: "Image 3 for carousel"
       }
     ]
@@ -33,7 +33,7 @@ const Carousel = () => {
     <div className="relative flex justify-center items-center w-screen h-[400px]">
       <BsArrowLeftCircleFill
         onClick={prevSlide}
-        className="absolute left-1 arrow arrow-left text-white w-8 h-8"
+        className="absolute left-1 arrow arrow-left text-white w-8 bg-color- h-8"
       />
       {data.slides.map((item, idx) => (
         <img

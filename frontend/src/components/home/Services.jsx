@@ -4,49 +4,38 @@ function Services() {
   return (
     <div className="flex flex-wrap justify-center space-y-3 space-x-2">
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
       <ServiceIcon
-        iconSrc="/icon1.png"
+        iconSrc="servie.svg"
         title="Service 1"
       />
-      <ServiceIcon
-        iconSrc="/icon1.png"
-        title="Service 1"
-      />
-      <ServiceIcon
-        iconSrc="/icon1.png"
-        title="Service 1"
-      />
-      <ServiceIcon
-        iconSrc="/icon1.png"
-        title="Service 1"
-      />
+    
       {/* Add more ServiceIcon components as needed */}
     </div>
   );
