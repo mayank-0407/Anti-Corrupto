@@ -1,7 +1,10 @@
-import React from "react";
-import Navbar from "../../components/home/Navbar";
+import React, { useState } from "react";
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
+import { useNavigate } from "react-router-dom";
+
 const VehicleChallan = () => {
+  const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([
     {
       id: 1,
@@ -26,6 +29,7 @@ const VehicleChallan = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-5xl mx-auto">
+      <button onClick={()=>{navigate('/dashboard/vehicle/challan/add')}}  className='bg-blue-600 rounded-md mr-4 hover:bg-blue-700 text-white p-2 my-3'>+ Add Challan</button>
         <div className="grid gap-8">
           {vehicles.map((vehicle) => (
             <div

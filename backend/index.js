@@ -5,18 +5,27 @@ const vehicleRouter = require('./routers/vehicleRouter');
 const challanRouter = require('./routers/challanRouter');
 const insuranceRouter = require('./routers/insuranceRouter');
 const repairRouter = require('./routers/repairRouter');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const app = express();
 
 app.use(bodyParser.json());
 dotenv.config();
 
+const corsOptions ={
+  origin:['http://localhost:5173'], 
+  credentials:true,         
+  optionSuccessStatus:200
+}
+
+app.use(cors(corsOptions));
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
 app.use('/auth', authRouter);
-app.use('/', vehicleRouter);
+app.use('/vehicle', vehicleRouter);
 app.use('/', challanRouter);
 app.use('/', insuranceRouter);
 app.use('/', repairRouter);

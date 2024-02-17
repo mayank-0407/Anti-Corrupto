@@ -6,9 +6,9 @@ const prisma = new PrismaClient();
 const signUpController = async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
-
+		// console.log(req.body);
 		if (!email || !password || !name) {
-			return res.status(400).json({ error: "Please provide all required fields" });
+			return res.status(203).json({ message: "Please provide all required fields" });
 		}
 
 		const existingUser = await prisma.user.findUnique({
@@ -18,7 +18,7 @@ const signUpController = async (req, res) => {
 		});
 
 		if (existingUser) {
-			return res.status(409).json({ error: "User already exists" });
+			return res.status(203).json({ message: "User already exists" });
 		}
 
 		const hashedPassword = await bcrypt.hash(password, 10);
@@ -41,8 +41,8 @@ const signUpController = async (req, res) => {
 			.json({ message: "User registered successfully", user, verificationToken });
 	} catch (err) {
 		return res
-			.status(500)
-			.json({ error: "Internal server error", details: err.message });
+			.status(203)
+			.json({ message: "Internal server error", details: err.message });
 	}
 };
 
@@ -57,13 +57,13 @@ const loginController = async (req, res) => {
 		});
 
 		if (!existingUser) {
-			return res.status(404).json({ error: "User not found" });
+			return res.status(203).json({ message: "User not found" });
 		}
 
 		const matched = await bcrypt.compare(password, existingUser.hashedPassword);
 
 		if (!matched) {
-			return res.status(403).json({ error: "Incorrect password" });
+			return res.status(203).json({ message: "Incorrect password" });
 		}
 
 		const accessToken = generateAccessToken({
@@ -97,8 +97,8 @@ const loginController = async (req, res) => {
 			.json({ message: "Login successful", accessToken, session });
 	} catch (err) {
 		return res
-			.status(500)
-			.json({ error: "Internal server error", details: err.message });
+			.status(203)
+			.json({ message: "Internal server error", details: err.message });
 	}
 };
 
@@ -227,6 +227,7 @@ const getUserDetails = async (req, res) => {
 				id:thisSession.userId
 			}
 		});
+		console.log(thisUser);
 		if(thisUser)
 			return res.status(200).send(thisUser);
 		else

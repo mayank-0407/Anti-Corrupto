@@ -6,7 +6,23 @@ export const signUpUser = async (userData) => {
 	console.log(userData);
 	try {
 		const response = await axios.post(`${API_URL}/signup`, userData);
-		return response.data;
+		console.log(response);
+		if(response.status===200){
+			let res={
+				status:200,
+				msg:response.data.message
+			}
+			return res;
+		}
+		else{
+			console.log(response);
+			let res={
+				status:response.status,
+				msg:response.data.message
+			}
+			console.log(res)
+			return res;
+		}
 	} catch (error) {
 		throw error;
 	}
