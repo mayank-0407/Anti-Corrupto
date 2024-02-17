@@ -1,12 +1,15 @@
 import React, { useState,useEffect, useRef } from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import { isLogin, logOut } from "../../Utils/cookieSetup";
+import {getOneVehicles} from "../../Utils/vehicleApi";
 
 const ViewVehicle = () => {
   const navigate = useNavigate();
   const [isLoggedd, setisLoggedd] = useState(false);
+  const { id } = useParams();
+
   useEffect(() => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {

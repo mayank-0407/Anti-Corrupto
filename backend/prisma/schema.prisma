@@ -4,7 +4,7 @@
 
   datasource db {
     provider = "postgresql"
-    url      = "postgresql://postgres:123@db:5432/capstone?schema=public"
+    url      = "postgresql://postgres:123@localhost:5432/capstone?schema=public"
   }
 
   model User {

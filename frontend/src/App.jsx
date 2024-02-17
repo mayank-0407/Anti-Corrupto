@@ -22,7 +22,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/dashboard/vehicle" element={<VehiclesPage />} />
-        <Route path="/dashboard/vehicle/view" element={<ViewVehicle />} />
+        <Route path="/dashboard/vehicle/view/:id" element={<ViewVehicle />} />
         <Route path="/dashboard/vehicle/challan" element={<VehicleChallan />} />
         <Route path="/dashboard/vehicle/challan/add" element={<AddVehicleChallan />} />
         <Route path="/dashboard/vehicle/add" element={<AddVehicle />} />
