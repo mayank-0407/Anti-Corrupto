@@ -1,38 +1,35 @@
 import React, { useState,useEffect, useRef } from 'react';
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
+import {getUserVehicles} from "../../Utils/vehicleApi";
+import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../Utils/authAPI";
 
 import { useNavigate } from "react-router-dom";
-import { isLogin, logOut } from "../../Utils/cookieSetup";
 
 const VehiclesPage = () => {
+  const [isLoggedd, setisLoggedd] = useState(false);
+  const [myUser, setMyUser] = useState("");
+  // const [myVehicles, setMyVehicles] = useState([]);
   const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([
-    {
-      id: 1,  
-      name: "Toyota Corolla",
-      image: "/login.jpg",
-      make: "Toyota",
-      model: "Corolla",
-      year: 2022,
-      color: "White"  
-    },
-    {
-       id: 2,
-       name: "Honda Civic",
-       image: "/login.jpg",
-       make: "Honda",
-       model: "Civic",
-       year: 2020,
-       color: "Black"
-    }
+    
   ]);
 
-  const [isLoggedd, setisLoggedd] = useState(false);
+  const getallvehicles=async ()=>{
+    const myToken=getToken();
+    const thisUser=await fetchUserDetails(myToken);
+    setMyUser(thisUser.data.id);
+    const myvehicles=await getUserVehicles(myUser);
+    console.log(myvehicles);
+    setVehicles(myvehicles);
+  }
+
   useEffect(() => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
+      getallvehicles();
     } else {
       setisLoggedd(false);
       navigate("/login");
@@ -51,14 +48,14 @@ const VehiclesPage = () => {
           {vehicles.map(vehicle => (
             <div key={vehicle.id} className="bg-white overflow-hidden rounded-lg shadow-md md:flex">
               <div className="px-6 py-8 md:w-1/2">
-                <h2 className="text-xl font-semibold">{vehicle.name}</h2>   
+                <h2 className="text-xl font-semibold"> Vehicle Number : {vehicle.plateNumber}</h2>   
                 <p className="text-gray-600">
                   {vehicle.year} {vehicle.make} {vehicle.model} - {vehicle.color}
                 </p>
 
                 <button 
                   className="mt-4 px-3 py-2 bg-blue-600 text-white rounded shadow"
-                  onClick={()=>{navigate(`/dashboard/vehicle/view`)}}
+                  onClick={()=>{navigate(`/dashboard/vehicle/view/${vehicle.plateNumber}`)}}
                 >
                   View Details  
                 </button>

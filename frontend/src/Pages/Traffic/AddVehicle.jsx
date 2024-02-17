@@ -13,7 +13,7 @@ const AddVehicle = () => {
   const [year, setYear] = useState("");
   const [color, setColor] = useState("");
   const [isLoggedd, setisLoggedd] = useState(false);
-  const [myUser, setMyUser] = useState(false);
+  const [myUser, setMyUser] = useState("");
 
   const navigate = useNavigate();
 

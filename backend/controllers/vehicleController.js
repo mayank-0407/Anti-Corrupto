@@ -50,6 +50,21 @@ const getVehicleById = async (req, res) => {
     res.status(500).json({ error: 'Error fetching vehicle', details: error.message });
   }
 };
+const getVehicleByUserId = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const vehicle = await prisma.vehicle.findUnique({
+      where: { plateNumber:id }
+    });
+    if (!vehicle) {
+      res.status(404).json({ error: 'Vehicle not found' });
+    } else {
+      res.status(200).json(vehicle);
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching vehicle', details: error.message });
+  }
+};
 
 const updateVehicle = async (req, res) => {
   const id = req.params.id;

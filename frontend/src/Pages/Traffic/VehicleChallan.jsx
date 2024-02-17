@@ -1,10 +1,32 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
+import {getUserVehicles} from "../../Utils/vehicleApi";
+import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../Utils/authAPI";
 
 const VehicleChallan = () => {
+  const [isLoggedd, setisLoggedd] = useState(false);
+  const [myUser, setMyUser] = useState("");
+  const [myVehicles, setMyVehicles] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(async () => {
+    const checkLoginSession = isLogin();
+    if (checkLoginSession) {
+      setisLoggedd(true);
+      const myToken=getToken();
+      const thisUser=await fetchUserDetails(myToken);
+      const myvehicles=await getUserVehicles(myToken);
+      setMyUser(thisUser.data.id);
+    } else {
+      setisLoggedd(false);
+      navigate("/login");
+    }
+  }, []);
+
   const [vehicles, setVehicles] = useState([
     {
       id: 1,

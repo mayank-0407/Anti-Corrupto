@@ -2,9 +2,12 @@
 
 Here we make our pre final year project
 
+# To run postgres database
+- docker compose up
+- docker exec -it container_id /bin/bash
+
 # How to Run Backend
 - npm i
-- docker compose up
 - npx prisma migrate dev
 - npx prisma generate
 - npx prisma studio
@@ -16,7 +19,9 @@ Here we make our pre final year project
 - i (for ios)
 
 # Backend env file
-DATABASE_URL=postgres://postgres:password@localhost:5432/capstone
-ACCESS_TOKEN_PRIVATE_KEY=
-REFRESH_TOKEN_PRIVATE_KEY=
-PORT=3000
+- DATABASE_URL=postgresql://postgres:123@db:5432/capstone?schema=public
+- ACCESS_TOKEN_PRIVATE_KEY=
+- REFRESH_TOKEN_PRIVATE_KEY=
+- PORT=3000
+
+

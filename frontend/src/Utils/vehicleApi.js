@@ -4,7 +4,15 @@ const API_URL = "http://localhost:3000";
 
 export const getUserVehicles = async (userId) => {
     try {
-        const response = await axios.get(`${API_URL}/${userId}/vehicles`);
+        const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`);
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+export const getOneVehicles = async (vehicleId) => {
+    try {
+        const response = await axios.get(`${API_URL}/vehicle/view/${vehicleId}`);
         return response.data;
     } catch (error) {
         throw error;
