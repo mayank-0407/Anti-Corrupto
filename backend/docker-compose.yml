@@ -1,29 +1,59 @@
-version: '3.1'
+# version: '3.1'
+
+# services:
+#   postgres:
+#     image: postgres:15
+#     container_name: capstone_postgres
+#     ports:
+#       - "5432:5432"
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: 123
+#       POSTGRES_DB: capstone
+#     networks:
+#       - newnetwork
+
+#   node_app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: capstone_node_app
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - postgres
+#     networks:
+#       - newnetwork
+
+# networks:
+#   newnetwork:
+version: '3.9'
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: capstone_postgres
+  backend:
+    container_name: backend
+    image: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5432:5432"
+      - 3000:3000
+      - 5555:5555
+    environment:
+      - DATABASE_URL="postgresql://postgres:123@db:5432/capstone?schema=public"
+
+  db:
+    container_name: db
+    image: postgres:12
+    # restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: capstone
-    networks:
-      - newnetwork
-
-  node_app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: capstone_node_app
     ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-    networks:
-      - newnetwork
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
-networks:
-  newnetwork:
+volumes:
+  pgdata: {}

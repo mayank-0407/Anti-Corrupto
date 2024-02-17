@@ -4,8 +4,7 @@
 
   datasource db {
     provider = "postgresql"
-    url      = env("DATABASE_URL")
-    shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+    url      = "postgresql://postgres:123@db:5432/capstone?schema=public"
   }
 
   model User {
