@@ -8,12 +8,20 @@ import {getOneVehicles} from "../../Utils/vehicleApi";
 const ViewVehicle = () => {
   const navigate = useNavigate();
   const [isLoggedd, setisLoggedd] = useState(false);
+  const [myVehicle, setMyVehicle] = useState("");
   const { id } = useParams();
+
+  const getmyvehicle=async ()=>{
+    const myvehicles=await getOneVehicles(id);
+    console.log(myvehicles);
+    setMyVehicle(myvehicles);
+  }
 
   useEffect(() => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
+      getmyvehicle();
     } else {
       setisLoggedd(false);
       navigate("/login");
@@ -36,21 +44,20 @@ const ViewVehicle = () => {
           </div>
 
           <div className="w-1/2 pl-6">
-            <h2 className="text-xl font-bold mb-2">Vehicle Model</h2>
-            <p className="text-gray-600 mb-4">Year: 2022</p>
+            <h2 className="text-xl font-bold mb-2">Vehicle Model : {myVehicle.model}</h2>
+            <p className="text-gray-600 mb-4">Year: {myVehicle.year}</p>
 
             <h3 className="text-lg font-bold mb-2">Features</h3>
             <ul className="list-disc pl-6 mb-4">
-              <li>Feature 1</li>
-              <li>Feature 2</li>
-              {/* Add more features as needed */}
+              <li>Made In : {myVehicle.make}</li>
+              <li>Plate Number : {myVehicle.plateNumber}</li>
+              <li>Color : {myVehicle.color}</li>
             </ul>
 
             <h3 className="text-lg font-bold mb-2">Claims</h3>
             <ul className="list-disc pl-6 mb-4">
               <li>Claim 1</li>
               <li>Claim 2</li>
-              {/* Add more claim items as needed */}
             </ul>
 
             <h3 className="text-lg font-bold mb-2">Chalans</h3>
