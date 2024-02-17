@@ -1,8 +1,21 @@
-import React from "react";
-import Navbar from "../../components/home/Navbar";
+import React, { useState,useEffect, useRef } from 'react';
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
+import { useNavigate } from "react-router-dom";
+import { isLogin, logOut } from "../../Utils/cookieSetup";
 
 const ViewVehicle = () => {
+  const navigate = useNavigate();
+  const [isLoggedd, setisLoggedd] = useState(false);
+  useEffect(() => {
+    const checkLoginSession = isLogin();
+    if (checkLoginSession) {
+      setisLoggedd(true);
+    } else {
+      setisLoggedd(false);
+      navigate("/login");
+    }
+  }, []);
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />

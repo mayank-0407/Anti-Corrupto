@@ -39,3 +39,9 @@ export const isLogin = () => {
   if(token) return true;
   return false;
 };
+
+export const getToken = () => {
+  const token = getCookie("token");
+  isLogin();
+  return token;
+};
