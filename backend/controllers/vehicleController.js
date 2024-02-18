@@ -37,24 +37,25 @@ const getAllVehicles = async (req, res) => {
 
 const getVehicleById = async (req, res) => {
   const id = req.params.id;
-  try {
-    const vehicle = await prisma.vehicle.findUnique({
-      where: { id }
+  if(true) {
+    const vehicle = await prisma.vehicle.findMany({
+      where: { ownerId:id }
     });
     if (!vehicle) {
       res.status(404).json({ error: 'Vehicle not found' });
     } else {
       res.status(200).json(vehicle);
     }
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching vehicle', details: error.message });
-  }
+  } 
+  // catch (error) {
+  //   res.status(500).json({ error: 'Error fetching vehicle', details: error.message });
+  // }
 };
 const getVehicleByUserId = async (req, res) => {
   const id = req.params.id;
   try {
     const vehicle = await prisma.vehicle.findUnique({
-      where: { plateNumber:id }
+      where: { id }
     });
     if (!vehicle) {
       res.status(404).json({ error: 'Vehicle not found' });
@@ -113,6 +114,7 @@ module.exports = {
   getVehicleById,
   updateVehicle,
   deleteVehicle,
-  updatePollutionDone
+  updatePollutionDone,
+  getVehicleByUserId
 };
 
