@@ -4,24 +4,23 @@ const prisma = new PrismaClient();
 // Create a new challan
 const createChallan = async (req, res) => {
   try {
-    const { issueDate, amount, reason, vehicleId } = req.body;
-
-    if (!issueDate || !amount || !reason || !vehicleId) {
+    const { amt, reason, vehicleId} = req.body;
+    if ( !amt || !reason || !vehicleId) {
       return res.status(400).json({ error: 'Please provide all required fields' });
     }
 
     const challan = await prisma.challan.create({
       data: {
-        issueDate,
-        amount,
+        amount:amt,
         reason,
-        vehicleId
+        vehicleId,
       }
     });
 
-    res.status(201).json(challan);
+    res.status(200).json(challan);
   } catch (error) {
-    res.status(500).json({ error: 'Error creating challan', details: error.message });
+
+    res.status(203).json({ error: 'Error creating challan', details: error.message });
   }
 };
 
@@ -35,14 +34,14 @@ const getAllChallans = async (req, res) => {
   }
 };
 
-// Get challan by ID
+// Get challan by ID`
 const getChallanById = async (req, res) => {
   const id = req.params.id;
   try {
     const challan = await prisma.challan.findUnique({
       where: { id }
     });
-    if (!challan) {
+    if (!challan) {``
       res.status(404).json({ error: 'Challan not found' });
     } else {
       res.status(200).json(challan);

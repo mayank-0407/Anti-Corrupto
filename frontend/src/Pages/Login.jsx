@@ -15,11 +15,9 @@ const Login = () => {
     let values = { email: email, password: password };
     try {
       const response = await loginUser(values);
-      console.log("LoginScreentoken:", response.session.sessionToken);
 
       if (response.session.sessionToken) {
         setSessionId(response.session.sessionToken);
-        console.log(sessionId);
         setSessionTocken(response.session.sessionToken);
         navigate('/');
       }

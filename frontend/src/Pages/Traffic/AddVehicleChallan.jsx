@@ -1,22 +1,53 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
+import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../Utils/authAPI";
+import { addChallan } from "../../Utils/challanApi";
 
 const AddVehicleChallan = () => {
   const [issueDate, setIssueDate] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0.0);
   const [reason, setReason] = useState("");
-  const [status, setStatus] = useState("");
-
+  const [status, setStatus] = useState(false);
+  const { vehicleId } = useParams();
+  const [isLoggedd, setisLoggedd] = useState(false);
   const navigate = useNavigate();
 
-  const handleAddChallan = (e) => {
+  const handleAddChallan = async (e) => {
     e.preventDefault();
-    const challanData = { issueDate, amount, reason, status };
-    console.log("Challan data:", challanData);
+    const amt = parseFloat(amount);
+    
+    const challanData = { vehicleId, amt, reason };
+    try {
+      
+      const challan = await addChallan(challanData);
+      
+      if(challan.status === 200){
+        navigate(`/dashboard/vehicle/${vehicleId}/challan`);
+      }else{
+        console.log(challan.data.details);
+      }
+      
+    } catch (error) {
+      console.error("Error adding challan:", error);
+    }
   };
+  
 
+  useEffect(() => {
+    const checkLoginSession = isLogin();
+
+    if (checkLoginSession) {
+      setisLoggedd(true);
+    } else {
+      setisLoggedd(false);
+      navigate("/login");
+    }
+  }, []);
+
+  
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
