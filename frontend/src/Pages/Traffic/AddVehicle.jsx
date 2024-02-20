@@ -8,7 +8,7 @@ import { fetchUserDetails } from "../../Utils/authAPI";
 
 const AddVehicle = () => {
   const [plateNumber, setPlateNumber] = useState("");
-  const [make, setMake] = useState("");
+  const [make, setMake] = useState("");``
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [color, setColor] = useState("");

@@ -25,6 +25,7 @@
     sessions        Session[]
     verificationTokens VerificationToken[]
     vehicles        Vehicle[]
+    challans          Challan[]         
   }
 
   model Session {
@@ -72,14 +73,16 @@
   }
 
   model Challan {
-    id         String   @id @default(cuid())
-    issueDate  DateTime
-    amount     Float
-    reason     String
-    status     String
-    vehicle    Vehicle  @relation(fields: [vehicleId], references: [id])
-    vehicleId  String
-  }
+  id         String   @id @default(cuid())
+  issueDate  DateTime @default(now())
+  amount     Float
+  reason     String
+  status     Boolean @default(false)
+  vehicle    Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId  String
+  user       User?    @relation(fields: [userId], references: [id]) // Opposite relation field to map challans to the user
+  userId     String?
+}
 
   model Repair {
     id           String   @id @default(cuid())
