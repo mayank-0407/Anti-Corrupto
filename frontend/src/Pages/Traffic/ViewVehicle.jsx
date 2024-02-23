@@ -9,11 +9,10 @@ const ViewVehicle = () => {
   const navigate = useNavigate();
   const [isLoggedd, setisLoggedd] = useState(false);
   const [myVehicle, setMyVehicle] = useState("");
-  const { id } = useParams();
+  const { vehicleId } = useParams();
 
   const getmyvehicle=async ()=>{
-    const myvehicles=await getOneVehicles(id);
-    console.log(myvehicles);
+    const myvehicles=await getOneVehicles(vehicleId);
     setMyVehicle(myvehicles);
   }
 

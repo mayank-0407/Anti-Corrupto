@@ -44,7 +44,7 @@ const getVehicleById = async (req, res) => {
     if (!vehicle) {
       res.status(404).json({ error: 'Vehicle not found' });
     } else {
-      res.status(200).json(vehicle);
+      res.status(200).json(vehicle);``
     }
   } 
   // catch (error) {

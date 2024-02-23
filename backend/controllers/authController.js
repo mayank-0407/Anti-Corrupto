@@ -6,7 +6,6 @@ const prisma = new PrismaClient();
 const signUpController = async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
-		// console.log(req.body);
 		if (!email || !password || !name) {
 			return res.status(203).json({ message: "Please provide all required fields" });
 		}
@@ -227,7 +226,6 @@ const getUserDetails = async (req, res) => {
 				id:thisSession.userId
 			}
 		});
-		console.log(thisUser);
 		if(thisUser)
 			return res.status(200).send(thisUser);
 		else

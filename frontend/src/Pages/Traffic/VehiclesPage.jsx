@@ -20,9 +20,7 @@ const VehiclesPage = () => {
     const myToken=getToken();
     const thisUser=await fetchUserDetails(myToken);
     setMyUser(thisUser.data.id);
-    console.log("Id:",thisUser.data.id);
     const myvehicles=await getUserVehicles(thisUser.data.id);
-    console.log(myvehicles);
     setVehicles(myvehicles);
   }
 
@@ -63,7 +61,7 @@ const VehiclesPage = () => {
 <p></p>
                 <button 
                   className="mt-4 px-3 py-2 bg-blue-600 text-white rounded shadow"
-                  onClick={()=>{navigate(`/dashboard/vehicle/challan`)}}
+                  onClick={()=>{navigate(`/dashboard/vehicle/${vehicle.id}/challan`)}}
                 >
                   Challans  
                 </button>

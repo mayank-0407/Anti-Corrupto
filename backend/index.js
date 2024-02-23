@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/vehicle', vehicleRouter);
-app.use('/', challanRouter);
+app.use('/challan', challanRouter);
 app.use('/', insuranceRouter);
 app.use('/', repairRouter);
 
