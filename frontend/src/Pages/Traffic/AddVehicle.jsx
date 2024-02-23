@@ -1,10 +1,11 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
-import {addVehicle} from "../../Utils/vehicleApi";
-import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { addVehicle } from "../../Utils/vehicleApi";
+import { isLogin, logOut, getToken } from "../../Utils/cookieSetup";
 import { fetchUserDetails } from "../../Utils/authAPI";
+import { VehicleContext } from "../../context/VehicleContext";
 
 const AddVehicle = () => {
   const [plateNumber, setPlateNumber] = useState("");
@@ -12,8 +13,17 @@ const AddVehicle = () => {
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [color, setColor] = useState("");
+  const [pnum, setPnum] = useState(0);
   const [isLoggedd, setisLoggedd] = useState(false);
   const [myUser, setMyUser] = useState("");
+
+  const {
+    currentAccount,
+    connectWallet,
+    addVehicleToBlockchain,
+    checkIfWalletIsConnect,
+    formData,
+  } = useContext(VehicleContext);
 
   const navigate = useNavigate();
 
@@ -25,22 +35,47 @@ const AddVehicle = () => {
       setisLoggedd(false);
       navigate("/login");
     }
+    checkIfWalletIsConnect();
+    console.log("print vehicles added: ", formData);
+    console.log(VehicleContext);
   }, []);
+
+  const handleBlockchain = async () => {
+    // connectWallet();
+
+    let tformData = {
+      vehicleId: plateNumber,
+      phoneNum: pnum,
+      buyDate: year,
+      model: model,
+      plateNum: plateNumber,
+      insuranceValidity: year,
+      pollutionValidity: year,
+    };
+    const tempid = addVehicleToBlockchain(tformData);
+    console.log(tempid);
+  };
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
-    
-    const myToken=getToken();
-    const thisUser=await fetchUserDetails(myToken);
-    setMyUser(thisUser.data.id);
-    const vehicleData = { plateNumber, make, model, year, color, ownerId:myUser };
-    const res= await addVehicle(vehicleData);
-    if(res.status===200){
-      navigate("/dashboard/vehicle");
-    } 
-    else{
-      alert("Error in adding vehicle");
-    }
+
+    // const myToken = getToken();
+    // const thisUser = await fetchUserDetails(myToken);
+    // setMyUser(thisUser.data.id);
+    // const vehicleData = {
+    //   plateNumber,
+    //   make,
+    //   model,
+    //   year,
+    //   color,
+    //   ownerId: myUser,
+    // };
+    // const res = await addVehicle(vehicleData);
+    // if (res.status === 200) {
+    //   navigate("/dashboard/vehicle");
+    // } else {
+    //   alert("Error in adding vehicle");
+    // }
   };
 
   return (
@@ -51,7 +86,10 @@ const AddVehicle = () => {
           <h1 className="text-3xl font-bold mb-4 text-center">Add Vehicle</h1>
           <form onSubmit={handleAddVehicle} className="mb-4">
             <div className="mb-2">
-              <label htmlFor="plateNumber" className="block mb-2 text-left font-semibold">
+              <label
+                htmlFor="plateNumber"
+                className="block mb-2 text-left font-semibold"
+              >
                 Plate Number
               </label>
               <input
@@ -65,7 +103,10 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="make" className="block mb-2 text-left font-semibold">
+              <label
+                htmlFor="make"
+                className="block mb-2 text-left font-semibold"
+              >
                 Make
               </label>
               <input
@@ -79,7 +120,27 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="model" className="block mb-2 text-left font-semibold">
+              <label
+                htmlFor="model"
+                className="block mb-2 text-left font-semibold"
+              >
+                Phone Number
+              </label>
+              <input
+                type="number"
+                id="pnum"
+                name="pnum"
+                value={pnum}
+                onChange={(e) => setPnum(e.target.value)}
+                placeholder="Enter Phone Number"
+                className="w-full p-2 border border-gray-300 rounded-xl mb-2 text-sm bg-gray-200"
+              />
+            </div>
+            <div className="mb-2">
+              <label
+                htmlFor="model"
+                className="block mb-2 text-left font-semibold"
+              >
                 Model
               </label>
               <input
@@ -93,7 +154,10 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="year" className="block mb-2 text-left font-semibold">
+              <label
+                htmlFor="year"
+                className="block mb-2 text-left font-semibold"
+              >
                 Year
               </label>
               <input
@@ -107,7 +171,10 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label htmlFor="color" className="block mb-2 text-left font-semibold">
+              <label
+                htmlFor="color"
+                className="block mb-2 text-left font-semibold"
+              >
                 Color
               </label>
               <input
@@ -123,15 +190,13 @@ const AddVehicle = () => {
             <button
               type="submit"
               className="bg-blue-800 text-white p-2 w-full rounded-xl"
+              onClick={handleBlockchain}
             >
               Add Vehicle
             </button>
           </form>
           <div className="flex items-center justify-center">
-            <button
-              onClick={() => navigate("/")}
-              className="text-blue-800"
-            >
+            <button onClick={() => navigate("/")} className="text-blue-800">
               Back to Home
             </button>
           </div>

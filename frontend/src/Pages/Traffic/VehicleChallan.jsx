@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/footer";
 import { useNavigate } from "react-router-dom";
-import {getUserVehicles} from "../../Utils/vehicleApi";
-import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { getUserVehicles } from "../../Utils/vehicleApi";
+import { isLogin, logOut, getToken } from "../../Utils/cookieSetup";
 import { fetchUserDetails } from "../../Utils/authAPI";
 
 const VehicleChallan = () => {
@@ -13,14 +13,17 @@ const VehicleChallan = () => {
 
   const navigate = useNavigate();
 
-  useEffect(async () => {
+  const getthisUser = async () => {
+    const myToken = getToken();
+    const thisUser = await fetchUserDetails(myToken);
+    const myvehicles = await getUserVehicles(myToken);
+    setMyUser(thisUser.data.id);
+  };
+  useEffect(() => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
-      const myToken=getToken();
-      const thisUser=await fetchUserDetails(myToken);
-      const myvehicles=await getUserVehicles(myToken);
-      setMyUser(thisUser.data.id);
+      getthisUser();
     } else {
       setisLoggedd(false);
       navigate("/login");
@@ -51,7 +54,14 @@ const VehicleChallan = () => {
   return (
     <div className="bg-gray-100 min-h-screen p-8">
       <div className="max-w-5xl mx-auto">
-      <button onClick={()=>{navigate('/dashboard/vehicle/challan/add')}}  className='bg-blue-600 rounded-md mr-4 hover:bg-blue-700 text-white p-2 my-3'>+ Add Challan</button>
+        <button
+          onClick={() => {
+            navigate("/dashboard/vehicle/challan/add");
+          }}
+          className="bg-blue-600 rounded-md mr-4 hover:bg-blue-700 text-white p-2 my-3"
+        >
+          + Add Challan
+        </button>
         <div className="grid gap-8">
           {vehicles.map((vehicle) => (
             <div
