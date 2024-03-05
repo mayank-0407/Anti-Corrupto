@@ -24,19 +24,21 @@ const PasswordSchema = Yup.object().shape({
 		.required("*Password is required"),
 });
 
-export default function LoginPage({ navigation }) {
+export default function LoginScreen({navigateTo}) {
 
 	const handleLogin = async (values) => {
 		try {
-		  const response = await loginUser(values);			
-		  if (response.session.sessionToken) {
-			navigation.navigate("Home", {userId: response.session.sessionToken});
-		  }
+			const response = await loginUser(values);
+			// console.log("LoginScreentoken:", response.session.sessionToken);
+
+			if (response.session.sessionToken) {
+				// navigation.navigate("Home", { userId: response.session.sessionToken });
+				navigateTo(7, response.session.sessionToken);
+			}
 		} catch (error) {
-		  console.log(error);
+			console.log(error);
 		}
 	};
-	
 
 	return (
 		<View className="flex-1">
@@ -44,6 +46,7 @@ export default function LoginPage({ navigation }) {
 				initialValues={{ email: "", password: "", checked: false }}
 				validationSchema={PasswordSchema}
 				onSubmit={(values) => {
+					console.log(values);
 					handleLogin(values);
 				}}
 			>

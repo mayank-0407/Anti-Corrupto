@@ -3,8 +3,14 @@ import axios from "axios";
 const API_URL = "http://localhost:3000/auth";
 
 export const signUpUser = async (userData) => {
+	console.log(userData);
 	try {
+		console.log("hi");
+
 		const response = await axios.post(`${API_URL}/signup`, userData);
+				console.log("hi");
+
+		console.log(response);
 		return response.data;
 	} catch (error) {
 		throw error;
@@ -12,6 +18,7 @@ export const signUpUser = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
+	console.log("apiLogin:", userData);
 	try {
 		const response = await axios.post(`${API_URL}/login`, userData);
 		return response.data;
@@ -21,6 +28,7 @@ export const loginUser = async (userData) => {
 };
 
 export const logoutUser = async (sessionToken) => {
+	console.log("apiLogin:", sessionToken);
 	try {
 		const response = await axios.post(`${API_URL}/logout/${sessionToken}`);
 		if (response.status == 200) return true;
@@ -31,6 +39,7 @@ export const logoutUser = async (sessionToken) => {
 };
 
 export const isSessionValid = async (sessionId) => {
+	console.log(sessionId);
 	try {
 		const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
 		if (response.status == 200) {
@@ -48,9 +57,7 @@ export const fetchUserDetails = async (sessionId) => {
 		if (response.status == 200) {
 			console.log("in status 200");
 			return response;
-		}
-		else
-		{
+		} else {
 			console.log("in error");
 		}
 	} catch (error) {

@@ -1,11 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import {
 	Ionicons,
 	MaterialIcons,
 	AntDesign,
 	FontAwesome5,
+	Octicons,
 } from "@expo/vector-icons";
 import { NavigationContainer, useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,120 +19,75 @@ import MenuScreen from "./Screens/MenuScreen";
 import Services from "./Screens/Services";
 import Report from "./Screens/Report";
 import Traffic from "./Screens/Traffic";
-
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+import MyVehicles from "./Screens/MyVehicles";
+import { array } from "yup";
+import { BlurView } from "expo-blur";
+import Colors from "./Components/Colors";
 
 export default function App() {
+	const [currentScreen, setCurrentScreen] = useState(1);
 
-	function BottomTab() {
-		return (
-			<Tab.Navigator>
-				<Tab.Screen
-					name="Home"
-					component={HomePage}
-					options={{
-						headerShown: false,
-						tabBarIcon: ({ color, size }) => (
-							<Ionicons name="home" size={size} color={color} />
-						),
-					}}
-				/>
+	const [id, setId] = useState(null);
 
-				<Tab.Screen
-					name="Services"
-					component={Services}
-					options={{
-						headerShown: false,
-						tabBarIcon: ({ color, size }) => (
-							<AntDesign name="switcher" size={size} color={color} />
-						),
-					}}
-				/>
-
-				<Tab.Screen
-					name="Report"
-					component={Report}
-					options={{
-						headerShown: false,
-						tabBarIcon: ({ color, size }) => (
-							<FontAwesome5 name="fist-raised" size={size} color={color} />
-						),
-					}}
-				/>
-
-				<Tab.Screen
-					name="Menu"
-					component={MenuScreen}
-					options={{
-						headerShown: false,
-						tabBarIcon: ({ color, size }) => (
-							<Ionicons name="person" size={size} color={color} />
-						),
-					}}
-				/>
-			</Tab.Navigator>
-		);
+	function navigationHandler(num, token) {
+		setId(token);
+		console.log("appjs:", token);
+		setCurrentScreen(num);
 	}
 
-	// function HomeStack() {
-	// 	return (
-	// 		<Stack.Navigator>
-	// 			<Stack.Screen
-	// 				name="HomeTab"
-	// 				component={HomePage}
-	// 				options={{ headerShown: false }}
-	// 			/>
-	// 		</Stack.Navigator>
-	// 	);
-	// }
+	const screens = [
+		<LoginSplash />,
+		<LoginScreen navigateTo={navigationHandler} />,
+		<SignUpPage />,
+		<HomePage token={id} />,
+		<Services />,
+		<MenuScreen navigateTo={navigationHandler} token={id}/>,
+		<MyVehicles token={id} navigateTo={navigationHandler}/>,
+		<Traffic token={id} navigateTo={navigationHandler}/>,
+	];
 
-	// function ServicesStack() {
-	// 	return (
-	// 		<Stack.Navigator>
-	// 			<Stack.Screen
-	// 				name="ServicesTab"
-	// 				component={Services}
-	// 				options={{ headerShown: false }}
-	// 			/>
-	// 			<Stack.Screen
-	// 				name="TrafficTab"
-	// 				component={Traffic}
-	// 				// options={{ headerShown: false }}
-	// 			/>
-	// 		</Stack.Navigator>
-	// 	);
-	// }
+	const BottomTab = () => {
+		return (
+			<View className=" m-2 absolute bottom-1 right-1 left-1">
+				<BlurView
+					intensity={100}
+					tint="light"
+					style={{
+						borderTopLeftRadius: 16,
+						borderBottomLeftRadius: 16,
+						borderTopRightRadius: 16,
+						borderBottomRightRadius: 16,
+						overflow: "hidden",
+						backgroundColor: "#dfdfdfaa",
+						justifyContent: "center",
+						flexDirection: "row",
+						justifyContent: "space-evenly",
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity className=" p-2 px-6 items-center">
+						<Ionicons name="home" size={26} color={"#0062f5"} />
+						<Text className="text-primaryBlue text-xs">Home</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity className=" p-2 px-6 items-center">
+						<Octicons name="apps" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Services</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity className=" p-2 px-6 items-center">
+						<Ionicons name="person" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Menu</Text>
+					</TouchableOpacity>
+				</BlurView>
+			</View>
+		);
+	};
 
 	return (
-		<NavigationContainer>
-			<Stack.Navigator initialRouteName="Dashboard">
-				<Stack.Screen
-					name="Login/SignUp"
-					component={LoginSplash}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="Login"
-					component={LoginScreen}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="Sign Up"
-					component={SignUpPage}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="Dashboard"
-					component={BottomTab}
-					options={{ headerShown: false }}
-				/>
-				<Stack.Screen
-					name="Traffic"
-					component={Traffic}
-					options={{ headerTransparent: true }}
-				/>
-			</Stack.Navigator>
-		</NavigationContainer>
+		<View className="flex-1">
+			{screens[currentScreen]}
+			{currentScreen > 2 && <BottomTab />}
+		</View>
 	);
 }
