@@ -25,8 +25,29 @@ import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
+import { getUserVehicles } from "../util/vehicleApi";
 
-export default function Traffic({ route, navigation }) {
+export default function Traffic({ token, navigateTo }) {
+	const [vehicles, setVehicles] = useState([]);
+	const [myUser, setMyUser] = useState("");
+
+	const getallvehicles = async () => {
+		const thisUser = await fetchUserDetails(token);
+		setMyUser(thisUser.data.id);
+		const myvehicles = await getUserVehicles(thisUser.data.id);
+		console.log(myvehicles);
+		setVehicles(myvehicles);
+	};
+
+	useEffect(() => {
+		const checkLoginSession = isSessionValid();
+		if (checkLoginSession) {
+			console.log("get all vehicles : ", checkLoginSession);
+			getallvehicles();
+		} else {
+			navigateTo(1);
+		}
+	}, []);
 
 	return (
 		<>
@@ -47,171 +68,63 @@ export default function Traffic({ route, navigation }) {
 						showsHorizontalScrollIndicator={false}
 						className="px-3 space-x-3"
 					>
-						<TouchableOpacity>
-							<BlurView
-								intensity={60}
-								tint="dark"
-								style={{
-									borderTopLeftRadius: 16,
-									borderBottomLeftRadius: 16,
-									borderTopRightRadius: 16,
-									borderBottomRightRadius: 16,
-									overflow: "hidden",
-									padding: 8,
-									backgroundColor: "#0062f5ff",
-									justifyContent: "center",
-								}}
-							>
-								<Card>
-									<Card.Image
-										source={require("../assets/Images/creta.webp")}
-										style={{ height: 130, width: 300 }}
-									/>
-								</Card>
+						{vehicles.map((vehicle, index) => (
 
-								<View className="justify-between flex-row">
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										Creta
-									</Text>
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										HR26DK8337
-									</Text>
-								</View>
-							</BlurView>
-						</TouchableOpacity>
+							<TouchableOpacity>
+								<BlurView
+									intensity={60}
+									tint="dark"
+									style={{
+										borderTopLeftRadius: 16,
+										borderBottomLeftRadius: 16,
+										borderTopRightRadius: 16,
+										borderBottomRightRadius: 16,
+										overflow: "hidden",
+										padding: 8,
+										backgroundColor: "#0062f5ff",
+										justifyContent: "center",
+									}}
+								>
+									<Card>
+										<Card.Image
+											source={require("../assets/Images/creta.webp")}
+											style={{ height: 130, width: 300 }}
+										/>
+									</Card>
 
-						<TouchableOpacity>
-							<BlurView
-								intensity={100}
-								tint="light"
-								style={{
-									borderTopLeftRadius: 16,
-									borderBottomLeftRadius: 16,
-									borderTopRightRadius: 16,
-									borderBottomRightRadius: 16,
-									overflow: "hidden",
-									padding: 8,
-									backgroundColor: "#0062f5ff",
-									justifyContent: "center",
-								}}
-							>
-								<Card>
-									<Card.Image
-										source={require("../assets/Images/thar.jpeg")}
-										style={{ height: 130, width: 300, opacity: 0.4 }}
-									/>
-								</Card>
-
-								<View className="justify-between flex-row">
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										Thar
-									</Text>
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										PB11DC0007
-									</Text>
-								</View>
-							</BlurView>
-						</TouchableOpacity>
-
-						<TouchableOpacity>
-							<BlurView
-								intensity={100}
-								tint="light"
-								style={{
-									borderTopLeftRadius: 16,
-									borderBottomLeftRadius: 16,
-									borderTopRightRadius: 16,
-									borderBottomRightRadius: 16,
-									overflow: "hidden",
-									padding: 8,
-									backgroundColor: "#0062f5ff",
-									justifyContent: "center",
-									marginRight: 24,
-								}}
-							>
-								<Card>
-									<Card.Image
-										source={require("../assets/Images/land.jpeg")}
-										style={{ height: 130, width: 300 }}
-									/>
-								</Card>
-
-								<View className="justify-between flex-row">
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										Creta
-									</Text>
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-										}}
-									>
-										HR26DK8337
-									</Text>
-								</View>
-							</BlurView>
-						</TouchableOpacity>
+									<View className="justify-between flex-row">
+										<Text
+											style={{
+												textAlign: "center",
+												padding: 8,
+												paddingTop: 10,
+												color: "white",
+												fontSize: 18,
+												fontWeight: "bold",
+												textShadowColor: "rgba(0, 52, 194, 0.577)",
+												textShadowRadius: 14,
+											}}
+										>
+											{vehicle.model}
+										</Text>
+										<Text
+											style={{
+												textAlign: "center",
+												padding: 8,
+												paddingTop: 10,
+												color: "white",
+												fontSize: 18,
+												fontWeight: "bold",
+												textShadowColor: "rgba(0, 52, 194, 0.577)",
+												textShadowRadius: 14,
+											}}
+										>
+											{vehicle.plateNumber}
+										</Text>
+									</View>
+								</BlurView>
+							</TouchableOpacity>
+						))}
 					</ScrollView>
 				</View>
 
@@ -231,9 +144,7 @@ export default function Traffic({ route, navigation }) {
 					}}
 				>
 					<View className="rounded-3xl overflow-hidden ">
-						<ScrollView
-							showsVerticalScrollIndicator={false}
-						>
+						<ScrollView showsVerticalScrollIndicator={false}>
 							<BlurView
 								intensity={70}
 								tint="light"
@@ -321,9 +232,7 @@ export default function Traffic({ route, navigation }) {
 								</Text>
 
 								<View className="justify-evenly px-2">
-									<Text className="p-2 border-b border-gray-600">
-										1. ₹10000 • Overspeeding
-									</Text>
+									<Text className="p-2 border-b border-gray-600">1.</Text>
 									<Text className="p-2 border-b border-gray-600">
 										2. ₹2000 • Crossin red lights
 									</Text>
