@@ -45,8 +45,6 @@ const signUpController = async (req, res) => {
 	}
 };
 
-
-
 const loginController = async (req, res) => {
 	try {
 		const { email, password } = req.body;
@@ -139,8 +137,6 @@ const refreshAccessTokenController = async (req, res) => {
 			.json({ error: "Invalid refresh token", details: err.message });
 	}
 };
-
-
 
 const generateAccessToken = (data) => {
 	try {

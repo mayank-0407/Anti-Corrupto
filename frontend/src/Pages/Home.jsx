@@ -30,7 +30,7 @@ const Home = () => {
         <ConnectToApp />
       </div>
 
-      <div className="mt-10">
+      <div classname="mt-10">
         <Footer />
       </div>
     </div>
