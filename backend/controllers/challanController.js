@@ -24,15 +24,26 @@ const createChallan = async (req, res) => {
   }
 };
 
-// Get all challans
 const getAllChallans = async (req, res) => {
-  try {
+  try{
     const challans = await prisma.challan.findMany();
     res.status(200).json(challans);
-  } catch (error) {
-    res.status(500).json({ error: 'Error fetching challans', details: error.message });
+  }catch(e){
+
   }
-};
+
+}
+
+
+// Get all challans
+// const getAllChallans = async (req, res) => {
+//   try {
+//     const challans = await prisma.challan.findMany();
+//     res.status(200).json(challans);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Error fetching challans', details: error.message });
+//   }
+// };
 
 // Get challan by ID`
 const getChallanById = async (req, res) => {
@@ -41,7 +52,7 @@ const getChallanById = async (req, res) => {
     const challan = await prisma.challan.findUnique({
       where: { id }
     });
-    if (!challan) {``
+    if (!challan) {
       res.status(404).json({ error: 'Challan not found' });
     } else {
       res.status(200).json(challan);
