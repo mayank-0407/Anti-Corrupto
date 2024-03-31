@@ -12,14 +12,6 @@ import { loginUser } from "../util/Api";
 import Colors from "../Components/Colors";
 
 export default function LoginSplash({ navigation }) {
-	function pressHandler(button) {
-		if (button === "Login") {
-			navigation.navigate("Login");
-		} else if (button === "Sign Up") {
-			navigation.navigate("Sign Up");
-		}
-	}
-
 	// const handleLogin = async (values) => {
 	// 	try {
 	// 		const response = await loginUser(values);
@@ -50,7 +42,9 @@ export default function LoginSplash({ navigation }) {
 						<Pressable
 							className=" bg-white py-3 "
 							android_ripple={{ color: "hsla(215, 100%, 50%, 0.368)" }}
-							onPress={pressHandler.bind(this, "Login")}
+							onPress={() => {
+								navigation.navigate("Login");
+							}}
 						>
 							<Text
 								className=" text-center font-bold text-base "
@@ -61,7 +55,9 @@ export default function LoginSplash({ navigation }) {
 						</Pressable>
 					</View>
 					<PrimaryButton
-						onPress={pressHandler.bind(this, "Sign Up")}
+						onPress={() => {
+							navigation.navigate("SignUp");
+						}}
 						outer={styles.border}
 					>
 						Sign up
@@ -78,4 +74,3 @@ const styles = StyleSheet.create({
 		borderColor: "white",
 	},
 });
-

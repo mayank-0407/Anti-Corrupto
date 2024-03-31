@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "new-app",
-    "slug": "new-app",
+    "name": "Anti-Corrupto",
+    "slug": "Anti-Corrupto",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Anti-Corrupto.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/Anti-Corrupto.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,12 +19,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/Anti-Corrupto.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.samivo.AntiCorrupto"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2933ffd7-87a4-4b69-a4c3-7eb499ae6b49"
+      }
     }
   }
 }

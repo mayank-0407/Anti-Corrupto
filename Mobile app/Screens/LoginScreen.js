@@ -24,21 +24,23 @@ const PasswordSchema = Yup.object().shape({
 		.required("*Password is required"),
 });
 
-export default function LoginScreen({navigateTo}) {
-
+export default function LoginScreen({ navigation }) {
+	
 	const handleLogin = async (values) => {
 		try {
 			const response = await loginUser(values);
-			// console.log("LoginScreentoken:", response.session.sessionToken);
+			console.log("LoginScreentoken:", response.session.sessionToken);
 
 			if (response.session.sessionToken) {
-				// navigation.navigate("Home", { userId: response.session.sessionToken });
-				navigateTo(7, response.session.sessionToken);
+				navigation.navigate("Home", { token: response.session.sessionToken });
+				// navigateTo(7, response.session.sessionToken);
 			}
 		} catch (error) {
-			console.log(error);
+			console.log("Error occurred during login:", error);
+			// Handle error here, such as showing an error message to the user or redirecting to login screen
 		}
 	};
+
 
 	return (
 		<View className="flex-1">
@@ -46,7 +48,7 @@ export default function LoginScreen({navigateTo}) {
 				initialValues={{ email: "", password: "", checked: false }}
 				validationSchema={PasswordSchema}
 				onSubmit={(values) => {
-					console.log(values);
+					// console.log(values);
 					handleLogin(values);
 				}}
 			>
@@ -114,7 +116,7 @@ export default function LoginScreen({navigateTo}) {
 								<Text className="flex">Don't have an account yet?</Text>
 								<TouchableOpacity
 									className=" px-2 flex"
-									onPress={() => navigation.navigate("Sign Up")}
+									onPress={() => navigation.navigate("SignUp")}
 								>
 									<Text className="text-primaryBlue text-base font-semibold ">
 										Sign up

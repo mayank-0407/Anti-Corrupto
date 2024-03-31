@@ -17,7 +17,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { signUpUser } from "../util/Api";
+import { signUpUser, loginUser } from "../util/Api";
 
 const PasswordSchema = Yup.object().shape({
 	password: Yup.string()
@@ -45,6 +45,9 @@ export default function SignUpPage({ navigation }) {
 	const handleSubmit = async (values) => {
 		try {
 			await signUpUser(values);
+			// const response = await loginUser(values);
+			// navigation.navigate("Home", response.session.sessionToken);
+			navigation.navigate("Login");
 		} catch (error) {
 			console.log(error);
 		}

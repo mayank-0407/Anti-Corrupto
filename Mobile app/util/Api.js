@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/auth";
+const API_URL = "http://10.0.2.2:3000/auth";
 
 export const signUpUser = async (userData) => {
 	console.log(userData);
 	try {
-		console.log("hi");
+		console.log("outside hi");
 
 		const response = await axios.post(`${API_URL}/signup`, userData);
-				console.log("hi");
+		console.log("inside hi");
 
-		console.log(response);
+		// console.log(response);
 		return response.data;
 	} catch (error) {
 		throw error;
@@ -39,13 +39,13 @@ export const logoutUser = async (sessionToken) => {
 };
 
 export const isSessionValid = async (sessionId) => {
-	console.log(sessionId);
+	console.log("isSessionValid:", sessionId);
 	try {
 		const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
 		if (response.status == 200) {
 			return true;
-		}
-		return false;
+		} 
+		else return false;
 	} catch (error) {
 		console.log(error);
 	}
@@ -55,7 +55,7 @@ export const fetchUserDetails = async (sessionId) => {
 	try {
 		const response = await axios.get(`${API_URL}/getuser/${sessionId}`);
 		if (response.status == 200) {
-			console.log("in status 200");
+			console.log("fetchUserDetails: in status 200");
 			return response;
 		} else {
 			console.log("in error");

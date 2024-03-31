@@ -14,6 +14,7 @@ import {
 	MaterialIcons,
 	AntDesign,
 	Feather,
+	Octicons,
 } from "@expo/vector-icons";
 // import Card from "../Components/card";
 import { StatusBar } from "expo-status-bar";
@@ -24,11 +25,11 @@ import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 
-export default function HomePage({ token }) {
+export default function HomePage({ route, navigation }) {
 	const [myuser, setmyuser] = useState("");
 
+	const { token } = route.params;
 	console.log("HomePage:", token);
-	const sessionToken = token;
 
 	// const handleLogout = async () => {
 	// 	try {
@@ -45,21 +46,21 @@ export default function HomePage({ token }) {
 	// };
 
 	useEffect(() => {
-		const getMyUser = async () => {
+		const fetchData = async () => {
 			try {
-				const getusertemp = await fetchUserDetails(sessionToken);
-				console.log("in use effect");
-				setmyuser(getusertemp.data);
-			} catch (e) {
-				console.log(e);
+				const sessionValid = await isSessionValid(token);
+				if (!sessionValid) {
+					navigation.navigate("Login");
+				} else {
+					const userDetails = await fetchUserDetails(token);
+					setmyuser(userDetails.data);
+				}
+			} catch (error) {
+				console.log("Error:", error);
 			}
 		};
-		const checkLoginSession = isSessionValid();
-		if (checkLoginSession) {
-			getMyUser();
-		} else {
-			navigation.navigate("Login");
-		}
+
+		fetchData();
 	}, []);
 
 	const items = [
@@ -146,7 +147,7 @@ export default function HomePage({ token }) {
 
 					<ScrollView
 						showsVerticalScrollIndicator={false}
-						fadingEdgeLength={777}
+						fadingEdgeLength={300}
 						className="flex-1"
 					>
 						<View className=" p-1 ml-4 ">
@@ -379,6 +380,50 @@ export default function HomePage({ token }) {
 					</ScrollView>
 				</View>
 			</FadedView>
+
+			<View className=" m-2 absolute bottom-1 right-1 left-1">
+				<BlurView
+					intensity={80}
+					tint="light"
+					style={{
+						borderTopLeftRadius: 16,
+						borderBottomLeftRadius: 16,
+						borderTopRightRadius: 16,
+						borderBottomRightRadius: 16,
+						overflow: "hidden",
+						backgroundColor: "#ffffff85",
+						justifyContent: "center",
+						flexDirection: "row",
+						justifyContent: "space-evenly",
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity
+						className=" p-2 px-6 items-center"
+						onPress={() => {
+							navigation.navigate("Home");
+						}}
+					>
+						<Ionicons name="home" size={26} color={"#0062f5"} />
+						<Text className="text-primaryBlue text-xs">Home</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						className=" p-2 px-6 items-center"
+						onPress={() => {
+							navigation.navigate("Services");
+						}}
+					>
+						<Octicons name="apps" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Services</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity className=" p-2 px-6 items-center">
+						<Ionicons name="person" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Menu</Text>
+					</TouchableOpacity>
+				</BlurView>
+			</View>
 		</>
 	);
 }

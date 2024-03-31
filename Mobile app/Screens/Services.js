@@ -17,6 +17,7 @@ import {
 	MaterialIcons,
 	AntDesign,
 	Feather,
+	Octicons,
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
@@ -118,9 +119,11 @@ export default function HomePage({ route, navigation }) {
 							showsVerticalScrollIndicator={false}
 							// fadingEdgeLength={200}
 						>
-							<TouchableOpacity onPress={()=>{
-								navigation.navigate("Traffic");
-								}}>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Traffic");
+								}}
+							>
 								<BlurView
 									intensity={77}
 									tint="light"
@@ -327,6 +330,49 @@ export default function HomePage({ route, navigation }) {
 				</View>
 			</ImageBackground>
 			<StatusBar style="dark" />
+			<View className=" m-2 absolute bottom-1 right-1 left-1">
+				<BlurView
+					intensity={80}
+					tint="light"
+					style={{
+						borderTopLeftRadius: 16,
+						borderBottomLeftRadius: 16,
+						borderTopRightRadius: 16,
+						borderBottomRightRadius: 16,
+						overflow: "hidden",
+						backgroundColor: "#ffffff85",
+						justifyContent: "center",
+						flexDirection: "row",
+						justifyContent: "space-evenly",
+						elevation: 10,
+					}}
+				>
+					<TouchableOpacity
+						className=" p-2 px-6 items-center"
+						onPress={() => {
+							navigation.navigate("Home");
+						}}
+					>
+						<Ionicons name="home" size={26} color={"#0062f5"} />
+						<Text className="text-primaryBlue text-xs">Home</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity
+						className=" p-2 px-6 items-center"
+						onPress={() => {
+							navigation.navigate("Services");
+						}}
+					>
+						<Octicons name="apps" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Services</Text>
+					</TouchableOpacity>
+
+					<TouchableOpacity className=" p-2 px-6 items-center">
+						<Ionicons name="person" size={26} color={"#454545"} />
+						<Text className="text-[#454545] text-xs">Menu</Text>
+					</TouchableOpacity>
+				</BlurView>
+			</View>
 		</>
 	);
 }
