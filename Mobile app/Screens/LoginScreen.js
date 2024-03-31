@@ -16,6 +16,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { loginUser } from "../util/Api";
+import { saveSessionToken } from "../util/tokenStore";
 
 const PasswordSchema = Yup.object().shape({
 	password: Yup.string()
@@ -25,22 +26,20 @@ const PasswordSchema = Yup.object().shape({
 });
 
 export default function LoginScreen({ navigation }) {
-	
+
 	const handleLogin = async (values) => {
 		try {
 			const response = await loginUser(values);
 			console.log("LoginScreentoken:", response.session.sessionToken);
 
 			if (response.session.sessionToken) {
-				navigation.navigate("Home", { token: response.session.sessionToken });
-				// navigateTo(7, response.session.sessionToken);
+				saveSessionToken(response.session.sessionToken);
+				navigation.navigate("Home");
 			}
 		} catch (error) {
 			console.log("Error occurred during login:", error);
-			// Handle error here, such as showing an error message to the user or redirecting to login screen
 		}
 	};
-
 
 	return (
 		<View className="flex-1">

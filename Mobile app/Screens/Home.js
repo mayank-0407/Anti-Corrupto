@@ -24,12 +24,10 @@ import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
+import { getSessionToken } from "../util/tokenStore";
 
 export default function HomePage({ route, navigation }) {
 	const [myuser, setmyuser] = useState("");
-
-	const { token } = route.params;
-	console.log("HomePage:", token);
 
 	// const handleLogout = async () => {
 	// 	try {
@@ -46,13 +44,15 @@ export default function HomePage({ route, navigation }) {
 	// };
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const checkSessionValidity = async () => {
+			const sessionToken = await getSessionToken();
 			try {
-				const sessionValid = await isSessionValid(token);
+				const sessionValid = await isSessionValid(sessionToken);
 				if (!sessionValid) {
+					// alert("Session Timed Out. Please Log In Again.");
 					navigation.navigate("Login");
 				} else {
-					const userDetails = await fetchUserDetails(token);
+					const userDetails = await fetchUserDetails(sessionToken);
 					setmyuser(userDetails.data);
 				}
 			} catch (error) {
@@ -60,8 +60,16 @@ export default function HomePage({ route, navigation }) {
 			}
 		};
 
-		fetchData();
+		// Check session validity initially
+		checkSessionValidity();
+
+		// // Set interval to check session validity periodically
+		// const intervalId = setInterval(checkSessionValidity, 60000); // Check every 60 seconds
+
+		// // Clean up the interval when the component unmounts
+		// return () => clearInterval(intervalId);
 	}, []);
+
 
 	const items = [
 		{

@@ -22,8 +22,8 @@ import MyVehicles from "./Screens/MyVehicles";
 import { BlurView } from "expo-blur";
 import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
-import { Provider } from "react-redux";
-import { store } from "./store/redux/store";
+// import { Provider } from "react-redux";
+// import { store } from "./store/redux/store";
 
 export default function App() {
 	// const [currentScreen, setCurrentScreen] = useState(1);
@@ -88,7 +88,7 @@ export default function App() {
 	const Stack = createNativeStackNavigator();
 
 	return (
-		<Provider store={store}>
+		// <Provider store={store}>
 			<NavigationContainer>
 				<Stack.Navigator screenOptions={{ headerShown: false }}>
 					<Stack.Screen name="LoginSplash" component={LoginSplash} />
@@ -101,7 +101,7 @@ export default function App() {
 					<Stack.Screen name="Traffic" component={Traffic} />
 				</Stack.Navigator>
 			</NavigationContainer>
-		</Provider>
+		// </Provider>
 
 		// <View className="flex-1">
 		// 	{screens[currentScreen]}

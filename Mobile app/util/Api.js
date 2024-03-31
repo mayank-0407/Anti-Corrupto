@@ -39,7 +39,7 @@ export const logoutUser = async (sessionToken) => {
 };
 
 export const isSessionValid = async (sessionId) => {
-	console.log("isSessionValid:", sessionId);
+	console.log("isSessionValid Api:", sessionId);
 	try {
 		const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
 		if (response.status == 200) {
@@ -48,6 +48,7 @@ export const isSessionValid = async (sessionId) => {
 		else return false;
 	} catch (error) {
 		console.log(error);
+		return false;
 	}
 };
 
