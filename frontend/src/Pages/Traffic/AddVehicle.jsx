@@ -58,24 +58,25 @@ const AddVehicle = () => {
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
+    handleBlockchain();
 
-    // const myToken = getToken();
-    // const thisUser = await fetchUserDetails(myToken);
-    // setMyUser(thisUser.data.id);
-    // const vehicleData = {
-    //   plateNumber,
-    //   make,
-    //   model,
-    //   year,
-    //   color,
-    //   ownerId: myUser,
-    // };
-    // const res = await addVehicle(vehicleData);
-    // if (res.status === 200) {
-    //   navigate("/dashboard/vehicle");
-    // } else {
-    //   alert("Error in adding vehicle");
-    // }
+    const myToken = getToken();
+    const thisUser = await fetchUserDetails(myToken);
+    setMyUser(thisUser.data.id);
+    const vehicleData = {
+      plateNumber,
+      make,
+      model,
+      year,
+      color,
+      ownerId: myUser,
+    };
+    const res = await addVehicle(vehicleData);
+    if (res.status === 200) {
+      navigate("/dashboard/vehicle");
+    } else {
+      alert("Error in adding vehicle");
+    }
   };
 
   return (
@@ -190,7 +191,6 @@ const AddVehicle = () => {
             <button
               type="submit"
               className="bg-blue-800 text-white p-2 w-full rounded-xl"
-              onClick={handleBlockchain}
             >
               Add Vehicle
             </button>
