@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/footer";
-import { isLogin, logOut, getToken } from "../../Utils/cookieSetup";
-import { getVehicleChallans } from "../../Utils/challanApi"; 
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/footer";
+import { isLogin, logOut, getToken } from "../../../Utils/cookieSetup";
+import { getVehicleChallans } from "../../../Utils/challanApi"; 
 
 const VehicleChallan = () => {
   const [isLoggedd, setisLoggedd] = useState(false);
