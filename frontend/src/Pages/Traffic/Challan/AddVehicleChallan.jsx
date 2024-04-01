@@ -5,6 +5,17 @@ import Footer from "../../../components/footer";
 import { isLogin, logOut,getToken } from "../../../Utils/cookieSetup";
 import { fetchUserDetails } from "../../../Utils/authAPI";
 import { addChallan } from "../../../Utils/challanApi";
+import { ChallanContext } from "../../../context/ChallanContext";
+
+const {
+  addChallanToBlockchain,
+  checkIfWalletIsConnect,
+  formData,
+  getUserChallansfunc,
+  payChallan
+} = useContext(ChallanContext);
+
+const navigate = useNavigate();
 
 const AddVehicleChallan = () => {
   const [issueDate, setIssueDate] = useState("");
@@ -13,13 +24,12 @@ const AddVehicleChallan = () => {
   const [status, setStatus] = useState(false);
   const { vehicleId } = useParams();
   const [isLoggedd, setisLoggedd] = useState(false);
-  const navigate = useNavigate();
 
   const handleAddChallan = async (e) => {
     e.preventDefault();
     const amt = parseFloat(amount);
-    
-    const challanData = { vehicleId, amt, reason };
+    handleChallanData();
+    const challanData = { vehicleId, amt, reason, location, paid };
     try {
       
       const challan = await addChallan(challanData);
@@ -34,7 +44,19 @@ const AddVehicleChallan = () => {
       console.error("Error adding challan:", error);
     }
   };
-  
+  handleChallanData = async () => {
+    let challanFormData = {
+      challanId: issueDate,
+      vehicleId: vehicleId,
+      issueDate: issueDate,
+      paid: status,
+      amount: amount,
+      location: "Delhi",
+      reason: reason,
+    };
+    const tempid = addChallanToBlockchain(challanFormData);
+    console.log(tempid);
+  };
 
   useEffect(() => {
     const checkLoginSession = isLogin();
@@ -45,9 +67,15 @@ const AddVehicleChallan = () => {
       setisLoggedd(false);
       navigate("/login");
     }
+
+    checkIfWalletIsConnect();
+    console.log("print vehicles added: ", formData);
+    console.log(ChallanContext);
   }, []);
 
   
+
+   
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
