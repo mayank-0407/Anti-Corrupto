@@ -1,10 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/footer";
-import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
-import { fetchUserDetails } from "../../Utils/authAPI";
-import { addChallan } from "../../Utils/challanApi";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/footer";
+import { isLogin, logOut,getToken } from "../../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../../Utils/authAPI";
+import { addChallan } from "../../../Utils/challanApi";
 
 const AddVehicleChallan = () => {
   const [issueDate, setIssueDate] = useState("");

@@ -18,7 +18,7 @@ contract VehicleManagement {
     mapping(address => Vehicle[]) public userVehicles;
     mapping(uint256 => Vehicle) public allVehicles;
 
-    event VehicleAdded(address indexed user, uint256 vehicleId,uint64 phoneNum,string buyDate,string model,string plateNum,string insuranceValidity,string pollutionValidity);
+    event VehicleAdded(address indexed user, uint256 vehicleId, uint64 phoneNum, string buyDate, string model, string plateNum, string insuranceValidity, string pollutionValidity);
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Not the contract owner");
@@ -36,7 +36,7 @@ contract VehicleManagement {
         return result;
     }
 
-    function addVehicle(string memory _vehicleId,uint16 phoneNum,string memory buyDate,string memory model,string memory plateNum,string memory insuranceValidity,string memory pollutionValidity) public {
+    function addVehicle(string memory _vehicleId, uint16 phoneNum, string memory buyDate, string memory model, string memory plateNum, string memory insuranceValidity, string memory pollutionValidity) public {
         vehicleCount+=1;
         uint256 vehicleId=parseAndConvert(_vehicleId);
         Vehicle memory newVehicle = Vehicle(vehicleId, phoneNum, buyDate, model, plateNum, insuranceValidity, pollutionValidity);
@@ -44,7 +44,7 @@ contract VehicleManagement {
         userVehicles[msg.sender].push(newVehicle);
         allVehicles[vehicleId] = newVehicle;
 
-        emit VehicleAdded(msg.sender, vehicleId, phoneNum,buyDate,model,plateNum,insuranceValidity,pollutionValidity );
+        emit VehicleAdded(msg.sender, vehicleId, phoneNum, buyDate, model, plateNum, insuranceValidity, pollutionValidity );
     }
 
     function getUserVehicles(address _userAddress) public view returns (Vehicle[] memory) {

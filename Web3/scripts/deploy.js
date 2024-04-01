@@ -1,6 +1,6 @@
 const main = async () => {
   const vehicleFactory = await hre.ethers.getContractFactory(
-    "VehicleManagement"
+    "ChallanManagement"
   );
   const vehicleContract = await vehicleFactory.deploy();
 

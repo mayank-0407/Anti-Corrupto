@@ -1,94 +1,96 @@
-  generator client {
-    provider = "prisma-client-js"
-  }
-
-  datasource db {
-    provider = "postgresql"
-    url      = "postgresql://postgres:123@localhost:5432/capstone?schema=public"
-  }
-
-  model User {
-    id              String   @id @default(cuid())
-    name            String?
-    email           String?  @unique
-    emailVerified   DateTime?
-    hashedPassword  String
-    access_token    String?
-    refresh_token   String?
-    expires_at      Int?
-    token_type      String?
-    scope           String?
-    id_token        String?
-    session_state   String?
-    createdAt       DateTime @default(now())
-    updatedAt       DateTime @updatedAt
-    sessions        Session[]
-    verificationTokens VerificationToken[]
-    vehicles        Vehicle[]
-    challans          Challan[]         
-  }
-
-  model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  }
-
-  model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-    userId     String
-    user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([identifier, token])
-  }
-
-  model Vehicle {
-    id          String   @id @default(cuid())
-    plateNumber String   @unique
-    make        String
-    model       String
-    year        Int
-    color       String
-    insurance   Insurance? 
-    challans    Challan[]
-    repairs     Repair[] 
-    owner       User?    @relation(fields: [ownerId], references: [id])
-    ownerId     String?
-    pollutionDone   DateTime?
-    pollutionExpiration  DateTime?  
-  }
-
-  model Insurance {
-    id          String   @id @default(cuid())
-    policyNumber String   @unique
-    startDate   DateTime
-    endDate     DateTime
-    provider    String
-    vehicle     Vehicle? @relation(fields: [vehicleId], references: [id])
-    vehicleId   String   @unique
-  }
-
-  model Challan {
-  id         String   @id @default(cuid())
-  issueDate  DateTime @default(now())
-  amount     Float
-  reason     String
-  status     Boolean @default(false)
-  vehicle    Vehicle  @relation(fields: [vehicleId], references: [id])
-  vehicleId  String
-  user       User?    @relation(fields: [userId], references: [id]) // Opposite relation field to map challans to the user
-  userId     String?
+generator client {
+  provider = "prisma-client-js"
 }
 
-  model Repair {
-    id           String   @id @default(cuid())
-    repairDate   DateTime
-    description  String
-    cost         Float
-    vehicle      Vehicle  @relation(fields: [vehicleId], references: [id])
-    vehicleId    String
-  }
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:123@localhost:5432/capstone?schema=public"
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  name               String?
+  email              String?             @unique
+  emailVerified      DateTime?
+  hashedPassword     String
+  access_token       String?
+  refresh_token      String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  sessions           Session[]
+  verificationTokens VerificationToken[]
+  vehicles           Vehicle[]
+  challans           Challan[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([identifier, token])
+}
+
+model Vehicle {
+  id                  String     @id @default(cuid())
+  plateNumber         String     @unique
+  make                String
+  model               String
+  year                Int
+  color               String
+  insurance           Insurance?
+  challans            Challan[]
+  repairs             Repair[]
+  owner               User?      @relation(fields: [ownerId], references: [id])
+  ownerId             String?
+  pollutionDone       DateTime?
+  pollutionExpiration DateTime?
+}
+
+model Insurance {
+  id           String   @id @default(cuid())
+  policyNumber String   @unique
+  startDate    DateTime
+  endDate      DateTime
+  provider     String
+  vehicle      Vehicle? @relation(fields: [vehicleId], references: [id])
+  vehicleId    String   @unique
+}
+
+model Challan {
+  id        String   @id @default(cuid())
+  issueDate DateTime @default(now())
+  fine      Float
+  reason    String
+  status    Boolean  @default(false)
+  vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId String
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+  location  String
+  officerId String?
+}
+
+model Repair {
+  id          String   @id @default(cuid())
+  repairDate  DateTime
+  description String
+  cost        Float
+  vehicle     Vehicle  @relation(fields: [vehicleId], references: [id])
+  vehicleId   String
+}

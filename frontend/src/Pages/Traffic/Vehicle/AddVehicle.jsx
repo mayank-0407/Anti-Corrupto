@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/footer";
-import { addVehicle } from "../../Utils/vehicleApi";
-import { isLogin, logOut, getToken } from "../../Utils/cookieSetup";
-import { fetchUserDetails } from "../../Utils/authAPI";
-import { VehicleContext } from "../../context/VehicleContext";
+import Navbar from "../../../components/Navbar";
+import Footer from "../../../components/footer";
+import { addVehicle } from "../../../Utils/vehicleApi";
+import { isLogin, logOut, getToken } from "../../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../../Utils/authAPI";
+import { VehicleContext } from "../../../context/VehicleContext";
 
 const AddVehicle = () => {
   const [plateNumber, setPlateNumber] = useState("");
@@ -19,7 +19,6 @@ const AddVehicle = () => {
 
   const {
     currentAccount,
-    connectWallet,
     addVehicleToBlockchain,
     checkIfWalletIsConnect,
     formData,
@@ -41,8 +40,6 @@ const AddVehicle = () => {
   }, []);
 
   const handleBlockchain = async () => {
-    // connectWallet();
-
     let tformData = {
       vehicleId: plateNumber,
       phoneNum: pnum,
