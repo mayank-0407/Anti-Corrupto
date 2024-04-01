@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+<<<<<<< HEAD:frontend/src/Pages/Traffic/Challan/AddVehicleChallan.jsx
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/footer";
 import { isLogin, logOut,getToken } from "../../../Utils/cookieSetup";
@@ -16,6 +17,13 @@ const {
 } = useContext(ChallanContext);
 
 const navigate = useNavigate();
+=======
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/footer";
+import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../Utils/authAPI";
+import { addChallan } from "../../Utils/challanApi";
+>>>>>>> parent of 92f3b51b (challan contract completed and challan context also completed):frontend/src/Pages/Traffic/AddVehicleChallan.jsx
 
 const AddVehicleChallan = () => {
   const [issueDate, setIssueDate] = useState("");

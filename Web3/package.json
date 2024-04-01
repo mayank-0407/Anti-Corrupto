@@ -16,8 +16,12 @@
   },
   "dependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+<<<<<<< HEAD
     "dotenv": "^16.4.5",
     "ethers": "^6.11.1",
     "hardhat": "^2.22.2"
+=======
+    "ethers": "^6.11.1"
+>>>>>>> parent of 92f3b51b (challan contract completed and challan context also completed)
   }
 }

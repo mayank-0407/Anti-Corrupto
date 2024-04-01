@@ -1,9 +1,9 @@
 import React, { useState,useEffect, useRef } from 'react';
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/footer";
 import { useNavigate,useParams } from "react-router-dom";
-import { isLogin, logOut } from "../../../Utils/cookieSetup";
-import {getOneVehicles} from "../../../Utils/vehicleApi";
+import { isLogin, logOut } from "../../Utils/cookieSetup";
+import {getOneVehicles} from "../../Utils/vehicleApi";
 
 const ViewVehicle = () => {
   const navigate = useNavigate();

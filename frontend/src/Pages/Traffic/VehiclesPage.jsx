@@ -1,9 +1,9 @@
 import React, { useState,useEffect, useRef } from 'react';
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
-import {getUserVehicles} from "../../../Utils/vehicleApi";
-import { isLogin, logOut,getToken } from "../../../Utils/cookieSetup";
-import { fetchUserDetails } from "../../../Utils/authAPI";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/footer";
+import {getUserVehicles} from "../../Utils/vehicleApi";
+import { isLogin, logOut,getToken } from "../../Utils/cookieSetup";
+import { fetchUserDetails } from "../../Utils/authAPI";
 
 import { useNavigate } from "react-router-dom";
 

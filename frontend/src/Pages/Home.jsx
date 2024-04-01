@@ -4,6 +4,7 @@ import Carousel from "../components/home/Carousel";
 import Updates from "../components/home/Updates";
 import ConnectToApp from "../components/home/ConnectToApp";
 import ServiceIcon from "../components/home/Services";
+// import Sidebar from "../components/ui/Sidebar";
 import Footer from "../components/footer";
 
 const Home = () => {
