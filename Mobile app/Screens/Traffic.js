@@ -20,40 +20,52 @@ import {
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { Carousel, Card } from "react-native-ui-lib";
+// import { Carousel, Card } from "react-native-ui-lib";
 import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { BlurView } from "expo-blur";
 import { getUserVehicles } from "../util/vehicleApi";
+import { getSessionToken } from "../util/tokenStore";
 
-export default function Traffic({ token, navigateTo }) {
+export default function Traffic({ navigation }) {
 	const [vehicles, setVehicles] = useState([]);
-	const [myUser, setMyUser] = useState("");
 
 	const getallvehicles = async () => {
+		const token = await getSessionToken();
 		const thisUser = await fetchUserDetails(token);
-		setMyUser(thisUser.data.id);
+		console.log(thisUser.data.id);
+		// setMyUser(thisUser.data.id);
 		const myvehicles = await getUserVehicles(thisUser.data.id);
 		console.log(myvehicles);
 		setVehicles(myvehicles);
 	};
 
 	useEffect(() => {
-		const checkLoginSession = isSessionValid();
-		if (checkLoginSession) {
-			console.log("get all vehicles : ", checkLoginSession);
-			getallvehicles();
-		} else {
-			navigateTo(1);
-		}
+		const checkSessionValidity = async () => {
+			const sessionToken = await getSessionToken();
+			try {
+				// const checkLoginSession = isSessionValid(sessionToken);
+				if (sessionToken) {
+					console.log("get all vehicles : ", sessionToken);
+					getallvehicles();
+				} else {
+					navigation.navigate("Login");
+				}
+			} catch (error) {
+				console.log("Error:", error);
+			}
+		};
+
+		// Check session validity initially
+		checkSessionValidity();
+		
 	}, []);
+	
 
 	return (
 		<>
-			<BlurView
-				intensity={60}
-				tint="light"
+			<View
 				style={{
 					flex: 1,
 					overflow: "hidden",
@@ -62,18 +74,15 @@ export default function Traffic({ token, navigateTo }) {
 				}}
 			>
 				<View className="mb-6">
-					<Text className="mt-20 p-4 font-bold text-base">My Vehicles</Text>
+					<Text className="mt-8 p-4 font-bold text-base">My Vehicles</Text>
 					<ScrollView
 						horizontal={true}
 						showsHorizontalScrollIndicator={false}
 						className="px-3 space-x-3"
 					>
 						{vehicles.map((vehicle, index) => (
-
 							<TouchableOpacity>
-								<BlurView
-									intensity={60}
-									tint="dark"
+								<View
 									style={{
 										borderTopLeftRadius: 16,
 										borderBottomLeftRadius: 16,
@@ -85,13 +94,10 @@ export default function Traffic({ token, navigateTo }) {
 										justifyContent: "center",
 									}}
 								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/creta.webp")}
-											style={{ height: 130, width: 300 }}
-										/>
-									</Card>
-
+									<Image
+										source={require("../assets/Images/creta.webp")}
+										style={{ height: 130, width: 300 }}
+									/>
 									<View className="justify-between flex-row">
 										<Text
 											style={{
@@ -122,7 +128,7 @@ export default function Traffic({ token, navigateTo }) {
 											{vehicle.plateNumber}
 										</Text>
 									</View>
-								</BlurView>
+								</View>
 							</TouchableOpacity>
 						))}
 					</ScrollView>
@@ -130,9 +136,7 @@ export default function Traffic({ token, navigateTo }) {
 
 				{/*/////////////////////////////////////////////////////////////////////////////////////////////// */}
 
-				<BlurView
-					intensity={0}
-					tint="dark"
+				<View
 					style={{
 						borderTopRightRadius: 32,
 						borderTopLeftRadius: 32,
@@ -145,9 +149,7 @@ export default function Traffic({ token, navigateTo }) {
 				>
 					<View className="rounded-3xl overflow-hidden ">
 						<ScrollView showsVerticalScrollIndicator={false}>
-							<BlurView
-								intensity={70}
-								tint="light"
+							<View
 								style={{
 									borderTopLeftRadius: 32,
 									borderBottomLeftRadius: 16,
@@ -155,7 +157,7 @@ export default function Traffic({ token, navigateTo }) {
 									borderBottomRightRadius: 16,
 									overflow: "hidden",
 									padding: 8,
-									backgroundColor: "#0062f5ff",
+									backgroundColor: "#9ac3ffff",
 									justifyContent: "center",
 									// marginTop: 12,
 								}}
@@ -165,7 +167,7 @@ export default function Traffic({ token, navigateTo }) {
 								</Text>
 
 								<View className="flex-row justify-evenly space-x-4">
-									<TouchableOpacity>
+									<TouchableOpacity onPress={()=>{navigation.navigate("MyVehicles");}}>
 										<View className="bg-primaryBlue rounded-lg p-4 ">
 											<Ionicons
 												name="language"
@@ -210,9 +212,9 @@ export default function Traffic({ token, navigateTo }) {
 										<Text className="text-center p-1">Contracts</Text>
 									</TouchableOpacity>
 								</View>
-							</BlurView>
+							</View>
 
-							<BlurView
+							<View
 								intensity={70}
 								tint="light"
 								style={{
@@ -222,7 +224,7 @@ export default function Traffic({ token, navigateTo }) {
 									borderBottomRightRadius: 16,
 									overflow: "hidden",
 									padding: 8,
-									backgroundColor: "#0062f5ff",
+									backgroundColor: "#9ac3ffff",
 									justifyContent: "center",
 									marginTop: 12,
 								}}
@@ -238,9 +240,9 @@ export default function Traffic({ token, navigateTo }) {
 									</Text>
 									<Text className="p-2 ">3. ₹500 • No parking zone</Text>
 								</View>
-							</BlurView>
+							</View>
 
-							<BlurView
+							<View
 								intensity={70}
 								tint="light"
 								style={{
@@ -250,7 +252,7 @@ export default function Traffic({ token, navigateTo }) {
 									borderBottomRightRadius: 16,
 									overflow: "hidden",
 									padding: 8,
-									backgroundColor: "#0062f5ff",
+									backgroundColor: "#9ac3ffff",
 									justifyContent: "center",
 									marginTop: 12,
 									marginBottom: 42,
@@ -269,11 +271,11 @@ export default function Traffic({ token, navigateTo }) {
 									</Text>
 									<Text className="p-2 ">3. ₹500 • No parking zone</Text>
 								</View>
-							</BlurView>
+							</View>
 						</ScrollView>
 					</View>
-				</BlurView>
-			</BlurView>
+				</View>
+			</View>
 
 			<StatusBar style="dark" />
 		</>

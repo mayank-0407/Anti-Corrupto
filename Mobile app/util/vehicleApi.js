@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL = "http://192.168.18.179:3000";
 
 export const getUserVehicles = async (userId) => {
     try {
@@ -10,6 +10,7 @@ export const getUserVehicles = async (userId) => {
         throw error;
     }
 };
+
 export const getOneVehicles = async (vehicleId) => {
     try {
         const response = await axios.get(`${API_URL}/vehicle/view/${vehicleId}`);

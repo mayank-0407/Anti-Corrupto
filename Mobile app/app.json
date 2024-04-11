@@ -1,36 +1,35 @@
 {
   "expo": {
-    "name": "Anti-Corrupto",
-    "slug": "Anti-Corrupto",
+    "name": "my-app",
+    "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/Anti-Corrupto.png",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/Anti-Corrupto.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.samivo.myapp"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Anti-Corrupto.png",
-        "backgroundColor": "#000000"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.samivo.AntiCorrupto"
+      "package": "com.samivo.myapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "2933ffd7-87a4-4b69-a4c3-7eb499ae6b49"
-      }
-    }
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }

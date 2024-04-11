@@ -11,6 +11,7 @@ import {
 	Modal,
 	Pressable,
 	TouchableHighlight,
+	Dimensions,
 } from "react-native";
 import {
 	Ionicons,
@@ -18,44 +19,20 @@ import {
 	AntDesign,
 	Feather,
 	Octicons,
+	FontAwesome5,
+	FontAwesome6,
+	MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { Carousel, Card } from "react-native-ui-lib";
+// import { Carousel, Card } from "react-native-ui-lib";
 import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import Traffic from "./Traffic";
-import { BlurView } from "expo-blur";
 
 export default function HomePage({ route, navigation }) {
-	const items = [1, 2, 3, 4];
-
-	const renderItem = (item, index) => {
-		return (
-			<View
-				key={index}
-				style={{
-					justifyContent: "center",
-					alignItems: "center",
-				}}
-			>
-				<Card>
-					<Card.Section
-						content={[{ text: `Card ${item}`, text70: true, white: true }]}
-						contentStyle={{
-							alignItems: "center",
-							backgroundColor: "green",
-							padding: 12,
-							width: 370,
-							height: 200,
-							justifyContent: "center",
-						}}
-					/>
-				</Card>
-			</View>
-		);
-	};
+	const width = Dimensions.get("window").width;
 
 	return (
 		<>
@@ -63,7 +40,7 @@ export default function HomePage({ route, navigation }) {
 				source={require("../assets/Images/light.png")}
 				resizeMode="cover"
 				className="flex-1"
-				opacity={0.85}
+				opacity={0.25}
 			>
 				<View className="flex-1">
 					<View className="p-4 pt-12 flex-row justify-between items-center ">
@@ -111,267 +88,155 @@ export default function HomePage({ route, navigation }) {
 						<TextInput placeholder="Search" />
 					</View>
 
-					<BlurView intensity={65} tint="light">
-						<Text className=" text-base font-bold mx-2 p-4 ">Choose a category</Text>
+					<View className="flex-1 items-start justify-center">
+						<Text className=" text-md text-gray-600 font-bold mx-2 p-4 ">
+							Choose a category
+						</Text>
 
 						<ScrollView
-							className=" space-y-5 px-4"
+							className="space-y-2 px-1 flex-1 mt-[-10]"
 							showsVerticalScrollIndicator={false}
-							// fadingEdgeLength={200}
+							fadingEdgeLength={200}
 						>
 							<TouchableOpacity
 								onPress={() => {
 									navigation.navigate("Traffic");
 								}}
+								className=" flex-row justify-between items-center p-4 m-4 border-gray-400 rounded-lg bg-white"
+								style={{ elevation: 3, width: "92%" }}
 							>
-								<BlurView
-									intensity={77}
-									tint="light"
-									style={{
-										borderTopLeftRadius: 16,
-										borderBottomLeftRadius: 16,
-										borderTopRightRadius: 16,
-										borderBottomRightRadius: 16,
-										overflow: "hidden",
-										padding: 8,
-										backgroundColor: "#0080a0ff",
-										justifyContent: "center",
-									}}
-								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/traffic.jpg")}
-											style={{ height: 170 }}
-										/>
-									</Card>
+								<View className="flex-row justify-between items-center space-x-4">
+									<FontAwesome5 name="car" size={24} color="rgb(31 41 55)" />
+									<Text className="font-bold text-gray-700 text-base">Traffic</Text>
+								</View>
 
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 120, 194, 0.577)",
-											textShadowRadius: 14,
-											// borderWidth: 2,
-										}}
-									>
-										Traffic
-									</Text>
-								</BlurView>
+								<MaterialIcons
+									name="arrow-forward-ios"
+									size={18}
+									color="rgb(31 41 55)"
+								/>
 							</TouchableOpacity>
 
-							<TouchableOpacity>
-								<BlurView
-									intensity={77}
-									tint="light"
-									style={{
-										borderTopLeftRadius: 16,
-										borderBottomLeftRadius: 16,
-										borderTopRightRadius: 16,
-										borderBottomRightRadius: 16,
-										overflow: "hidden",
-										padding: 8,
-										backgroundColor: "#0062f5ff",
-										justifyContent: "center",
-									}}
-								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/land.jpeg")}
-											style={{ height: 170 }}
-										/>
-									</Card>
-
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(0, 52, 194, 0.577)",
-											textShadowRadius: 14,
-											// borderWidth: 2,
-										}}
-									>
-										Land Registry
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Traffic");
+								}}
+								className=" flex-row justify-between items-center p-4 m-4 border-gray-400 rounded-lg bg-white"
+								style={{ elevation: 3, width: "92%" }}
+							>
+								<View className="flex-row justify-between items-center space-x-4">
+									<MaterialIcons name="landscape" size={24} color="rgb(31 41 55)" />
+									<Text className="font-bold text-gray-700 text-base">
+										Land Registery
 									</Text>
-								</BlurView>
+								</View>
+
+								<MaterialIcons
+									name="arrow-forward-ios"
+									size={18}
+									color="rgb(31 41 55)"
+								/>
 							</TouchableOpacity>
 
-							<TouchableOpacity>
-								<BlurView
-									intensity={77}
-									tint="light"
-									style={{
-										borderTopLeftRadius: 16,
-										borderBottomLeftRadius: 16,
-										borderTopRightRadius: 16,
-										borderBottomRightRadius: 16,
-										overflow: "hidden",
-										padding: 8,
-										backgroundColor: "#0000f5ff",
-										justifyContent: "center",
-									}}
-								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/voting.jpeg")}
-											style={{ height: 170 }}
-										/>
-									</Card>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Traffic");
+								}}
+								className=" flex-row justify-between items-center p-4 m-4 border-gray-400 rounded-lg bg-white"
+								style={{ elevation: 3, width: "92%" }}
+							>
+								<View className="flex-row justify-between items-center space-x-4">
+									<MaterialCommunityIcons name="vote" size={24} color="rgb(31 41 55)" />
+									<Text className="font-bold text-gray-700 text-base">Voting</Text>
+								</View>
 
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(81, 0, 194, 0.577)",
-											textShadowRadius: 14,
-											// borderWidth: 2,
-										}}
-									>
-										Voting
-									</Text>
-								</BlurView>
+								<MaterialIcons
+									name="arrow-forward-ios"
+									size={18}
+									color="rgb(31 41 55)"
+								/>
 							</TouchableOpacity>
 
-							<TouchableOpacity>
-								<BlurView
-									intensity={77}
-									tint="light"
-									style={{
-										borderTopLeftRadius: 16,
-										borderBottomLeftRadius: 16,
-										borderTopRightRadius: 16,
-										borderBottomRightRadius: 16,
-										overflow: "hidden",
-										padding: 8,
-										backgroundColor: "#8f4a00ff",
-										justifyContent: "center",
-									}}
-								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/contract.jpeg")}
-											style={{ height: 170 }}
-										/>
-									</Card>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Traffic");
+								}}
+								className=" flex-row justify-between items-center p-4 m-4 border-gray-400 rounded-lg bg-white"
+								style={{ elevation: 3, width: "92%" }}
+							>
+								<View className="flex-row justify-between items-center space-x-4 pl-1">
+									<FontAwesome6 name="file-contract" size={23} color="rgb(31 41 55)" />
+									<Text className="font-bold text-gray-700 text-base">Contracts</Text>
+								</View>
 
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(194, 110, 0, 0.577)",
-											textShadowRadius: 14,
-											// borderWidth: 2,
-										}}
-									>
-										Contracts
-									</Text>
-								</BlurView>
+								<MaterialIcons
+									name="arrow-forward-ios"
+									size={18}
+									color="rgb(31 41 55)"
+								/>
 							</TouchableOpacity>
 
-							<TouchableOpacity>
-								<BlurView
-									intensity={77}
-									tint="light"
-									style={{
-										borderTopLeftRadius: 16,
-										borderBottomLeftRadius: 16,
-										borderTopRightRadius: 16,
-										borderBottomRightRadius: 16,
-										overflow: "hidden",
-										padding: 8,
-										backgroundColor: "#f50014ff",
-										justifyContent: "center",
-										marginBottom: 250,
-									}}
-								>
-									<Card>
-										<Card.Image
-											source={require("../assets/Images/funds.jpeg")}
-											style={{ height: 170 }}
-										/>
-									</Card>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.navigate("Traffic");
+								}}
+								className=" flex-row justify-between items-center p-4 m-4 border-gray-400 rounded-lg bg-white"
+								style={{ elevation: 3, width: "92%" }}
+							>
+								<View className="flex-row justify-between items-center space-x-4 pl-1">
+									<FontAwesome5 name="landmark" size={21} color="rgb(31 41 55)" />
+									<Text className="font-bold text-gray-700 text-base">Funds</Text>
+								</View>
 
-									<Text
-										style={{
-											textAlign: "center",
-											padding: 8,
-											paddingTop: 10,
-											color: "white",
-											fontSize: 18,
-											fontWeight: "bold",
-											textShadowColor: "rgba(194, 0, 52, 0.577)",
-											textShadowRadius: 14,
-											// borderWidth: 2,
-										}}
-									>
-										Funds
-									</Text>
-								</BlurView>
+								<MaterialIcons
+									name="arrow-forward-ios"
+									size={18}
+									color="rgb(31 41 55)"
+								/>
 							</TouchableOpacity>
 						</ScrollView>
-					</BlurView>
+					</View>
 
-					<View className="flex-1"></View>
+					{/* <View className="flex-1"></View> */}
 				</View>
 			</ImageBackground>
+
 			<StatusBar style="dark" />
-			<View className=" m-2 absolute bottom-1 right-1 left-1">
-				<BlurView
-					intensity={80}
-					tint="light"
-					style={{
-						borderTopLeftRadius: 16,
-						borderBottomLeftRadius: 16,
-						borderTopRightRadius: 16,
-						borderBottomRightRadius: 16,
-						overflow: "hidden",
-						backgroundColor: "#ffffff85",
-						justifyContent: "center",
-						flexDirection: "row",
-						justifyContent: "space-evenly",
-						elevation: 10,
+
+			<View
+				className="border border-gray-200 flex-row justify-evenly m-2 bg-white absolute bottom-1 right-1 overflow-hidden left-1"
+				style={{
+					borderTopLeftRadius: 16,
+					borderBottomLeftRadius: 16,
+					borderTopRightRadius: 16,
+					borderBottomRightRadius: 16,
+					elevation: 10,
+				}}
+			>
+				<TouchableOpacity
+					className=" p-2 px-6 items-center"
+					onPress={() => {
+						navigation.navigate("Home");
 					}}
 				>
-					<TouchableOpacity
-						className=" p-2 px-6 items-center"
-						onPress={() => {
-							navigation.navigate("Home");
-						}}
-					>
-						<Ionicons name="home" size={26} color={"#0062f5"} />
-						<Text className="text-primaryBlue text-xs">Home</Text>
-					</TouchableOpacity>
+					<Ionicons name="home" size={26} color={"#0062f5"} />
+					<Text className="text-primaryBlue text-xs">Home</Text>
+				</TouchableOpacity>
 
-					<TouchableOpacity
-						className=" p-2 px-6 items-center"
-						onPress={() => {
-							navigation.navigate("Services");
-						}}
-					>
-						<Octicons name="apps" size={26} color={"#454545"} />
-						<Text className="text-[#454545] text-xs">Services</Text>
-					</TouchableOpacity>
+				<TouchableOpacity
+					className=" p-2 px-6 items-center"
+					onPress={() => {
+						navigation.navigate("Services");
+					}}
+				>
+					<Octicons name="apps" size={26} color={"#454545"} />
+					<Text className="text-[#454545] text-xs">Services</Text>
+				</TouchableOpacity>
 
-					<TouchableOpacity className=" p-2 px-6 items-center">
-						<Ionicons name="person" size={26} color={"#454545"} />
-						<Text className="text-[#454545] text-xs">Menu</Text>
-					</TouchableOpacity>
-				</BlurView>
+				<TouchableOpacity className=" p-2 px-6 items-center">
+					<Ionicons name="person" size={26} color={"#454545"} />
+					<Text className="text-[#454545] text-xs">Menu</Text>
+				</TouchableOpacity>
 			</View>
 		</>
 	);
