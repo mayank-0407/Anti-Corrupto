@@ -21,7 +21,7 @@ import {
 } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { Carousel, Card, Switch } from "react-native-ui-lib";
+// import { Carousel, Card, Switch } from "react-native-ui-lib";
 import Colors from "../Components/Colors";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";

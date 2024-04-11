@@ -13,6 +13,7 @@ export async function getSessionToken() {
 	try {
 		const sessionToken = await SecureStore.getItemAsync("sessionToken");
 		if (sessionToken) {
+			console.log("Session token retrieved successfully:", sessionToken);
 			return sessionToken;
 		} else {
 			console.log("No session token found.");

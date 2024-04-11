@@ -12,19 +12,6 @@ import { loginUser } from "../util/Api";
 import Colors from "../Components/Colors";
 
 export default function LoginSplash({ navigation }) {
-	// const handleLogin = async (values) => {
-	// 	try {
-	// 		const response = await loginUser(values);
-	// 		console.log("LoginScreentoken:", response.session.sessionToken);
-
-	// 		if (response.session.sessionToken) {
-	// 			navigation.navigate("Home", { userId: response.session.sessionToken });
-	// 			// navigation.navigate({userId: response.session.sessionToken});
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
 
 	return (
 		<ImageBackground
