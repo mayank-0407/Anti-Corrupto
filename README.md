@@ -25,3 +25,6 @@ Here we make our pre final year project
 - PORT=3000
 
 
+# How to Run Ml Model
+- pip3 install -r requirements.txt
+- python main.py
