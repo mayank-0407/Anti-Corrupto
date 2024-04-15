@@ -4,14 +4,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { images } from "./assets/images";
 
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
+import Login from "./Pages/Auth/Login";
+import Signup from "./Pages/Auth/Signup";
 import Dashboard from "./Pages/Dashboard";
-import VehiclesPage from "./Pages/Traffic/VehiclesPage";
-import ViewVehicle from "./Pages/Traffic/ViewVehicle";
-import VehicleChallan from "./Pages/Traffic/VehicleChallan";
-import AddVehicle from "./Pages/Traffic/AddVehicle";
-import AddVehicleChallan from "./Pages/Traffic/AddVehicleChallan";
+import VehiclesPage from "./Pages/Traffic/Vehicle/VehiclesPage";
+import ViewVehicle from "./Pages/Traffic/Vehicle/ViewVehicle";
+import VehicleChallan from "./Pages/Traffic/Challan/VehicleChallan";
+import AddVehicle from "./Pages/Traffic/Vehicle/AddVehicle";
+import AddVehicleChallan from "./Pages/Traffic/Challan/AddVehicleChallan";
 
 export default function App() {
   return (

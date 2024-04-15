@@ -11,9 +11,10 @@ const createChallan = async (req, res) => {
 
     const challan = await prisma.challan.create({
       data: {
-        amount:amt,
+        fine:amt,
         reason,
         vehicleId,
+        location: "Delhi",
       }
     });
 
@@ -41,7 +42,7 @@ const getChallanById = async (req, res) => {
     const challan = await prisma.challan.findUnique({
       where: { id }
     });
-    if (!challan) {``
+    if (!challan) {
       res.status(404).json({ error: 'Challan not found' });
     } else {
       res.status(200).json(challan);

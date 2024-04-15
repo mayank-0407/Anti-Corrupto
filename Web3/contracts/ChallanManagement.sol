@@ -37,9 +37,17 @@ contract ChallanManagement {
         owner = msg.sender;
     }
 
+    function parseAndConvert(string memory input) public pure returns (uint256) {
+        uint256 result;
+        assembly {
+            result := mload(add(input, 32))
+        }
+        return result;
+    }
+
     function issueChallan(
-        uint256 _vehicleId,
-        uint256 _amount,
+        string memory _vehicleId,
+        string memory _amount,
         string memory _reason,
         string memory _location
     ) public {
@@ -47,12 +55,15 @@ contract ChallanManagement {
             keccak256(abi.encodePacked(msg.sender, block.timestamp))
         );
 
+        uint256 __vehicleId = parseAndConvert(_vehicleId);
+        uint256 __amount = parseAndConvert(_amount);
+
         uint256 issueDate = timeCall();
 
         Challan memory newChallan = Challan(
             challanId,
-            _vehicleId,
-            _amount,
+            __vehicleId,
+            __amount,
             false,
             _reason,
             issueDate,
@@ -65,8 +76,8 @@ contract ChallanManagement {
         emit ChallanIssued(
             msg.sender,
             challanId,
-            _vehicleId,
-            _amount,
+            __vehicleId,
+            __amount,
             _reason,
             _location,
             issueDate

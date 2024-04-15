@@ -22,12 +22,14 @@ import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Wallet from "./Metamask/WalleConnect";
+import VehicleProvider from "./Context/VehicleContext";
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
 
 	return (
 		<Wallet>
+			<VehicleProvider>
 			<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName="Home"
@@ -44,6 +46,7 @@ export default function App() {
 					<Stack.Screen name="Contract" component={vehicleContract} />
 				</Stack.Navigator>
 			</NavigationContainer>
+			</VehicleProvider>
 		</Wallet>
 	);
 }

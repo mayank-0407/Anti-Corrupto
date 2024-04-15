@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { challancontractABI, challancontractAddress } from "../Utils/ethers/constants";
+import { ethers } from "ethers";
 
 export const ChallanContext = React.createContext();
 
 const { ethereum } = window;
 
 const ChallanProvider = ({ children }) => {
-
     const [formData, setFormData] = useState({
         challanId: "",
         vehicleId: "",
@@ -49,61 +49,53 @@ const ChallanProvider = ({ children }) => {
         }
     };
 
+    const getChallanContract = async () => {
+        if (!ethereum) return alert("Please install MetaMask.");
+
+        const provider = new ethers.BrowserProvider(window.ethereum);
+        const signer = await provider.getSigner();
+        const challanContract = new ethers.Contract(
+            challancontractAddress,
+            challancontractABI,
+            signer
+        );
+
+        return challanContract;
+    };
+
     const addChallanToBlockchain = async (formData) => {
+        console.log("I am jod");
         try {
-            if (window.ethereum) {
-                const {
-                    challanId,
-                    vehicleId,
-                    issueDate,
-                    paid,
-                    amount,
-                    location,
-                    reason,
-                } = formData;
-            }
-
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const challanContract = new ethers.Contract(
-                challancontractAddress,
-                challancontractABI,
-                signer
-            );
-
-            console.log(challanContract);
-
-            const challanTransaction = await challanContract.addChallan(
-                challanId,
+            const challanContract = await getChallanContract();
+            
+            const {
                 vehicleId,
-                amount,
+                issueDate,
                 paid,
                 amount,
-                reason,
-                issueDate,
                 location,
+                reason,
+            } = formData;
+
+            const challanTransaction = await challanContract.issueChallan(
+                vehicleId,
+                amount,
+                reason,
+                location
             );
             setIsLoading(true);
             console.log(`Loading - ${challanTransaction.hash}`);
             await challanTransaction.wait();
             console.log(`Success - ${challanTransaction.hash}`);
             setIsLoading(false);
-
         } catch (err) {
             console.log(err);
         }
-        console.log(err);
-    }
+    };
 
     const getUserChallansfunc = async (account) => {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            const signer = provider.getSigner();
-            const challanContract = new ethers.Contract(
-                challancontractAddress,
-                challancontractABI,
-                signer
-            );
+            const challanContract = await getChallanContract();
 
             const challans = await challanContract.getUserChallans(account);
             console.log("your challans", challans);
@@ -120,14 +112,15 @@ const ChallanProvider = ({ children }) => {
             console.log(structuredTransactions);
             console.log("In get All Transaction");
             setTransactions(structuredTransactions);
-
         } catch (err) {
             console.log(err);
         }
-    }
+    };
 
     const payChallan = async (formData) => {
         try {
+            const challanContract = await getChallanContract();
+
             const {
                 challanId,
                 vehicleId,
@@ -138,13 +131,6 @@ const ChallanProvider = ({ children }) => {
                 reason,
             } = formData;
 
-            const provider = new ethers.BrowserProvider(window.ethereum);
-            const signer = await provider.getSigner();
-            const challanContract = new ethers.Contract(
-                challancontractAddress,
-                challancontractABI,
-                signer
-            );
             const parsedAmount = ethers.parseEther(amount);
 
             await ethereum.request({
@@ -169,15 +155,23 @@ const ChallanProvider = ({ children }) => {
         } catch (err) {
             console.log(err);
         }
-    }
-    
+    };
 
     return (
-        <ChallanContext.Provider value={{ formData, handleChange, payChallan, addChallanToBlockchain, checkIfWalletIsConnect, getUserChallansfunc, challanCount }}>
+        <ChallanContext.Provider
+            value={{
+                formData,
+                handleChange,
+                payChallan,
+                addChallanToBlockchain,
+                checkIfWalletIsConnect,
+                getUserChallansfunc,
+                challanCount,
+            }}
+        >
             {children}
         </ChallanContext.Provider>
     );
-}
+};
 
 export default ChallanProvider;
-

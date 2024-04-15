@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../../components/Navbar";
 import Footer from "../../../components/footer";
@@ -7,31 +7,27 @@ import { fetchUserDetails } from "../../../Utils/authAPI";
 import { addChallan } from "../../../Utils/challanApi";
 import { ChallanContext } from "../../../context/ChallanContext";
 
-const {
-  addChallanToBlockchain,
-  checkIfWalletIsConnect,
-  formData,
-  getUserChallansfunc,
-  payChallan
-} = useContext(ChallanContext);
-
-const navigate = useNavigate();
 
 const AddVehicleChallan = () => {
+  const {
+    formData, handleChange, payChallan, addChallanToBlockchain, checkIfWalletIsConnect, getUserChallansfunc, challanCount
+  } = useContext(ChallanContext);
+  const navigate = useNavigate();
   const [issueDate, setIssueDate] = useState("");
   const [amount, setAmount] = useState(0.0);
   const [reason, setReason] = useState("");
   const [status, setStatus] = useState(false);
   const { vehicleId } = useParams();
+  const [ challanId, setChallanId ] = useState("");
   const [isLoggedd, setisLoggedd] = useState(false);
 
   const handleAddChallan = async (e) => {
     e.preventDefault();
     const amt = parseFloat(amount);
     handleChallanData();
-    const challanData = { vehicleId, amt, reason, location, paid };
+    const challanData = { vehicleId, amt, reason, location, paid:status };
+
     try {
-      
       const challan = await addChallan(challanData);
       
       if(challan.status === 200){
@@ -39,14 +35,13 @@ const AddVehicleChallan = () => {
       }else{
         console.log(challan.data.details);
       }
-      
     } catch (error) {
       console.error("Error adding challan:", error);
     }
   };
-  handleChallanData = async () => {
+  const handleChallanData = async () => {
     let challanFormData = {
-      challanId: issueDate,
+      challanId,
       vehicleId: vehicleId,
       issueDate: issueDate,
       paid: status,
@@ -72,8 +67,6 @@ const AddVehicleChallan = () => {
     console.log("print vehicles added: ", formData);
     console.log(ChallanContext);
   }, []);
-
-  
 
    
   return (
