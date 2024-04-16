@@ -16,20 +16,18 @@ import MenuScreen from "./Screens/MenuScreen";
 import Services from "./Screens/Services";
 import Report from "./Screens/Report";
 import Traffic from "./Screens/Traffic";
-import MyVehicles from "./Screens/MyVehicles";
+import AddVehicles from "./Screens/AddVehicles";
 import vehicleContract from "./Metamask/vehicleContract";
 import Colors from "./Components/Colors";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Wallet from "./Metamask/WalleConnect";
-import VehicleProvider from "./Context/VehicleContext";
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
 
 	return (
 		<Wallet>
-			<VehicleProvider>
 			<NavigationContainer>
 				<Stack.Navigator
 					initialRouteName="Home"
@@ -41,12 +39,11 @@ export default function App() {
 					<Stack.Screen name="Home" component={HomePage} />
 					<Stack.Screen name="Services" component={Services} />
 					<Stack.Screen name="MenuScreen" component={MenuScreen} />
-					<Stack.Screen name="MyVehicles" component={MyVehicles} />
+					<Stack.Screen name="AddVehicles" component={AddVehicles} />
 					<Stack.Screen name="Traffic" component={Traffic} />
-					<Stack.Screen name="Contract" component={vehicleContract} />
+					{/* <Stack.Screen name="Contract" component={vehicleContract} /> */}
 				</Stack.Navigator>
 			</NavigationContainer>
-			</VehicleProvider>
 		</Wallet>
 	);
 }

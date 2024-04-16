@@ -13,8 +13,7 @@ module.exports = {
 		"./Screens/Services.{js,jsx,ts,tsx}",
 		"./Screens/Report.{js,jsx,ts,tsx}",
 		"./Screens/Traffic.{js,jsx,ts,tsx}",
-		"./Screens/MyVehicles.{js,jsx,ts,tsx}",
-		"./Metamask/vehicleContract.{js,jsx,ts,tsx}",
+		"./Screens/AddVehicles.{js,jsx,ts,tsx}",
 	],
 	theme: {
 		extend: {

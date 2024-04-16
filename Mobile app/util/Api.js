@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.18.33:3000/auth";
+const API_URL = "http://192.168.18.179:3000/auth";
 
 export const signUpUser = async (userData) => {
 	console.log(userData);
@@ -43,9 +43,12 @@ export const isSessionValid = async (sessionId) => {
 		const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
 		if (response.status == 200) {
 			return true;
-		} else return false;
+		} else {
+			console.log("Session timed out");
+			return false;
+		}
 	} catch (error) {
-		console.log(error);
+		console.log("Session timed out",error);
 		return false;
 	}
 };

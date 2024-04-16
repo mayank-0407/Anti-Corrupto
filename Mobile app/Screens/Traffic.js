@@ -81,7 +81,7 @@ export default function Traffic({ navigation }) {
 						className="px-3 space-x-3"
 					>
 						{vehicles.map((vehicle, index) => (
-							<TouchableOpacity>
+							<TouchableOpacity key={index}>
 								<View
 									style={{
 										borderTopLeftRadius: 16,
