@@ -47,10 +47,10 @@ const VehicleProvider = ({ children }) => {
   };
 
   const getUserVehiclesfunc = async (tempAddress, vehicleContract) => {
-    console.log("in checkIfWalletIsConnect Connected:", tempAddress);
+    // console.log("in checkIfWalletIsConnect Connected:", tempAddress);
     try {
       const availableVehicles = await vehicleContract.getUserVehicles(tempAddress);
-      console.log("available vehicles : ", availableVehicles);
+      // console.log("available vehicles : ", availableVehicles);
 
       const structuredTransactions = availableVehicles.map((transaction) => ({
         vehicleId: transaction.vehicleId,
@@ -62,8 +62,8 @@ const VehicleProvider = ({ children }) => {
         pollutionValidity: transaction.pollutionValidity,
       }));
 
-      console.log(structuredTransactions);
-      console.log("In get All Transaction");
+      // console.log(structuredTransactions);
+      // console.log("In get All Transaction");
       setTransactions(structuredTransactions);
     } catch (error) {
       console.log(error);
@@ -91,8 +91,8 @@ const VehicleProvider = ({ children }) => {
   const checkIfVehiclesExists = async () => {
     try {
       const vehicleContract = await getContractInstance();
-      console.log(vehicleContract);
-      console.log("In Check Transaction");
+      // console.log(vehicleContract);
+      // console.log("In Check Transaction");
       const currentvehicleCount = await vehicleContract.getVehicleCount();
 
       window.localStorage.setItem("vehicleCount", currentvehicleCount);
@@ -115,7 +115,7 @@ const VehicleProvider = ({ children }) => {
         pollutionValidity,
       } = formData;
 
-      console.log(vehicleContract);
+      // console.log(vehicleContract);
 
       const transactionHash = await vehicleContract.addVehicle(
         vehicleId,
@@ -135,7 +135,7 @@ const VehicleProvider = ({ children }) => {
       
     } catch (error) {
       console.log(error);
-      throw new Error("No ethereum object");
+      // throw new Error("No ethereum object");
     }
   };
 
@@ -186,18 +186,18 @@ const transferLandfunc = async (formData) => {
             },
           ],
         });
-        console.log("parsedAmount : ", parsedAmount);
+        // console.log("parsedAmount : ", parsedAmount);
 
         const transactionHash = await landContract.transferLand(
           landId,
           newOwnerAddress,
           transferAmount
         );
-        console.log("Error aya error");
+        // console.log("Error aya error");
         setIsLoading(true);
-        console.log(`Loading - ${transactionHash.hash}`);
+        // console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
-        console.log(`Success - ${transactionHash.hash}`);
+        // console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
       } else {
         console.log("No ethereum object");

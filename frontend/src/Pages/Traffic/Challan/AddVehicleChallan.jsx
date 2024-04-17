@@ -7,41 +7,40 @@ import { fetchUserDetails } from "../../../Utils/authAPI";
 import { addChallan } from "../../../Utils/challanApi";
 import { ChallanContext } from "../../../context/ChallanContext";
 
-
 const AddVehicleChallan = () => {
   const {
     formData, handleChange, payChallan, addChallanToBlockchain, checkIfWalletIsConnect, getUserChallansfunc, challanCount
   } = useContext(ChallanContext);
   const navigate = useNavigate();
   const [issueDate, setIssueDate] = useState("");
-  const [amount, setAmount] = useState(0.0);
+  const [amount, setAmount] = useState("");
   const [reason, setReason] = useState("");
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState("");
   const { vehicleId } = useParams();
   const [ challanId, setChallanId ] = useState("");
   const [isLoggedd, setisLoggedd] = useState(false);
 
   const handleAddChallan = async (e) => {
     e.preventDefault();
-    const amt = parseFloat(amount);
+    // const amt = parseFloat(amount);
     handleChallanData();
-    const challanData = { vehicleId, amt, reason, location, paid:status };
+    const challanData = { vehicleId, amount, reason, location, paid:status };
 
-    try {
-      const challan = await addChallan(challanData);
+    // try {
+    //   const challan = await addChallan(challanData);
       
-      if(challan.status === 200){
-        navigate(`/dashboard/vehicle/${vehicleId}/challan`);
-      }else{
-        console.log(challan.data.details);
-      }
-    } catch (error) {
-      console.error("Error adding challan:", error);
-    }
+    //   if(challan.status === 200){
+    //     navigate(`/dashboard/vehicle/${vehicleId}/challan`);
+    //   }else{
+    //     console.log(challan.data.details);
+    //   }
+    // } catch (error) {
+    //   console.error("Error adding challan:", error);
+    // }
   };
   const handleChallanData = async () => {
     let challanFormData = {
-      challanId,
+      challanId:"12345",
       vehicleId: vehicleId,
       issueDate: issueDate,
       paid: status,
@@ -95,7 +94,7 @@ const AddVehicleChallan = () => {
                   Amount
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   id="amount"
                   name="amount"
                   value={amount}

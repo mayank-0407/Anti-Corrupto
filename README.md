@@ -28,3 +28,8 @@ Here we make our pre final year project
 # How to Run Ml Model
 - pip3 install -r requirements.txt
 - python main.py
+
+
+# deploy contracts hardhat
+npx hardhat run scripts/deploy.js --network sepolia
+(get abhi in artifacts)

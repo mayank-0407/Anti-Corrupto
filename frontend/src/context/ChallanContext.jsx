@@ -67,7 +67,7 @@ const ChallanProvider = ({ children }) => {
         console.log("I am jod");
         try {
             const challanContract = await getChallanContract();
-            
+            console.log("I am jod 2")
             const {
                 vehicleId,
                 issueDate,
@@ -77,12 +77,16 @@ const ChallanProvider = ({ children }) => {
                 reason,
             } = formData;
 
+            console.log(challanContract)
+
             const challanTransaction = await challanContract.issueChallan(
                 vehicleId,
                 amount,
                 reason,
                 location
             );
+            console.log("I am jod 2")
+
             setIsLoading(true);
             console.log(`Loading - ${challanTransaction.hash}`);
             await challanTransaction.wait();
