@@ -3,11 +3,15 @@ const prisma = new PrismaClient();
 
 const createVehicle = async (req, res) => {
   try{
+    console.log("hi1");
+    console.log(req.body);
     const { plateNumber, make, model, year, color, ownerId } = req.body;
     if (!plateNumber || !make || !model || !year || !color || !ownerId) {
-      return res.status(400).json({ error: 'Please provide all required fields' });
+      return res.status(203).json({ error: 'Please provide all required fields' });
     }
+    console.log("hi2");
     const yearInInt=parseInt(year);
+    console.log("hi3");
     const vehicle = await prisma.vehicle.create({
       data: {
         plateNumber,
@@ -18,7 +22,7 @@ const createVehicle = async (req, res) => {
         ownerId
       }
     });
-    res.status(200).json(vehicle);
+    res.status(200).json({msg:"Vehicle added successfully"});
   } 
   
   catch (error) {

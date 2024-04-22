@@ -132,6 +132,7 @@ const VehicleProvider = ({ children }) => {
       await transactionHash.wait();
       console.log(`Success - ${transactionHash.hash}`);
       setIsLoading(false);
+      return true;
       
     } catch (error) {
       console.log(error);

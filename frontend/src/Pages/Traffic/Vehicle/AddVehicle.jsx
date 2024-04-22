@@ -30,6 +30,7 @@ const AddVehicle = () => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
+      
     } else {
       setisLoggedd(false);
       navigate("/login");
@@ -50,12 +51,12 @@ const AddVehicle = () => {
       pollutionValidity: year,
     };
     const tempid = addVehicleToBlockchain(tformData);
-    console.log(tempid);
+    return tempid;
   };
 
   const handleAddVehicle = async (e) => {
     e.preventDefault();
-    handleBlockchain();
+    await handleBlockchain();
 
     const myToken = getToken();
     const thisUser = await fetchUserDetails(myToken);
@@ -66,7 +67,7 @@ const AddVehicle = () => {
       model,
       year,
       color,
-      ownerId: myUser,
+      ownerId: thisUser.data.id,
     };
     const res = await addVehicle(vehicleData);
     if (res.status === 200) {

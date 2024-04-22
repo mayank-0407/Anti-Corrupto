@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { challancontractABI, challancontractAddress } from "../Utils/ethers/constants";
 import { ethers } from "ethers";
+import { useParams } from "react-router-dom";
 
 export const ChallanContext = React.createContext();
 
@@ -8,7 +9,7 @@ const { ethereum } = window;
 
 const ChallanProvider = ({ children }) => {
     const [formData, setFormData] = useState({
-        challanId: "",
+        challanId: useParams(),
         vehicleId: "",
         issueDate: "",
         paid: "",
@@ -124,7 +125,7 @@ const ChallanProvider = ({ children }) => {
     const payChallan = async (formData) => {
         try {
             const challanContract = await getChallanContract();
-
+            
             const {
                 challanId,
                 vehicleId,

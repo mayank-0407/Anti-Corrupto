@@ -7,6 +7,6 @@ export const vehiclecontractAddress =
 export const vehiclecontractABI = vehicleabi.abi;
 
 export const challancontractAddress =
-  "0x2199F96CFD2B1406b738748bf60B96A35121BF90";
+  "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 export const challancontractABI = challanabi.abi;
 

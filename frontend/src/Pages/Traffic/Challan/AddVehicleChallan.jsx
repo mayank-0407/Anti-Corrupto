@@ -23,20 +23,20 @@ const AddVehicleChallan = () => {
   const handleAddChallan = async (e) => {
     e.preventDefault();
     // const amt = parseFloat(amount);
-    handleChallanData();
+    const idk=await handleChallanData();
     const challanData = { vehicleId, amount, reason, location, paid:status };
 
-    // try {
-    //   const challan = await addChallan(challanData);
+    try {
+      const challan = await addChallan(challanData);
       
-    //   if(challan.status === 200){
-    //     navigate(`/dashboard/vehicle/${vehicleId}/challan`);
-    //   }else{
-    //     console.log(challan.data.details);
-    //   }
-    // } catch (error) {
-    //   console.error("Error adding challan:", error);
-    // }
+      if(challan.status === 200){
+        navigate(`/dashboard/vehicle/${vehicleId}/challan`);
+      }else{
+        console.log("in add vehicle chalanaasndjansdnaksnd : ",challan.data.error);
+      }
+    } catch (error) {
+      console.error("Error adding challan:", error);
+    }
   };
   const handleChallanData = async () => {
     let challanFormData = {
@@ -50,6 +50,7 @@ const AddVehicleChallan = () => {
     };
     const tempid = addChallanToBlockchain(challanFormData);
     console.log(tempid);
+    return true;
   };
 
   useEffect(() => {

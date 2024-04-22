@@ -4,19 +4,22 @@ const prisma = new PrismaClient();
 // Create a new challan
 const createChallan = async (req, res) => {
   try {
-    const { amt, reason, vehicleId} = req.body;
-    if ( !amt || !reason || !vehicleId) {
-      return res.status(400).json({ error: 'Please provide all required fields' });
+    const { amount, reason, vehicleId} = req.body;
+    console.log("hi1",amount,reason,vehicleId);
+    if ( !amount || !reason || !vehicleId) {
+      return res.status(203).json({ error: 'Please provide all required fields' });
     }
-
+    console.log("hi2");
+    
     const challan = await prisma.challan.create({
       data: {
-        fine:amt,
+        fine:amount,
         reason,
         vehicleId,
         location: "Delhi",
       }
     });
+    console.log("hi3");
 
     res.status(200).json(challan);
   } catch (error) {

@@ -75,7 +75,7 @@ model Insurance {
 model Challan {
   id        String   @id @default(cuid())
   issueDate DateTime @default(now())
-  fine      Float
+  fine      String
   reason    String
   status    Boolean  @default(false)
   vehicle   Vehicle  @relation(fields: [vehicleId], references: [id])

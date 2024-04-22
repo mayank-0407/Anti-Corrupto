@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Challan" ALTER COLUMN "fine" SET DATA TYPE TEXT;

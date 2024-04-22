@@ -12,6 +12,7 @@ import ViewVehicle from "./Pages/Traffic/Vehicle/ViewVehicle";
 import VehicleChallan from "./Pages/Traffic/Challan/VehicleChallan";
 import AddVehicle from "./Pages/Traffic/Vehicle/AddVehicle";
 import AddVehicleChallan from "./Pages/Traffic/Challan/AddVehicleChallan";
+import PayingChallan from "./Pages/Traffic/Challan/PayingChallan";
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/dashboard/vehicle" element={<VehiclesPage />} />
         <Route path="/dashboard/vehicle/view/:vehicleId" element={<ViewVehicle />} />
         <Route path="/dashboard/vehicle/:vehicleId/challan" element={<VehicleChallan />} />
+        <Route path="/dashboard/vehicle/:vehicleId/challan/:challanId" element={<PayingChallan />} />
         <Route path="/dashboard/vehicle/:vehicleId/challan/add" element={<AddVehicleChallan />} />
         <Route path="/dashboard/vehicle/add" element={<AddVehicle />} />
       </Routes>
