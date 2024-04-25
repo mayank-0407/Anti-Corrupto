@@ -48,9 +48,8 @@ function LandDashboard() {
         <p className=" bg-center text-white text-5xl py-20 font-bold drop-shadow-xl">
           <TypeAnimation
             sequence={[
-             
               'Anti - Corruptō',
-              4000, 
+              4000,
               'Anti - Tampering',
               1500,
               'Anti - Fraudulent',
@@ -121,7 +120,7 @@ function LandDashboard() {
           <div className="mx-12 flex flex-row justify-center ">
             <button
               onClick={() => {
-                navigate('/dashboard/land/addland');
+                navigate('/dashboa`rd/land/addland');
               }}
               className="flex flex-row  p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
             >
