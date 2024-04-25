@@ -6,7 +6,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { TypeAnimation } from 'react-type-animation';
 import { setSessionToken, isLogin, getCookie, getToken } from '../../Utils/cookieSetup';
 import { useNavigate } from 'react-router-dom';
-import { LandContext } from '../../context/LandContext';
+// import { LandContext } from '../../context/LandContext';
 import { Link } from 'react-router-dom';
 import { getUserLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
@@ -14,7 +14,7 @@ import HeaderHome from '../../components/HeaderHome';
 
 function LandDashboard() {
   const [isLoggedd, setisLoggedd] = useState(false);
-  const { transactions, checkIfWalletIsConnect } = useContext(LandContext);
+  // const { checkIfWalletIsConnect } = useContext(LandContext);
   const [lands, setLands] = useState([]);
   const [sortBy, setSortBy] = useState('');
 
@@ -27,7 +27,6 @@ function LandDashboard() {
     setLands(tlands);
   };
   useEffect(() => {
-    checkIfWalletIsConnect();
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
@@ -49,9 +48,9 @@ function LandDashboard() {
         <p className=" bg-center text-white text-5xl py-20 font-bold drop-shadow-xl">
           <TypeAnimation
             sequence={[
-              // Same substring at the start will only be typed out once, initially
+             
               'Anti - Corruptō',
-              4000, // wait 1s before replacing "Mice" with "Hamsters"
+              4000, 
               'Anti - Tampering',
               1500,
               'Anti - Fraudulent',
@@ -122,7 +121,7 @@ function LandDashboard() {
           <div className="mx-12 flex flex-row justify-center ">
             <button
               onClick={() => {
-                navigate('/addland');
+                navigate('/dashboard/land/addland');
               }}
               className="flex flex-row  p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
             >
