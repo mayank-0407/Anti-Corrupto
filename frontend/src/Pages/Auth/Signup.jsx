@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { signUpUser } from "../../Utils/authAPI";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signUpUser } from '../../Utils/API/authAPI';
 
 const Signup = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [iserror, setIsError] = useState(false);
-  const [fname, setFName] = useState("");
-  const [lname, setLName] = useState("");
-  const [email, setEmail] = useState("");
+  const [fname, setFName] = useState('');
+  const [lname, setLName] = useState('');
+  const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();``
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
+  ``;
 
   const handleSignup = async (e) => {
     e.preventDefault();
     if (confirmPassword !== password) {
-      console.error("Both Passwords must be same!");
+      console.error('Both Passwords must be same!');
     }
-    
-    const name = fname.concat(" ",lname);
+
+    const name = fname.concat(' ', lname);
     let values = {
       name: name,
       email: email,
@@ -27,11 +28,11 @@ const Signup = () => {
     };
     try {
       const res = await signUpUser(values);
-      if(res.status===200){
-        navigate("/login");
+      if (res.status === 200) {
+        navigate('/login');
         setIsError(true);
         setError(res.msg);
-      } else{
+      } else {
         setIsError(true);
         setError(res.msg);
       }
@@ -55,14 +56,11 @@ const Signup = () => {
             <div className="md:w-1/3 order-2 md:order-1">
               <div className="p-8">
                 <h1 className="text-3xl font-bold mb-4 text-center">Signup</h1>
-                
+
                 <form className="mb-4" onSubmit={handleSignup}>
                   <div className="mb-2 flex">
                     <div className="mr-2 w-1/2">
-                      <label
-                        htmlFor="firstName"
-                        className="block mb-2 text-left font-semibold"
-                      >
+                      <label htmlFor="firstName" className="block mb-2 text-left font-semibold">
                         First Name
                       </label>
                       <input
@@ -76,10 +74,7 @@ const Signup = () => {
                       />
                     </div>
                     <div className=" w-1/2">
-                      <label
-                        htmlFor="firstName"
-                        className="block mb-2 text-left font-semibold"
-                      >
+                      <label htmlFor="firstName" className="block mb-2 text-left font-semibold">
                         Last Name
                       </label>
                       <input
@@ -94,10 +89,7 @@ const Signup = () => {
                     </div>
                   </div>
                   <div className="mb-2">
-                    <label
-                      htmlFor="email"
-                      className="block mb-2 text-left font-semibold"
-                    >
+                    <label htmlFor="email" className="block mb-2 text-left font-semibold">
                       Email
                     </label>
                     <input
@@ -111,10 +103,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="mb-2">
-                    <label
-                      htmlFor="pnumber"
-                      className="block mb-2 text-left font-semibold"
-                    >
+                    <label htmlFor="pnumber" className="block mb-2 text-left font-semibold">
                       Phone Number
                     </label>
                     <input
@@ -128,10 +117,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="mb-2">
-                    <label
-                      htmlFor="password"
-                      className="block mb-2 text-left font-semibold"
-                    >
+                    <label htmlFor="password" className="block mb-2 text-left font-semibold">
                       Password
                     </label>
                     <input
@@ -145,10 +131,7 @@ const Signup = () => {
                     />
                   </div>
                   <div className="mb-4">
-                    <label
-                      htmlFor="confirmPassword"
-                      className="block mb-2 text-left font-semibold"
-                    >
+                    <label htmlFor="confirmPassword" className="block mb-2 text-left font-semibold">
                       Confirm Password
                     </label>
                     <input
@@ -161,24 +144,20 @@ const Signup = () => {
                       className="w-full p-2 border border-gray-300 rounded-2xl mb-2 bg-blue-50 text-sm"
                     />
                   </div>
-                  {iserror?
-                <div class="px-1 my-2 text-sm text-red-500 rounded-lg" role="alert">
-  <span class="font-medium"> {"*"+error} </span> 
-</div>:<></>
-                }
-                  <button
-                    type="submit"
-                    className="bg-blue-800 text-white p-2 w-full rounded-2xl"
-                  >
+                  {iserror ? (
+                    <div class="px-1 my-2 text-sm text-red-500 rounded-lg" role="alert">
+                      <span class="font-medium"> {'*' + error} </span>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  <button type="submit" className="bg-blue-800 text-white p-2 w-full rounded-2xl">
                     Submit
                   </button>
                 </form>
                 <div className="flex items-center justify-center">
                   <p className="mr-2">Already Having an Account?</p>
-                  <button
-                    onClick={() => navigate("/login")}
-                    className="text-blue-800"
-                  >
+                  <button onClick={() => navigate('/login')} className="text-blue-800">
                     Login
                   </button>
                 </div>

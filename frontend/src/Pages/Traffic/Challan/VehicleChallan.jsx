@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
-import { isLogin, logOut, getToken } from "../../../Utils/cookieSetup";
-import { getVehicleChallans } from "../../../Utils/challanApi"; 
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/footer';
+import { isLogin, logOut, getToken } from '../../../Utils/cookieSetup';
+import { getVehicleChallans } from '../../../Utils/API/challanApi';
 
 const VehicleChallan = () => {
   const [isLoggedd, setisLoggedd] = useState(false);
   const [challans, setChallans] = useState([]);
-  const { vehicleId } = useParams(); 
+  const { vehicleId } = useParams();
   const navigate = useNavigate();
 
   const getChallansForVehicle = async () => {
     try {
-      const challansData = await getVehicleChallans(vehicleId); 
+      const challansData = await getVehicleChallans(vehicleId);
       setChallans(challansData);
     } catch (error) {
-      console.error("Error fetching challans:", error);
+      console.error('Error fetching challans:', error);
     }
   };
 
@@ -27,13 +27,17 @@ const VehicleChallan = () => {
       getChallansForVehicle();
     } else {
       setisLoggedd(false);
-      navigate("/login");
+      navigate('/login');
     }
   }, []);
 
   // Filter and sort unpaid and paid challans
-  const unpaidChallans = challans.filter(challan => !challan.status).sort((a, b) => new Date(a.issueDate) - new Date(b.issueDate));
-  const paidChallans = challans.filter(challan => challan.status).sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate));
+  const unpaidChallans = challans
+    .filter((challan) => !challan.status)
+    .sort((a, b) => new Date(a.issueDate) - new Date(b.issueDate));
+  const paidChallans = challans
+    .filter((challan) => challan.status)
+    .sort((a, b) => new Date(b.issueDate) - new Date(a.issueDate));
 
   return (
     <div>
@@ -58,7 +62,8 @@ const VehicleChallan = () => {
                   <div className="px-6 py-8 md:w-1/2">
                     <h2 className="text-xl font-semibold">Challan ID: {challan.id}</h2>
                     <p className="text-gray-600">
-                      Amount: {challan.amount}, Reason: {challan.reason}, Status: {challan.status ? 'Paid' : 'Unpaid'}
+                      Amount: {challan.amount}, Reason: {challan.reason}, Status:{' '}
+                      {challan.status ? 'Paid' : 'Unpaid'}
                     </p>
                     <Link
                       to={`/dashboard/vehicle/${vehicleId}/challan/${challan.id}`}
@@ -81,7 +86,8 @@ const VehicleChallan = () => {
                   <div className="px-6 py-8 md:w-1/2">
                     <h2 className="text-xl font-semibold">Challan ID: {challan.id}</h2>
                     <p className="text-gray-600">
-                      Amount: {challan.amount}, Reason: {challan.reason}, Status: {challan.status ? 'Paid' : 'Unpaid'}
+                      Amount: {challan.amount}, Reason: {challan.reason}, Status:{' '}
+                      {challan.status ? 'Paid' : 'Unpaid'}
                     </p>
                     <Link
                       to={`/dashboard/vehicle/${vehicleId}/challan/${challan.id}`}

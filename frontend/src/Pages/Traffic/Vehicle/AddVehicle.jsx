@@ -1,28 +1,24 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
-import { addVehicle } from "../../../Utils/vehicleApi";
-import { isLogin, logOut, getToken } from "../../../Utils/cookieSetup";
-import { fetchUserDetails } from "../../../Utils/authAPI";
-import { VehicleContext } from "../../../context/VehicleContext";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/footer';
+import { addVehicle } from '../../../Utils/API/vehicleApi';
+import { isLogin, logOut, getToken } from '../../../Utils/cookieSetup';
+import { VehicleContext } from '../../../context/VehicleContext';
+import { fetchUserDetails } from '../../../Utils/API/authAPI';
 
 const AddVehicle = () => {
-  const [plateNumber, setPlateNumber] = useState("");
-  const [make, setMake] = useState("");``
-  const [model, setModel] = useState("");
-  const [year, setYear] = useState("");
-  const [color, setColor] = useState("");
+  const [plateNumber, setPlateNumber] = useState('');
+  const [make, setMake] = useState('');
+  const [model, setModel] = useState('');
+  const [year, setYear] = useState('');
+  const [color, setColor] = useState('');
   const [pnum, setPnum] = useState(0);
   const [isLoggedd, setisLoggedd] = useState(false);
-  const [myUser, setMyUser] = useState("");
+  const [myUser, setMyUser] = useState('');
 
-  const {
-    currentAccount,
-    addVehicleToBlockchain,
-    checkIfWalletIsConnect,
-    formData,
-  } = useContext(VehicleContext);
+  const { currentAccount, addVehicleToBlockchain, checkIfWalletIsConnect, formData } =
+    useContext(VehicleContext);
 
   const navigate = useNavigate();
 
@@ -30,13 +26,12 @@ const AddVehicle = () => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
-      
     } else {
       setisLoggedd(false);
-      navigate("/login");
+      navigate('/login');
     }
     checkIfWalletIsConnect();
-    console.log("print vehicles added: ", formData);
+    console.log('print vehicles added: ', formData);
     console.log(VehicleContext);
   }, []);
 
@@ -71,9 +66,9 @@ const AddVehicle = () => {
     };
     const res = await addVehicle(vehicleData);
     if (res.status === 200) {
-      navigate("/dashboard/vehicle");
+      navigate('/dashboard/vehicle');
     } else {
-      alert("Error in adding vehicle");
+      alert('Error in adding vehicle');
     }
   };
 
@@ -85,10 +80,7 @@ const AddVehicle = () => {
           <h1 className="text-3xl font-bold mb-4 text-center">Add Vehicle</h1>
           <form onSubmit={handleAddVehicle} className="mb-4">
             <div className="mb-2">
-              <label
-                htmlFor="plateNumber"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="plateNumber" className="block mb-2 text-left font-semibold">
                 Plate Number
               </label>
               <input
@@ -102,10 +94,7 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="make"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="make" className="block mb-2 text-left font-semibold">
                 Make
               </label>
               <input
@@ -119,10 +108,7 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="model"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="model" className="block mb-2 text-left font-semibold">
                 Phone Number
               </label>
               <input
@@ -136,10 +122,7 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="model"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="model" className="block mb-2 text-left font-semibold">
                 Model
               </label>
               <input
@@ -153,10 +136,7 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="year"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="year" className="block mb-2 text-left font-semibold">
                 Year
               </label>
               <input
@@ -170,10 +150,7 @@ const AddVehicle = () => {
               />
             </div>
             <div className="mb-2">
-              <label
-                htmlFor="color"
-                className="block mb-2 text-left font-semibold"
-              >
+              <label htmlFor="color" className="block mb-2 text-left font-semibold">
                 Color
               </label>
               <input
@@ -186,15 +163,12 @@ const AddVehicle = () => {
                 className="w-full p-2 border border-gray-300 rounded-xl mb-2 text-sm bg-gray-200"
               />
             </div>
-            <button
-              type="submit"
-              className="bg-blue-800 text-white p-2 w-full rounded-xl"
-            >
+            <button type="submit" className="bg-blue-800 text-white p-2 w-full rounded-xl">
               Add Vehicle
             </button>
           </form>
           <div className="flex items-center justify-center">
-            <button onClick={() => navigate("/")} className="text-blue-800">
+            <button onClick={() => navigate('/')} className="text-blue-800">
               Back to Home
             </button>
           </div>

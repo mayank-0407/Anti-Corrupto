@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from "react-icons/bs";
+import React, { useState, useEffect } from 'react';
+import { BsArrowLeftCircleFill, BsArrowRightCircleFill } from 'react-icons/bs';
 
 const Carousel = () => {
   const [slide, setSlide] = useState(0);
@@ -7,18 +7,18 @@ const Carousel = () => {
   const data = {
     slides: [
       {
-        src: "./home/anti_2.jpg",
-        alt: "Image 2 for carousel"
+        src: './home/anti_2.jpg',
+        alt: 'Image 2 for carousel',
       },
       {
-        src: "./home/anti_1.jpg",
-        alt: "Image 1 for carousel"
+        src: './home/anti_1.jpg',
+        alt: 'Image 1 for carousel',
       },
       {
-        src: "./home/anti_3.png",
-        alt: "Image 3 for carousel"
-      }
-    ]
+        src: './home/anti_3.png',
+        alt: 'Image 3 for carousel',
+      },
+    ],
   };
 
   const nextSlide = () => {
@@ -35,7 +35,7 @@ const Carousel = () => {
     }, 7000);
 
     return () => clearInterval(interval);
-  }, []); 
+  }, []);
 
   return (
     <div className="relative flex justify-center items-center w-screen h-[400px] transition-all duration-500">
@@ -48,7 +48,11 @@ const Carousel = () => {
           src={item.src}
           alt={item.alt}
           key={idx}
-          className={slide === idx ? "border-0.5 border-gray-500 rounded-md shadow-md w-full h-full" : "hidden"}
+          className={
+            slide === idx
+              ? 'border-0.5 border-gray-500 rounded-md shadow-md w-full h-full'
+              : 'hidden'
+          }
         />
       ))}
       <BsArrowRightCircleFill
@@ -61,8 +65,8 @@ const Carousel = () => {
             key={idx}
             className={
               slide === idx
-                ? "bg-white h-2 w-2 rounded-full border-none outline-none mx-1 shadow-md"
-                : "bg-gray-400 h-2 w-2 rounded-full border-none outline-none mx-1 shadow-md"
+                ? 'bg-white h-2 w-2 rounded-full border-none outline-none mx-1 shadow-md'
+                : 'bg-gray-400 h-2 w-2 rounded-full border-none outline-none mx-1 shadow-md'
             }
             onClick={() => setSlide(idx)}
           ></button>

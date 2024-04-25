@@ -1,20 +1,20 @@
-import React, { useState,useEffect, useRef } from 'react';
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
-import { useNavigate,useParams } from "react-router-dom";
-import { isLogin, logOut } from "../../../Utils/cookieSetup";
-import {getOneVehicles} from "../../../Utils/vehicleApi";
+import React, { useState, useEffect, useRef } from 'react';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/footer';
+import { useNavigate, useParams } from 'react-router-dom';
+import { isLogin, logOut } from '../../../Utils/cookieSetup';
+import { getOneVehicles } from '../../../Utils/API/vehicleApi';
 
 const ViewVehicle = () => {
   const navigate = useNavigate();
   const [isLoggedd, setisLoggedd] = useState(false);
-  const [myVehicle, setMyVehicle] = useState("");
+  const [myVehicle, setMyVehicle] = useState('');
   const { vehicleId } = useParams();
 
-  const getmyvehicle=async ()=>{
-    const myvehicles=await getOneVehicles(vehicleId);
+  const getmyvehicle = async () => {
+    const myvehicles = await getOneVehicles(vehicleId);
     setMyVehicle(myvehicles);
-  }
+  };
 
   useEffect(() => {
     const checkLoginSession = isLogin();
@@ -23,7 +23,7 @@ const ViewVehicle = () => {
       getmyvehicle();
     } else {
       setisLoggedd(false);
-      navigate("/login");
+      navigate('/login');
     }
   }, []);
   return (
@@ -35,11 +35,7 @@ const ViewVehicle = () => {
 
         <div className="flex justify-between">
           <div className="w-1/2">
-            <img
-              src="/vehicle/bike.jpg"
-              alt="Vehicle"
-              className="w-full h-auto rounded"
-            />
+            <img src="/vehicle/bike.jpg" alt="Vehicle" className="w-full h-auto rounded" />
           </div>
 
           <div className="w-1/2 pl-6">

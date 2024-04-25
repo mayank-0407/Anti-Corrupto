@@ -1,51 +1,57 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/footer";
-import { isLogin, logOut,getToken } from "../../../Utils/cookieSetup";
-import { fetchUserDetails } from "../../../Utils/authAPI";
-import { addChallan } from "../../../Utils/challanApi";
-import { ChallanContext } from "../../../context/ChallanContext";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import Navbar from '../../../components/Navbar';
+import Footer from '../../../components/footer';
+import { isLogin, logOut, getToken } from '../../../Utils/cookieSetup';
+import { fetchUserDetails } from '../../../Utils/API/authAPI';
+import { addChallan } from '../../../Utils/API/challanApi';
+import { ChallanContext } from '../../../context/ChallanContext';
 
 const AddVehicleChallan = () => {
   const {
-    formData, handleChange, payChallan, addChallanToBlockchain, checkIfWalletIsConnect, getUserChallansfunc, challanCount
+    formData,
+    handleChange,
+    payChallan,
+    addChallanToBlockchain,
+    checkIfWalletIsConnect,
+    getUserChallansfunc,
+    challanCount,
   } = useContext(ChallanContext);
   const navigate = useNavigate();
-  const [issueDate, setIssueDate] = useState("");
-  const [amount, setAmount] = useState("");
-  const [reason, setReason] = useState("");
-  const [status, setStatus] = useState("");
+  const [issueDate, setIssueDate] = useState('');
+  const [amount, setAmount] = useState('');
+  const [reason, setReason] = useState('');
+  const [status, setStatus] = useState('');
   const { vehicleId } = useParams();
-  const [ challanId, setChallanId ] = useState("");
+  const [challanId, setChallanId] = useState('');
   const [isLoggedd, setisLoggedd] = useState(false);
 
   const handleAddChallan = async (e) => {
     e.preventDefault();
     // const amt = parseFloat(amount);
-    const idk=await handleChallanData();
-    const challanData = { vehicleId, amount, reason, location, paid:status };
+    const idk = await handleChallanData();
+    const challanData = { vehicleId, amount, reason, location, paid: status };
 
     try {
       const challan = await addChallan(challanData);
-      
-      if(challan.status === 200){
+
+      if (challan.status === 200) {
         navigate(`/dashboard/vehicle/${vehicleId}/challan`);
-      }else{
-        console.log("in add vehicle chalanaasndjansdnaksnd : ",challan.data.error);
+      } else {
+        console.log('in add vehicle chalanaasndjansdnaksnd : ', challan.data.error);
       }
     } catch (error) {
-      console.error("Error adding challan:", error);
+      console.error('Error adding challan:', error);
     }
   };
   const handleChallanData = async () => {
     let challanFormData = {
-      challanId:"12345",
+      challanId: '12345',
       vehicleId: vehicleId,
       issueDate: issueDate,
       paid: status,
       amount: amount,
-      location: "Delhi",
+      location: 'Delhi',
       reason: reason,
     };
     const tempid = addChallanToBlockchain(challanFormData);
@@ -60,15 +66,14 @@ const AddVehicleChallan = () => {
       setisLoggedd(true);
     } else {
       setisLoggedd(false);
-      navigate("/login");
+      navigate('/login');
     }
 
     checkIfWalletIsConnect();
-    console.log("print vehicles added: ", formData);
+    console.log('print vehicles added: ', formData);
     console.log(ChallanContext);
   }, []);
 
-   
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
@@ -132,18 +137,12 @@ const AddVehicleChallan = () => {
                   className="w-full p-2 border border-gray-300 rounded-xl mb-2 text-sm bg-gray-200"
                 />
               </div>
-              <button
-                type="submit"
-                className="bg-blue-800 text-white p-2 w-full rounded-xl"
-              >
+              <button type="submit" className="bg-blue-800 text-white p-2 w-full rounded-xl">
                 Add Challan
               </button>
             </form>
             <div className="flex items-center justify-center">
-              <button
-                onClick={() => navigate("/")}
-                className="text-blue-800"
-              >
+              <button onClick={() => navigate('/')} className="text-blue-800">
                 Back to Home
               </button>
             </div>

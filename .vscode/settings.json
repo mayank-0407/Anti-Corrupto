@@ -11,7 +11,7 @@
             },
             {
               "name": "frontend",
-              "commands": ["cd frontend","npm i","npm run dev"]
+              "commands": ["cd frontend","npx prettier --write .","npm i","npm run dev"]
             }
           ]
         }

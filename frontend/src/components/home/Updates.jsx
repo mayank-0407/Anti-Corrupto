@@ -1,91 +1,91 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react';
 
 const UpdatesTab = () => {
   const updates = [
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     {
       id: 1,
-      image: "login.jpg",
-      text: "New notification 1",
+      image: 'login.jpg',
+      text: 'New notification 1',
     },
     // Add other updates here
   ];
@@ -110,7 +110,7 @@ const UpdatesTab = () => {
       const styleSheet = document.styleSheets[0];
       styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
       return () => {
-        container.style.animation = ""; // Clear animation when component unmounts
+        container.style.animation = ''; // Clear animation when component unmounts
         styleSheet.deleteRule(styleSheet.cssRules.length - 1); // Remove the keyframes rule
       };
     }
