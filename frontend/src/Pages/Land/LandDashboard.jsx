@@ -120,7 +120,7 @@ function LandDashboard() {
           <div className="mx-12 flex flex-row justify-center ">
             <button
               onClick={() => {
-                navigate('/dashboa`rd/land/addland');
+                navigate('/dashboard/land/addland');
               }}
               className="flex flex-row  p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
             >
@@ -128,7 +128,7 @@ function LandDashboard() {
             </button>
             <button
               onClick={() => {
-                navigate('/Market');
+                navigate('/dashboard/land/Market');
               }}
               className="flex p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
@@ -139,7 +139,7 @@ function LandDashboard() {
             </button>
             <button
               onClick={() => {
-                navigate('/cases');
+                navigate('/dashboard/landcases');
               }}
               className="flex p-4 px-36 rounded-md w-16 bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
@@ -162,7 +162,7 @@ function LandDashboard() {
           <div>
             <p
               onClick={() => {
-                navigate(`/transfer/${land.landId}`);
+                navigate(`/dashboard/land/transfer/${land.landId}`);
               }}
               className="px-4 pt-4 text-2xl font-bold"
             >
@@ -188,7 +188,8 @@ function LandDashboard() {
               </div>
             </div>
           </div>
-          <Link to={`/transfer/${land.id}`}>
+          <Link to={`/dashboard/land/transfer/${land.id}`}>
+          
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}
               <br></br>

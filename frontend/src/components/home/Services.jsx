@@ -25,7 +25,7 @@ function Services() {
         thislink="/dashboard/land"
       />
       <ServiceIcon iconSrc="./home/fund.png" title="Public Funding" thislink="" />
-      <ServiceIcon iconSrc="./home/tendor.png" title="Public Tendors" thislink="" />
+      <ServiceIcon iconSrc="./home/tendor.png" title="Public Tenders" thislink="" />
       <ServiceIcon iconSrc="servie.svg" title="Public Sewa" thislink="" />
       <ServiceIcon iconSrc="servie.svg" title="Pollution" thislink="" />
       <ServiceIcon iconSrc="servie.svg" title="Insurance" thislink="" />

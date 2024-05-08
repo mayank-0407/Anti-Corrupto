@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Challan" ALTER COLUMN "issueDate" SET DEFAULT CURRENT_TIMESTAMP;

@@ -47,11 +47,11 @@ const AddLand = () => {
       landType: landType,
       ownerId: thisUser.data.id,
     };
-    console.log(formData);
+    // console.log(formData);
     const res = await addLand(formDataDB);
     console.log('Res : ', res);
     if (res.status === 200) {
-      navigate('/dashboard');
+      navigate('/dashboard/land');
     } else {
       console.log(res.data.message);
     }

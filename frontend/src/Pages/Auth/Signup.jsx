@@ -144,8 +144,8 @@ const Signup = () => {
                     />
                   </div>
                   {iserror ? (
-                    <div class="px-1 my-2 text-sm text-red-500 rounded-lg" role="alert">
-                      <span class="font-medium"> {'*' + error} </span>
+                    <div className="px-1 my-2 text-sm text-red-500 rounded-lg" role="alert">
+                      <span className="font-medium"> {'*' + error} </span>
                     </div>
                   ) : (
                     <></>
