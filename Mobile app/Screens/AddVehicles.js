@@ -19,203 +19,131 @@ import { Formik } from "formik";
 import { loginUser, fetchUserDetails } from "../util/Api";
 // import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-// import { AddVehicle } from "../Metamask/vehicleContract";
+import AddvehicleContract from "../Metamask/AddvehicleContract";
+import Web3 from "../Metamask/WalleConnect";
+import { addVehicle } from "../util/vehicleApi";
 
-///////////////////
-
-import {
-	useContractRead,
-	useContractWrite,
-	usePrepareContractWrite,
-} from "wagmi";
-import addVehicleABI from "../Metamask/ABI's/addVehicleABI.json";
-
-////////////////////
 
 export default function AddVehicles({ navigation }) {
-	// const handleaddVehicle = async (values) => {
-	// 	try {
-	// 		const token = getSessionToken();
-	// 		console.log("IN ADD vehicle 1");
-	// 		const thisuser = await fetchUserDetails(token);
-	// 		console.log("IN ADD vehicle 2", thisuser);
-	// 		const userId = thisuser.data.id;
-	// 		values.ownerId = userId;
-	// 		const res = await addVehicle(values);
-	// 		if (res.status === 200) {
-	// 			navigateTo(7);
-	// 		} else {
-	// 			alert("Error in adding vehicle");
-	// 		}
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-	// };
-
-	const [vehicleID, setVehicleID] = useState("");
-	const [phoneNum, setPhoneNum] = useState(0);
-	const [buyDate, setBuyDate] = useState("");
-	const [model, setModel] = useState("");
-	const [plateNum, setPlateNum] = useState("");
-	const [insuranceValidity, setInsuranceValidity] = useState("");
-	const [pollutionValidity, setPollutionValidity] = useState("");
-
-	// Writing to the Contract
-	const { config } = usePrepareContractWrite({
-		address: "0x7a134d5e67e388d7dbdb62491c1c7e1b6374548a",
-		abi: addVehicleABI,
-		functionName: "addVehicle",
-		args: [
-			vehicleID,
-			parseInt(phoneNum),
-			buyDate,
-			model,
-			plateNum,
-			insuranceValidity,
-			pollutionValidity,
-		],
-	});
-
-	const { data, isLoading, isSuccess, write } = useContractWrite(config);
-
-	useEffect(() => {
-		if (isLoading) {
-			console.log("Loading...");
-		} else if (isSuccess) {
-			console.log("Vehicle added successfully", JSON.stringify(data));
-			Alert.alert("Vehicle added successfully.", [
-				{ text: "OK", style: "cancel" },
-			]);
-		}
-	}, [isLoading, isSuccess, data]);
 
 	return (
-		<View className="flex-1">
-			<Formik
-				initialValues={{
-					vehicleID: "",
-					phoneNum: "",
-					buyDate: "",
-					model: "",
-					plateNum: "",
-					insuranceValidity: "",
-					pollutionValidity: "",
-				}}
-				onSubmit={(values) => {
-					// navigation.navigate("Contract");
-					console.log(values);
+		<Web3>
+			<View className="flex-1">
+				<Formik
+					initialValues={{
+						vehicleID: "",
+						year: 0,
+						make: "",
+						model: "",
+						plateNumber: "",
+						color: "",
+						insuranceValidity: "",
+						pollutionValidity: "",
+					}}
+					onSubmit={(values) => {
+						// navigation.navigate("Contract");
+						// console.log(values);
+					}}
+				>
+					{({ handleChange, handleSubmit, values, touched, errors }) => (
+						<View className=" flex-1 flex-col justify-between items-center w-full h-full bg-white p-3">
+							<View className=" py-24 ">
+								<Text
+									className="text-2xl font-bold text-center"
+									style={{ color: Colors.primaryBlue }}
+								>
+									Add Vehicle
+								</Text>
+							</View>
 
-					const {
-						vehicleID,
-						phoneNum,
-						buyDate,
-						model,
-						plateNum,
-						insuranceValidity,
-						pollutionValidity,
-					} = values;
+							<View className=" flex-col w-full px-4 justify-between ">
+								<View className=" pb-52  justify-between">
+									<TextInput
+										className=" mb-4 border-b border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Vehicle ID"
+										onChangeText={handleChange("vehicleID")}
+										value={values.vehicleID}
+									/>
+									<TextInput
+										keyboardType="numeric"
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Year"
+										onChangeText={handleChange("year")}
+										value={values.year}
+									/>
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Make"
+										onChangeText={handleChange("make")}
+										value={values.make}
+									/>
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Model"
+										onChangeText={handleChange("model")}
+										value={values.model}
+									/>
 
-					setVehicleID(vehicleID);
-					setPhoneNum(phoneNum);
-					setBuyDate(buyDate);
-					setModel(model);
-					setPlateNum(plateNum);
-					setInsuranceValidity(insuranceValidity);
-					setPollutionValidity(pollutionValidity);
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Enter Plate Number"
+										onChangeText={handleChange("plateNumber")}
+										value={values.plateNumber}
+									/>
 
-					console.log(
-						"Vehicle ID: ",
-						vehicleID,
-						"  Phone Number: ",
-						phoneNum,
-						"  Buy Date: ",
-						buyDate,
-						"  Model: ",
-						model,
-						"  Plate Number: ",
-						plateNum,
-						"  Insurance Validity: ",
-						insuranceValidity,
-						"  Pollution Validity: ",
-						pollutionValidity
-					);
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Color"
+										onChangeText={handleChange("color")}
+										value={values.color}
+									/>
 
-					try {
-						write?.();
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Enter Insurance Validity"
+										onChangeText={handleChange("insuranceValidity")}
+										value={values.insuranceValidity}
+									/>
 
-					} catch (error) {
-						console.log(error);
-					}
-				}}
-			>
-				{({ handleChange, handleSubmit, values, touched, errors }) => (
-					<View className=" flex-1 flex-col justify-between items-center w-full h-full bg-white p-3">
-						<View className=" py-24 ">
-							<Text
-								className="text-2xl font-bold text-center"
-								style={{ color: Colors.primaryBlue }}
-							>
-								Add Vehicle
-							</Text>
-						</View>
+									<TextInput
+										className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
+										placeholder="Enter Pollution Validity"
+										onChangeText={handleChange("pollutionValidity")}
+										value={values.pollutionValidity}
+									/>
 
-						<View className=" flex-col w-full px-4 justify-between ">
-							<View className=" pb-52  justify-between">
-								<TextInput
-									className=" mb-4 border-b border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Vehicle ID"
-									onChangeText={handleChange("vehicleID")}
-									value={values.vehicleID}
-								/>
-								<TextInput
-									keyboardType="numeric"
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Phone Number"
-									onChangeText={handleChange("phoneNum")}
-									value={values.phoneNum}
-								/>
-								<TextInput
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Buy Date"
-									onChangeText={handleChange("buyDate")}
-									value={values.buyDate}
-								/>
-								<TextInput
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Model"
-									onChangeText={handleChange("model")}
-									value={values.model}
-								/>
+									<View className=" my-2">
+										<AddvehicleContract values={values} />
 
-								<TextInput
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Enter Plate Number"
-									onChangeText={handleChange("plateNum")}
-									value={values.plateNum}
-								/>
+										{/* <PrimaryButton
+											onPress={async () => {
+												values.ownerId = "clvb57hq400006i2lagezy3kj";
+												try {
+													const addtoDB = await addVehicle(values);
+													if (addtoDB.status == 200) {
+														console.log("vehicle added to DB successfully");
+														navigation.navigate("Traffic");
+													} else {
+														console.log(
+															"Error adding vehicle to DB, status code:",
+															addtoDB.status
+														);
+													}
+												} catch (error) {
+													console.log("Error adding vehicle to DB", error);
+												}
+											}}
+										>
+											DB only
+										</PrimaryButton> */}
 
-								<TextInput
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Enter Insurance Validity"
-									onChangeText={handleChange("insuranceValidity")}
-									value={values.insuranceValidity}
-								/>
-
-								<TextInput
-									className=" border-b mb-4 border-gray-200 py-2 px-2 text-base text-gray-700"
-									placeholder="Enter Pollution Validity"
-									onChangeText={handleChange("pollutionValidity")}
-									value={values.pollutionValidity}
-								/>
-
-								<View className=" my-2">
-									<PrimaryButton onPress={handleSubmit}>Add</PrimaryButton>
+									</View>
 								</View>
 							</View>
 						</View>
-					</View>
-				)}
-			</Formik>
-		</View>
+					)}
+				</Formik>
+			</View>
+		</Web3>
 	);
 }

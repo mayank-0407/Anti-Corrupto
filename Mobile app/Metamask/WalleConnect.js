@@ -34,11 +34,11 @@ createWeb3Modal({
 	enableAnalytics: true, // Optional - defaults to your Cloud configuration
 });
 
-const Wallet = ({ children }) => (
+const Web3 = ({ children }) => (
 	<WagmiConfig config={wagmiConfig}>
 		{children}
 		<Web3Modal />
 	</WagmiConfig>
 );
 
-export default Wallet;
+export default Web3;

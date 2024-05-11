@@ -26,10 +26,9 @@ import Carousel from "react-native-reanimated-carousel";
 import { logoutUser, fetchUserDetails, isSessionValid } from "../util/Api";
 import FadedView from "../Components/FadeView";
 import { getSessionToken } from "../util/tokenStore";
-import Wallet from "../Metamask/WalleConnect";
 import { useWeb3Modal } from "@web3modal/wagmi-react-native";
 import { W3mButton } from "@web3modal/wagmi-react-native";
-
+import Web3 from "../Metamask/WalleConnect";
 
 export default function HomePage({ route, navigation }) {
 	const [myuser, setmyuser] = useState("");
@@ -97,7 +96,7 @@ export default function HomePage({ route, navigation }) {
 	];
 
 	return (
-		<>
+		<Web3>
 			<StatusBar style="light" />
 
 			<FadedView>
@@ -130,8 +129,6 @@ export default function HomePage({ route, navigation }) {
 									style={{ padding: 2, paddingHorizontal: 8 }}
 								/>
 							</TouchableOpacity>
-
-							<W3mButton />
 
 							<Feather
 								name="bell"
@@ -178,7 +175,7 @@ export default function HomePage({ route, navigation }) {
 									style={{ width: 300, height: 150 }}
 								></View>
 								<View className="mx-2"></View>
-							</ScrollView>       
+							</ScrollView>
 						</View>
 
 						<View
@@ -411,11 +408,16 @@ export default function HomePage({ route, navigation }) {
 					<Text className="text-[#454545] text-xs">Services</Text>
 				</TouchableOpacity>
 
-				<TouchableOpacity className=" p-2 px-6 items-center">
+				<TouchableOpacity
+					className=" p-2 px-6 items-center"
+					onPress={() => {
+						navigation.navigate("MenuScreen");
+					}}
+				>
 					<Ionicons name="person" size={26} color={"#454545"} />
 					<Text className="text-[#454545] text-xs">Menu</Text>
 				</TouchableOpacity>
 			</View>
-		</>
+		</Web3>
 	);
 }

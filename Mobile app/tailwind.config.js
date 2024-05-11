@@ -14,6 +14,8 @@ module.exports = {
 		"./Screens/Report.{js,jsx,ts,tsx}",
 		"./Screens/Traffic.{js,jsx,ts,tsx}",
 		"./Screens/AddVehicles.{js,jsx,ts,tsx}",
+		"./Screens/ChallanPage.{js,jsx,ts,tsx}",
+		"./Metamask/PayChallanContract.{js,jsx,ts,tsx}",
 	],
 	theme: {
 		extend: {
