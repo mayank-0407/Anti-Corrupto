@@ -1,6 +1,18 @@
-# Capstone-Anti-Corruption-TTF
+# Anti Corrupto
 
-Here we make our pre final year project
+In today's governance landscape, transparency and accountability are indispensable for fostering trust
+and combatting corruption. Manual processes and opaque systems often facilitate malfeasance,
+leading to public disillusionment. This project addresses these challenges by harnessing innovative
+technologies, notably blockchain and analytics, to revolutionize governance practices. Through
+blockchain-powered systems like automated traffic monitoring and automated challan system through
+edge computing and a secure land registry, tamper-proof records are established, minimizing
+corruption opportunities. Smart contracts automate processes such as ticketing and fund allocation,
+reducing bribery risks. A secure whistleblower platform fosters accountability. Data-driven insights
+enable efficient resource allocation. This platform not only encourages transparency but also fosters a
+culture of accountability within governmental institutions. Addressing issues in land registry, such as
+stamp duty evasion and undervaluation, the project aims to restore public trust in governmental
+systems. The project sets a precedent for responsible and effective administration, ultimately fostering
+a more equitable and just society
 
 # To run postgres database
 - docker compose up
