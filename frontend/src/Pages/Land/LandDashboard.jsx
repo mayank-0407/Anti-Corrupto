@@ -189,7 +189,6 @@ function LandDashboard() {
             </div>
           </div>
           <Link to={`/dashboard/land/transfer/${land.id}`}>
-          
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}
               <br></br>

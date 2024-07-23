@@ -15,7 +15,7 @@ const Home = () => {
       <div className="py-4">
         <Carousel />
       </div>
-      <Updates />
+      {/* <Updates /> */}
       <div className="bg-slate-50">
         <div className="mx-[100px] my-5 py-5 ">
           <h1 className="text-center text-4xl font-bold mt-2 font-3xl pb-4">Services</h1>

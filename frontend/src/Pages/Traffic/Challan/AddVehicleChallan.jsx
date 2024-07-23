@@ -54,7 +54,7 @@ const AddVehicleChallan = () => {
       location: 'Delhi',
       reason: reason,
     };
-    const tempid = addChallanToBlockchain(challanFormData);
+    const tempid = await addChallanToBlockchain(challanFormData);
     console.log(tempid);
     return true;
   };

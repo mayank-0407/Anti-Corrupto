@@ -19,7 +19,7 @@ const VehiclesPage = () => {
     const thisUser = await fetchUserDetails(myToken);
     setMyUser(thisUser.data.id);
     const myvehicles = await getUserVehicles(thisUser.data.id);
-    setVehicles(myvehicles);
+    setVehicles(myvehicles);  
   };
 
   useEffect(() => {
