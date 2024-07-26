@@ -37,7 +37,7 @@ a more equitable and just society
 - PORT=3000
 
 
-# How to Run Ml Model
+# How to Run ML Model
 - pip3 install -r requirements.txt
 - python main.py
 
