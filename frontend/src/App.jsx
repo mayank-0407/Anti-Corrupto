@@ -22,7 +22,7 @@ import Cases from './Pages/Land/Cases';
 
 export default function App() {
   return (
-    <BrowserRouter className="flex items-center justify-center">
+    <BrowserRouter className="flex items-center justify-center bg-slate-100">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

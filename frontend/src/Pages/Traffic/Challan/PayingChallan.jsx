@@ -14,14 +14,13 @@ function PayingChallan() {
   const challan = async (challanId) => {
     try {
       const challanData = await getChallansById(challanId);
-      console.log("chalan ki ki",challanData)
+      console.log('chalan ki ki', challanData);
       console.log(challanData.id);
       payChallan(challanData);
       let metamask_address = '0x2Bf6A37145e08a1E556891D7dE6f5c2cCEAf457C';
-      console.log()
+      console.log();
       let f = getUserChallansfunc(metamask_address);
-      console.log("challan in getuserchallanfunc",f)
-
+      console.log('challan in getuserchallanfunc', f);
     } catch (error) {
       console.error('Error fetching challans:', error);
     }

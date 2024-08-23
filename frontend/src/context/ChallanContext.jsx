@@ -136,7 +136,7 @@ const ChallanProvider = ({ children }) => {
       await challanTransaction.wait();
       console.log(`Success - ${challanTransaction.hash}`);
       setIsLoading(false);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };

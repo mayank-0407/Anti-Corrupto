@@ -1,6 +1,6 @@
 export default function ConnectToApp() {
   return (
-    <div className="flex justify-center my-20">
+    <div className="flex justify-center my-20 bg-slate-100">
       <div className="w-1/3 p-4 transform transition-all duration-300 hover:scale-100">
         {/* Left Card */}
         <div className="shadow-md rounded-md p-4 bg-orange-400 h-full">

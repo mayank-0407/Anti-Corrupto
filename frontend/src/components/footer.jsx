@@ -2,8 +2,8 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-950 text-white p-4">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <footer className=" bg-sky-800 text-white p-4 ">
+      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center pl-10 pr-10">
         <div className="mb-4 md:mb-0">
           <h1 className="text-2xl font-bold">Anti Corrupto</h1>
           <p className="text-sm">fight againt corruption</p>

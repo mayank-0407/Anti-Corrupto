@@ -117,7 +117,7 @@ const UpdatesTab = () => {
   }, []);
 
   return (
-    <div className="flex px-14 items-center">
+    <div className="flex px-14 items-center ">
       <h2 className="text-4xl font-bold mb-2 px-2">New in Anticorrupto</h2>
       <div className="flex flex-no-wrap overflow-hidden">
         <div ref={containerRef} className="flex">

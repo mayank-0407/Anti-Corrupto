@@ -7,11 +7,11 @@ const Carousel = () => {
   const data = {
     slides: [
       {
-        src: './home/anti_2.jpg',
+        src: 'https://www.ids.ac.uk/wp-content/uploads/2024/05/Blognews-story-1024x600-px-1.jpg',
         alt: 'Image 2 for carousel',
       },
       {
-        src: './home/anti_1.jpg',
+        src: 'https://www.gardenvareli.com/wp-content/uploads/2022/05/09-Tender-1920X560.jpg',
         alt: 'Image 1 for carousel',
       },
       {
@@ -50,7 +50,7 @@ const Carousel = () => {
           key={idx}
           className={
             slide === idx
-              ? 'border-0.5 border-gray-500 rounded-md shadow-md w-full h-full'
+              ? 'border-0.5 border-gray-500 rounded-md shadow-md  h-full w-full object-cover'
               : 'hidden'
           }
         />

@@ -36,11 +36,11 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-blue-950 text-white py-4 w-screen">
+    <div className="bg-sky-800 text-white py-4 w-screen">
       <div className="container mx-auto flex justify-between items-center relative px-10">
         <div className="flex items-center">
           <img src="/Logo_1.png" alt="Logo" className="h-8 mr-4" />
-          <span className="text-xl font-semibold">Anti Corrupto</span>
+          <span className="text-xl font-semibold hidden sm:inline">Anti Corrupto</span>
         </div>
 
         <div className="flex items-center ml-auto">
@@ -48,7 +48,7 @@ const Navbar = () => {
             <>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-purple-600 rounded-md mr-4 hover:bg-purple-700"
+                className="px-4 py-2 bg-purple-800 rounded-md mr-4 hover:bg-purple-700"
               >
                 Logout
               </button>
@@ -76,14 +76,14 @@ const Navbar = () => {
             <>
               <button
                 onClick={() => navigate('/login')}
-                className="px-4 py-2 bg-purple-600 rounded-md mr-4 hover:bg-purple-700"
+                className="px-4 py-2 bg-slate-50 rounded-md mr-4 font-semibold hover:bg-slate-700 hover:text-slate-100 text-black"
               >
                 Login
               </button>
-              <span className="mx-1 text-purple-600">|</span>
+              <span className="mx-1 text-slate-50">|</span>
               <button
                 onClick={() => navigate('/signup')}
-                className="px-4 py-2 text-purple-600 rounded-md hover:bg-gray-700"
+                className="px-4 py-2 text-slate-50 rounded-md font-semibold hover:bg-gray-700"
               >
                 Signup
               </button>
