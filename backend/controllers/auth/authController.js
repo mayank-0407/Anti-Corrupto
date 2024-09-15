@@ -3,47 +3,35 @@ const jwt = require("jsonwebtoken");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+const validRoles = ["ADMIN", "USER", "POLICE", "REGISTRAR"];
+
 const signUpController = async (req, res) => {
 	try {
-		const { name, email, password } = req.body;
-		if (!email || !password || !name) {
-			return res.status(203).json({ message: "Please provide all required fields" });
+		const { name, email, password, role } = req.body;
+		if (!email || !password || !name || !validRoles.includes(role)) {
+			return res.status(400).json({ message: "Please provide all required fields with a valid role" });
 		}
 
 		const existingUser = await prisma.user.findUnique({
-			where: {
-				email: email,
-			},
+			where: { email },
 		});
 
 		if (existingUser) {
-			return res.status(203).json({ message: "User already exists" });
+			return res.status(400).json({ message: "User already exists" });
 		}
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
 		const user = await prisma.user.create({
-			data: { name, email, hashedPassword },
+			data: { name, email, hashedPassword, role },
 		});
 
-		const verificationToken = await prisma.verificationToken.create({
-			data: {
-				identifier: user.email,
-				token: generateVerificationToken(),
-				expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-				userId: user.id,
-			},
-		});
-
-		return res
-			.status(200)
-			.json({ message: "User registered successfully", user, verificationToken });
+		return res.status(201).json({ message: "User registered successfully", user });
 	} catch (err) {
-		return res
-			.status(203)
-			.json({ message: "Internal server error", details: err.message });
+		return res.status(500).json({ message: "Internal server error", details: err.message });
 	}
 };
+
 
 const loginController = async (req, res) => {
 	try {
@@ -166,8 +154,9 @@ const generateRefreshToken = (data) => {
 
 const logOutController = async (req, res) => {
 
+	const sessionId = req.headers['authorization'];
 	try {
-		if (!req.params.id) {
+		if (! sessionId) {
 			return res.status(400).json({ error: "session not available" });
 		}
 
@@ -180,10 +169,10 @@ const logOutController = async (req, res) => {
 		// 		refresh_token: null,
 		// 	},
 		// });
-
+		
 		await prisma.Session.deleteMany({
 			where: {
-				sessionToken: req.params.id,
+				sessionToken:  sessionId,
 			},
 		});
 		return res.status(200).json({ message: "Logged out successfully" });

@@ -34,7 +34,11 @@ export const loginUser = async (userData) => {
 
 export const logoutUser = async (sessionToken) => {
   try {
-    const response = await axios.post(`${API_URL}/logout/${sessionToken}`);
+    const response = await axios.post(`${API_URL}/logout`, null,{
+      headers: {
+        'Authorization': sessionToken,  // Session token in headers
+      },
+    });
     if (response.status == 200) return true;
     else return false;
   } catch (error) {

@@ -4,7 +4,9 @@ const API_URL = 'http://localhost:3000';
 
 export const getUserVehicles = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`);
+    const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`,null,headers: {
+      'Authorization': sessionToken,  // Session token in headers
+    },);
     return response.data;
   } catch (error) {
     throw error;
