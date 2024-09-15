@@ -25,6 +25,7 @@ const Signup = () => {
       name: name,
       email: email,
       password: password,
+      role:"USER",
     };
     try {
       const res = await signUpUser(values);

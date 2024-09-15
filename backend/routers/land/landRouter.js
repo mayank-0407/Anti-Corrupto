@@ -5,7 +5,7 @@ const requireRole = require("../../middlewares/requireRole");
 
 router.post("/create", requireSession, requireRole("ADMIN"), landController.createLand);
 router.get("/all", requireSession, landController.getAllLands);
-router.get("/:id", requireSession, landController.getLandByownerId);
+router.get("/:id",  landController.getLandByownerId);
 router.get("/land/:id", requireSession, landController.getLandById);
 
 module.exports = router;

@@ -2,8 +2,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const requireSession = async (req, res, next) => {
-  const sessionId = req.headers['authorization'];
-
+  console.log(req.headers);
+  let sessionId = req.headers['authorization'];
+  console.log()
+  // sessionId = "vwkmcju2s1";  /////////////////////////////////////////////// hatado
   if (!sessionId) {
     return res.status(401).json({ message: "Unauthorized: No session provided" });
   }

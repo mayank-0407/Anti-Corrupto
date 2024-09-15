@@ -1,10 +1,16 @@
 import axios from 'axios';
+import { getCookie } from '../cookieSetup';
 
 const BASE_URL = 'http://localhost:3000/case';
 
+const sessionToken = getCookie('token');
+const header = {headers: {
+  'Authorization': sessionToken,
+}};
+
 const createLandCase = async (landCaseData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/create`, landCaseData);
+    const response = await axios.post(`${BASE_URL}/create`, landCaseData, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -13,7 +19,7 @@ const createLandCase = async (landCaseData) => {
 
 const getAllLandCases = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/all`);
+    const response = await axios.get(`${BASE_URL}/all`, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -22,7 +28,7 @@ const getAllLandCases = async () => {
 
 const getLandCaseById = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/${id}`);
+    const response = await axios.get(`${BASE_URL}/${id}`, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -31,7 +37,7 @@ const getLandCaseById = async (id) => {
 
 const getLandCasesByUser = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/user/${userId}`);
+    const response = await axios.get(`${BASE_URL}/user/${userId}`, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');

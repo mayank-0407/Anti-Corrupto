@@ -1,6 +1,16 @@
 import axios from 'axios';
+import cookie from 'js-cookie';
+import { getCookie } from '../cookieSetup';
 
 const API_URL = 'http://localhost:3000/auth';
+
+const sessionToken = cookie.get('token');
+
+const header = {
+  headers: {
+    'Authorization': sessionToken,  // Session token in headers
+  },
+}
 
 export const signUpUser = async (userData) => {
   try {
@@ -34,11 +44,7 @@ export const loginUser = async (userData) => {
 
 export const logoutUser = async (sessionToken) => {
   try {
-    const response = await axios.post(`${API_URL}/logout`, null,{
-      headers: {
-        'Authorization': sessionToken,  // Session token in headers
-      },
-    });
+    const response = await axios.post(`${API_URL}/logout`, null, header);
     if (response.status == 200) return true;
     else return false;
   } catch (error) {
@@ -48,7 +54,7 @@ export const logoutUser = async (sessionToken) => {
 
 export const isSessionValid = async (sessionId) => {
   try {
-    const response = await axios.get(`${API_URL}/verifysession/${sessionId}`);
+    const response = await axios.get(`${API_URL}/verifysession/${sessionId}`, header);
     if (response.status == 200) {
       return true;
     }
@@ -60,7 +66,18 @@ export const isSessionValid = async (sessionId) => {
 
 export const fetchUserDetails = async (sessionId) => {
   try {
-    const response = await axios.get(`${API_URL}/getuser/${sessionId}`);
+    const response = await axios.get(`${API_URL}/getuser/${sessionId}`, header);
+    if (response.status == 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchUserEmail = async (clientId) => {
+  try {
+    const response = await axios.get(`${API_URL}/getuseremail/${clientId}`, header);
     if (response.status == 200) {
       return response;
     }

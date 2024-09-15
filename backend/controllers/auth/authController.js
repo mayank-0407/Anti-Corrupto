@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 const validRoles = ["ADMIN", "USER", "POLICE", "REGISTRAR"];
 
 const signUpController = async (req, res) => {
+	console.log(req.body);	
 	try {
 		const { name, email, password, role } = req.body;
 		if (!email || !password || !name || !validRoles.includes(role)) {
@@ -15,19 +16,21 @@ const signUpController = async (req, res) => {
 		const existingUser = await prisma.user.findUnique({
 			where: { email },
 		});
-
+		console.log("hi");
+		
 		if (existingUser) {
 			return res.status(400).json({ message: "User already exists" });
 		}
-
+		
 		const hashedPassword = await bcrypt.hash(password, 10);
-
+		
 		const user = await prisma.user.create({
 			data: { name, email, hashedPassword, role },
 		});
-
+		
 		return res.status(201).json({ message: "User registered successfully", user });
 	} catch (err) {
+		console.log("hi1");
 		return res.status(500).json({ message: "Internal server error", details: err.message });
 	}
 };
@@ -213,6 +216,23 @@ const getUserDetails = async (req, res) => {
 		const thisUser = await prisma.User.findUnique({
 			where : {
 				id:thisSession.userId
+			}
+		});
+		if(thisUser)
+			return res.status(200).send(thisUser);
+		else
+			return res.status(500).json({ error: "No user found", details: e.message });
+	} catch (e) {
+		return res.status(500).json({ error: "Session Expired", details: e.message });
+	}
+};
+
+const getUserEmailDetails = async (req, res) => {
+	const clientId  = req.params.id;
+	try {
+		const thisUser = await prisma.User.findUnique({
+			where : {
+				id:clientId
 			}
 		});
 		if(thisUser)

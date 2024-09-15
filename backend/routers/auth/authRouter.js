@@ -11,6 +11,7 @@ router.post("/logout", requireSession, authController.logOutController);
 
 // Session validation routes
 router.get("/verifysession/:id", authController.checkValidSession);
-router.get("/getuser/:id", requireSession, authController.getUserDetails);
+router.get("/getuser/:id", authController.getUserDetails);
+router.get("/getuseremail/:id", authController.getUserDetails);
 
 module.exports = router;

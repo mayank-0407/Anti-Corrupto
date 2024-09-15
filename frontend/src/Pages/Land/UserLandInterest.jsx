@@ -8,12 +8,11 @@ import { setSessionToken, isLogin, getCookie, getToken } from '../../Utils/cooki
 import { useNavigate } from 'react-router-dom';
 // import { LandContext } from '../../context/LandContext';
 import { Link } from 'react-router-dom';
-import { getUserLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
-import { createInquiry } from '../../Utils/API/landInquiry';
+import { getUserInterestedLands } from '../../Utils/API/landInquiry';
 
-function LandDashboard() {
+function UserLandInterest() {
   const [isLoggedd, setisLoggedd] = useState(false);
   // const { checkIfWalletIsConnect } = useContext(LandContext);
   const [lands, setLands] = useState([]);
@@ -28,7 +27,7 @@ function LandDashboard() {
     const Tocken = getToken();
     const UserDetails = await fetchUserDetails(Tocken);
     setclientId(UserDetails.data.id);
-    const tlands = await getUserLands(UserDetails);
+    const tlands = await getUserInterestedLands(UserDetails.data.id);
     setLands(tlands);
   };
   useEffect(() => {
@@ -54,15 +53,16 @@ function LandDashboard() {
   };
 
   const confirmInterest = async () => {
-    if (clientId == selectedLand.id) {
+
+    if(clientId.id == selectedLand.currentOwner){
       console.log('You are the owner of this land');
       setShowModal(false);
     }
     const data = {
-      clientId: clientId,
-      landId: selectedLand.id,
-    };
-    try {
+      clientId: clientId.id,
+      landId: selectedLand,
+    }
+    try{
       const response = await createInquiry(data);
       console.log('Inquiry response:', response);
       if (response.status == 200) {
@@ -70,7 +70,7 @@ function LandDashboard() {
       }
       console.log('User confirmed interest in land:', selectedLand);
       setShowModal(false);
-    } catch (error) {
+    }catch(error){
       console.log('Error:', error);
       setShowModal(false);
     }
@@ -134,17 +134,7 @@ function LandDashboard() {
                 {/* <option value="5">Residential</option> */}
               </select>
             </div>
-            {/* <select
-							className="absolute top-0 left-20 h-full w-auto opacity-0 cursor-pointer"
-							style={{ zIndex: 10 }}
-						>
-							<option value="all">All Categories</option>
-							<option value="category1">Location</option>
-							<option value="category2">Area</option>
-							<option value="category3">Type</option>
-							<option value="category4">Price</option>
-						</select> */}
-
+            
             <input
               type="text"
               className="h-12 ml-2 pl-4 w-full rounded-l-xl border-2 border-r-0 shadow-xl"
@@ -173,13 +163,8 @@ function LandDashboard() {
             >
               Marketplace
             </button>
-            <button
-              onClick={() => {
-                navigate('/dashboard/land/interested');
-              }}
-              className="flex p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
-            >
-             Lands Status
+            <button className="flex p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap">
+              Transfer Land
             </button>
             <button
               onClick={() => {
@@ -193,7 +178,7 @@ function LandDashboard() {
         </div>
       </div>
 
-      <p className="text-xl mt-8 m-4 font-bold">My Lands</p>
+      <p className="text-xl mt-8 m-4 font-bold">My Interests</p>
 
       {lands.map((land, index) => (
         <div
@@ -206,11 +191,11 @@ function LandDashboard() {
           <div>
             <p
               onClick={() => {
-                navigate(`/dashboard/land/enquiries/${land.id}`);
+                navigate(`/dashboard/land/transfer/${land.landId}`);
               }}
-              className="px-4 pt-4 text-2xl font-bold hover:cursor-pointer"
+              className="px-4 pt-4 text-2xl font-bold"
             >
-              {land.id}
+              {land.landId}
             </p>
             {land.landType === 0 ? (
               <p className="pl-4 ">Government</p>
@@ -232,20 +217,19 @@ function LandDashboard() {
               </div>
             </div>
           </div>
-          <Link to={`/dashboard/land/enquiries/${land.landId}`}>
-          {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
+          <Link to={`/dashboard/land/transfer/${land.id}`}>
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}
               <br></br>
               Current Rate: ₹{land.transferAmount}/-
             </p>
           </Link>
-          {/* <button
+          <button
             onClick={() => handleInterestedClick(land)}
             className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
           >
             I am interested to buy
-          </button> */}
+          </button>
         </div>
       ))}
       {/* Modal Section */}
@@ -277,4 +261,4 @@ function LandDashboard() {
   );
 }
 
-export default LandDashboard;
+export default UserLandInterest;

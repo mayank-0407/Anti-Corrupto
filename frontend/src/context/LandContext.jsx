@@ -8,6 +8,7 @@ export const LandContext = React.createContext();
 const { ethereum } = window;
 
 const LandProvider = ({ children }) => {
+  // ethers.BigNumber.from(number)
   const [formData, setformData] = useState({
     landId: '',
     location: '',
@@ -114,27 +115,65 @@ const LandProvider = ({ children }) => {
   };
 
   const addLandToBlockchain = async (formData) => {
-    // console.log("in backend", formData);
     try {
       if (window.ethereum) {
-        const { location, area, dimensionOfLand, landIdentificationNumber, landType } = formData;
-
+        const { location, area, dimensionOfLand, landIdentificationNumber, landType, landPrice } =
+          formData;
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const landContract = new ethers.Contract(landAddress, landABI, signer);
-        const transactionHash = await landContract.registerLand(
-          location,
-          area,
-          dimensionOfLand,
-          landIdentificationNumber,
-          landType
-        );
-        setIsLoading(true);
-        console.log(`Loading - ${transactionHash.hash}`);
-        await transactionHash.wait();
-        console.log(`Success - ${transactionHash.hash}`);
-        setIsLoading(false);
-        return transactionHash.hash;
+
+        try {
+          // Register the land and get the transaction object
+          const transaction = await landContract.registerLand(
+            location,
+            area,
+            dimensionOfLand,
+            landIdentificationNumber,
+            landType,
+            landPrice
+          );
+
+          console.log('Transaction hash:', transaction.hash);
+          setIsLoading(true);
+
+          // Wait for the transaction to be mined/confirmed
+          const receipt = await transaction.wait();
+          console.log(`Success - ${receipt.hash}`);
+          setIsLoading(false);
+
+          // Listen for the LandRegistered event
+          landContract.on(
+            'LandRegistered',
+            (
+              landId,
+              owner,
+              location,
+              area,
+              dimensionOfLand,
+              landIdentificationNumber,
+              landType
+            ) => {
+              console.log('LandRegistered event received:', {
+                landId: landId.toString(),
+                owner,
+                location,
+                area,
+                dimensionOfLand,
+                landIdentificationNumber,
+                landType: landType.toString(),
+              });
+            }
+          );
+
+          return 200; // Successfully registered
+        } catch (error) {
+          console.error('Error registering land:', error);
+          setIsLoading(false);
+          return 400; // Failed to register
+        }
+
+        // return transactionHash.hash;
       } else {
         console.log('No ethereum object');
       }
