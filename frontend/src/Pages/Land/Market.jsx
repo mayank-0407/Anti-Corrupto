@@ -60,6 +60,7 @@ function Market() {
     const UserDetails = await fetchUserDetails(Tocken);
     setclientId(UserDetails.data.id);
     const tlands = await getAllLands(UserDetails);
+    console.log("Market : ", tlands);
     setLands(tlands);
   };
   useEffect(() => {
@@ -93,7 +94,7 @@ function Market() {
   };
 
   const confirmInterest = async () => {
-    console.log(clientId,"---", selectedLand.id);
+    console.log(clientId, '---', selectedLand.id);
     const data = {
       clientId: clientId,
       landId: selectedLand.id,
@@ -288,7 +289,7 @@ function Market() {
             <h2 className="text-2xl font-bold mb-4">
               Confirm Interest in Buying {selectedLand.landId}
             </h2>
-            <p>Are you sure you want to express interest in purchasing this land?</p>
+            <p>Are you sure you want to open Transfer Window to purchasing this land?</p>
             <div className="mt-4 flex justify-end">
               <button
                 onClick={closeModal}

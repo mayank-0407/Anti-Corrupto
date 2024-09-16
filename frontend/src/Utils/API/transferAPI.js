@@ -4,9 +4,11 @@ import { getCookie } from '../cookieSetup';
 const BASE_URL = 'http://localhost:3000';
 
 const sessionToken = getCookie('token');
-const header = {headers: {
-  'Authorization': sessionToken,  // Session token in headers
-}};
+const header = {
+  headers: {
+    Authorization: sessionToken, // Session token in headers
+  },
+};
 
 const createTransferLand = async (transferLandData) => {
   try {

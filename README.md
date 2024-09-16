@@ -20,6 +20,7 @@ a more equitable and just society
 
 # How to Run Backend
 - npm i
+- npx prisma format
 - npx prisma migrate dev
 - npx prisma generate
 - npx prisma studio

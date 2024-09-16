@@ -11,7 +11,11 @@ import { Link } from 'react-router-dom';
 import { getUserLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, fetchUserEmail, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
-import { createInquiry, getInquiryLandsById } from '../../Utils/API/landInquiry';
+import {
+  createInquiry,
+  getInquiryLandsById,
+  updateInquiryStatus,
+} from '../../Utils/API/landInquiry';
 
 function LandEnquiries() {
   const [isLoggedd, setisLoggedd] = useState(false);
@@ -21,46 +25,51 @@ function LandEnquiries() {
   const [clientId, setclientId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedLand, setSelectedLand] = useState(null);
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredLandData, setfilteredLandData] = useState([]);
 
   const { landId } = useParams();
   const navigate = useNavigate();
 
   // Add fetching lands with the email associated with each user
   const getLands = async () => {
-    const Tocken = getToken();
-    const UserDetails = await fetchUserDetails(Tocken);
+    const Token = getToken(); // Assuming this function fetches a token
+    const UserDetails = await fetchUserDetails(Token);
     setclientId(UserDetails.data.id);
-    const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns email
-    console.log('tlands:', tlands);
-    setLands(tlands); // Ensure the API returns 'email' for each land inquiry
+
+    const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns lands
+    setLands(tlands); // Update lands state with fetched data
+    console.log("Lands in get lands in land enquiries : ",tlands);
+    separateData(tlands);
   };
 
   const fetchEmail = async (clientId) => {
     try {
-      console.log('clientId:', clientId);
       const userDetails = await fetchUserEmail(clientId);
-      console.log('userDetails:', userDetails);
       return userDetails.data.email;
     } catch (error) {
       console.error('Error fetching user details:', error);
       return null;
     }
+    console.log('User Details:', userDetails);
   };
 
   // Function to filter data and append required fields
-  const separateData = async () => {
-    const newData = await Promise.all(
-      lands.map(async (item) => {
-        const email = await fetchEmail(item.clientId); // Fetch email for each clientId
-        return {
-          clientId: item.clientId,
-          status: item.status,
-          email: email,
-        };
-      })
-    );
-    setFilteredData(newData);
+  const separateData = async (tlands) => {
+    const newData = [];
+
+    console.log("Lands in separateData in land enquiries : ",tlands);
+
+    for (const land of tlands) {
+      const email = await fetchEmail(land.clientId); // Sequentially fetch email for each clientId
+      newData.push({
+        id: land.id,
+        clientId: land.clientId,
+        status: land.status,
+        email: email,
+      });
+    }
+
+    setfilteredLandData(newData);
   };
 
   useEffect(() => {
@@ -68,21 +77,38 @@ function LandEnquiries() {
     if (checkLoginSession) {
       setisLoggedd(true);
       getLands(); // Fetch lands and emails
-      separateData();
-      console.log("filteredData:", filteredData);
+      // separateData();
+      console.log('Lands in LandEnquiries.jsx : ', lands);
+      console.log('updated lands in LandEnquiries.jsx : ', filteredLandData);
     } else {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, [lands]);
+  }, []);
 
-  const [buyerList, setBuyerList] = useState(null);
+  const openApproveModal = (land) => {
+    setSelectedLand(land);
+    setShowModal(true);
+  };
 
-  const handleStatusChange = (buyerId) => {
-    const updatedBuyers = buyerList.map((buyer) =>
-      buyer.id === buyerId ? { ...buyer, status: 'Approved' } : buyer
-    );
-    setBuyerList(updatedBuyers);
+  const closeApproveModal = () => {
+    setShowModal(false);
+    setSelectedLand(null);
+  };
+
+  const handleApprove = async () => {
+    try {
+      const response = await updateInquiryStatus(selectedLand.id, 'APPROVED');
+      console.log('Response:', response);
+      if(response.status === 200)
+        console.log(response);
+      else{
+        console.log(response);
+      }
+    } catch (error) {
+      console.error('Error approving land:', error);
+    }
+    closeApproveModal();
   };
 
   return (
@@ -182,11 +208,11 @@ function LandEnquiries() {
             </button>
             <button
               onClick={() => {
-                navigate('/dashboard/land/enquiries');
+                navigate('/dashboard/land');
               }}
               className="flex p-4 px-36 rounded-md w-16 bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
-              Enquiries
+              Dashboard
             </button>
           </div>
         </div>
@@ -203,30 +229,64 @@ function LandEnquiries() {
               <th className="py-2 text-left text-white px-4">Buyer Email</th>
               <th className="py-2 text-left text-white px-4">Status</th>
               <th className="py-2 text-left text-white px-4">Change Status</th>
+              <th className="py-2 text-left text-white px-4">Contact</th>
             </tr>
           </thead>
           <tbody>
-            {lands.map((land) => (
+            {filteredLandData.map((land) => (
               <tr key={land.id} className="odd:bg-slate-700 even:bg-slate-600">
                 <td className="py-3 px-4 text-white">{land.clientId}</td>
                 <td className="py-3 px-4 text-white">{land.email}</td>{' '}
                 {/* Displaying the email here */}
                 <td className="py-3 px-4 text-white">{land.status}</td>
                 <td className="py-3 px-4">
-                  {land.status !== 'Approved' && (
-                    <button
-                      onClick={() => handleStatusChange(land.id)}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Approve
-                    </button>
-                  )}
+                  <button
+                    onClick={() => openApproveModal(land)}
+                    disabled={land.status === 'APPROVED'} // Disable the button if already approved
+                    className={`font-bold py-2 px-4 rounded ${
+                      land.status === 'APPROVED'
+                        ? 'bg-gray-500 cursor-not-allowed' // Gray color and disabled cursor for already approved
+                        : 'bg-blue-500 hover:bg-blue-700 text-white' // Active button style
+                    }`}
+                  >
+                    {land.status === 'APPROVED' ? 'Approved' : 'Approve'}
+                  </button>
+                </td>
+                <td className="py-3 px-4">
+                  <a
+                    href={`mailto:${land.email}`}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Contact
+                  </a>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold mb-4">Approve Land</h2>
+            <p>Are you sure you want to approve the Client's but Request?</p>
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={handleApprove}
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+              >
+                Approve
+              </button>
+              <button
+                onClick={closeApproveModal}
+                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

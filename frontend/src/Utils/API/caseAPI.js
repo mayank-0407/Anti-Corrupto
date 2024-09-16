@@ -4,9 +4,11 @@ import { getCookie } from '../cookieSetup';
 const BASE_URL = 'http://localhost:3000/case';
 
 const sessionToken = getCookie('token');
-const header = {headers: {
-  'Authorization': sessionToken,
-}};
+const header = {
+  headers: {
+    Authorization: sessionToken,
+  },
+};
 
 const createLandCase = async (landCaseData) => {
   try {

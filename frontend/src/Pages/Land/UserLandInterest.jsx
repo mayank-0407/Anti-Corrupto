@@ -6,7 +6,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { TypeAnimation } from 'react-type-animation';
 import { setSessionToken, isLogin, getCookie, getToken } from '../../Utils/cookieSetup';
 import { useNavigate } from 'react-router-dom';
-// import { LandContext } from '../../context/LandContext';
+import { LandContext } from '../../context/LandContext';
 import { Link } from 'react-router-dom';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
@@ -20,6 +20,19 @@ function UserLandInterest() {
   const [clientId, setclientId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedLand, setSelectedLand] = useState(null);
+
+  const {
+    currentAccount,
+    LandCount,
+    connectWallet,
+    transactions,
+    isLoading,
+    addLandToBlockchain,
+    handleChange,
+    formData,
+    checkIfWalletIsConnect,
+    transferLandfunc,
+  } = useContext(LandContext);
 
   const navigate = useNavigate();
 
@@ -39,11 +52,13 @@ function UserLandInterest() {
       setisLoggedd(false);
       navigate('/login');
     }
+    checkIfWalletIsConnect();
   }, []);
 
   const handleInterestedClick = (land) => {
     console.log(land);
     setSelectedLand(land); // Set selected land
+
     setShowModal(true); // Show modal
   };
 
@@ -53,26 +68,17 @@ function UserLandInterest() {
   };
 
   const confirmInterest = async () => {
-
-    if(clientId.id == selectedLand.currentOwner){
-      console.log('You are the owner of this land');
-      setShowModal(false);
-    }
-    const data = {
-      clientId: clientId.id,
-      landId: selectedLand,
-    }
-    try{
-      const response = await createInquiry(data);
-      console.log('Inquiry response:', response);
-      if (response.status == 200) {
-        return response;
-      }
-      console.log('User confirmed interest in land:', selectedLand);
-      setShowModal(false);
-    }catch(error){
-      console.log('Error:', error);
-      setShowModal(false);
+    console.log('Selected Land : ', selectedLand.land.boughtPrice);
+    const formData = {
+      landId: selectedLand.land.web3Id,
+      transferAmount: selectedLand.land.boughtPrice,
+    };
+    const transactionConfirmations = transferLandfunc(formData);
+    setShowModal(false);
+    if(transactionConfirmations === 200){
+      alert('Land Transfer Successful');
+    }else{
+      console.log('Land Transfer Failed');
     }
   };
   return (
@@ -134,7 +140,7 @@ function UserLandInterest() {
                 {/* <option value="5">Residential</option> */}
               </select>
             </div>
-            
+
             <input
               type="text"
               className="h-12 ml-2 pl-4 w-full rounded-l-xl border-2 border-r-0 shadow-xl"
@@ -190,9 +196,9 @@ function UserLandInterest() {
         >
           <div>
             <p
-              onClick={() => {
-                navigate(`/dashboard/land/transfer/${land.landId}`);
-              }}
+              // onClick={() => {
+              //   navigate(`/dashboard/land/transfer/${land.landId}`);
+              // }}
               className="px-4 pt-4 text-2xl font-bold"
             >
               {land.landId}
@@ -217,19 +223,25 @@ function UserLandInterest() {
               </div>
             </div>
           </div>
-          <Link to={`/dashboard/land/transfer/${land.id}`}>
-            <p className="p-4 text-lg font-bold">
-              Owner: {land.currentOwner}
-              <br></br>
-              Current Rate: ₹{land.transferAmount}/-
-            </p>
-          </Link>
-          <button
-            onClick={() => handleInterestedClick(land)}
-            className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
-          >
-            I am interested to buy
-          </button>
+          {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
+          <p className="p-4 text-lg font-bold">
+            Owner: {land.currentOwner}
+            <br></br>
+            Current Rate: ₹{land.transferAmount}/-
+            <br></br>
+            Status: {land.status}
+          </p>
+          {/* </Link> */}
+          {land.status === 'APPROVED' ? (
+            <button
+              onClick={() => handleInterestedClick(land)}
+              className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
+            >
+              Pay The Dues
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
       ))}
       {/* Modal Section */}

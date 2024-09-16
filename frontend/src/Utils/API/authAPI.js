@@ -8,9 +8,9 @@ const sessionToken = cookie.get('token');
 
 const header = {
   headers: {
-    'Authorization': sessionToken,  // Session token in headers
+    Authorization: sessionToken, // Session token in headers
   },
-}
+};
 
 export const signUpUser = async (userData) => {
   try {

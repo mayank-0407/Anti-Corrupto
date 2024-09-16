@@ -40,7 +40,12 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center relative px-10">
         <div className="flex items-center">
           <img src="/Logo_1.png" alt="Logo" className="h-8 mr-4" />
-          <span className="text-xl font-semibold hidden sm:inline cursor-pointer" onClick={() => navigate('/')}>Anti Corrupto</span>
+          <span
+            className="text-xl font-semibold hidden sm:inline cursor-pointer"
+            onClick={() => navigate('/')}
+          >
+            Anti Corrupto
+          </span>
         </div>
 
         <div className="flex items-center ml-auto">

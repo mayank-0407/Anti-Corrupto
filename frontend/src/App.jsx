@@ -1,8 +1,9 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home';
 import Login from './Pages/Auth/Login';
 import Signup from './Pages/Auth/Signup';
+import AdminSignup from './Pages/Auth/AdminSignup';
 import VehiclesPage from './Pages/Traffic/Vehicle/VehiclesPage';
 import ViewVehicle from './Pages/Traffic/Vehicle/ViewVehicle';
 import VehicleChallan from './Pages/Traffic/Challan/VehicleChallan';
@@ -29,14 +30,14 @@ export default function App() {
   useEffect(() => {
     const fetchRole = async () => {
       const sessionId = getCookie('token');
-      console.log(sessionId)
+      console.log(sessionId);
       try {
         const userDetails = await fetchUserDetails(sessionId);
-        console.log(userDetails)
+        console.log("User Details From App.jsx : ",userDetails);
         if (userDetails && userDetails.data) {
-          let userRole = userDetails.data.role
+          let userRole = userDetails.data.role;
           setRole(userRole);
-          console.log(userRole)
+          console.log("Role in App.jsx",userRole);
         } else {
           setRole(null);
         }
@@ -78,12 +79,16 @@ export default function App() {
           exact
           path="/dashboard/vehicle/:vehicleId/challan/add"
           element={
-            <ProtectedRoute element={<AddVehicleChallan />} userRole={role} allowedRoles={['POLICE']} />
+            <ProtectedRoute
+              element={<AddVehicleChallan />}
+              userRole={role}
+              allowedRoles={['POLICE']}
+            />
           }
         />
         <Route path="/dashboard/land" element={<LandDashboard />} />
         <Route path="/dashboard/land/interested" element={<UserLandInterest />} />
-        
+
         <Route path="/dashboard/land/enquiries/:landId" element={<LandEnquiries />} />
         <Route path="/dashboard/land/addland" element={<AddLand />} />
         <Route path="/dashboard/land/View" element={<ViewLand />} />

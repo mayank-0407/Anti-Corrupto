@@ -3,7 +3,7 @@ import { getCookie } from '../cookieSetup';
 
 const API_URL = 'http://localhost:3000';
 const sessionToken = getCookie('token');
-console.log("Vehicle session token :",sessionToken);
+console.log('Vehicle session token :', sessionToken);
 const header = {
   headers: {
     Authorization: sessionToken, // Session token in headers
@@ -12,7 +12,7 @@ const header = {
 
 export const getUserVehicles = async (userId) => {
   try {
-    const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`,  header);
+    const response = await axios.get(`${API_URL}/vehicle/view/all/${userId}`, header);
     return response.data;
   } catch (error) {
     throw error;
@@ -20,7 +20,7 @@ export const getUserVehicles = async (userId) => {
 };
 export const getOneVehicles = async (vehicleId) => {
   try {
-    const response = await axios.get(`${API_URL}/vehicle/view/${vehicleId}`,  header);
+    const response = await axios.get(`${API_URL}/vehicle/view/${vehicleId}`, header);
     return response.data;
   } catch (error) {
     throw error;

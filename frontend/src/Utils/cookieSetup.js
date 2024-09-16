@@ -21,8 +21,8 @@ export const setSessionToken = (token) => {
 
 export const logOut = async () => {
   const sessionId = getCookie('token');
-  if(logoutUser(sessionId)){
-    console.log("logged out");
+  if (logoutUser(sessionId)) {
+    console.log('logged out');
     removeCookie('token');
     return true;
   }

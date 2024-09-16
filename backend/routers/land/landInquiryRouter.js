@@ -13,7 +13,7 @@ router.get('/:id', landInquiryController.getInquiryById);
 router.get('/land/:id', landInquiryController.getInquiryBylandId);
 
 // Update Inquiry Status
-router.put('/:id', landInquiryController.updateInquiry);
+router.post('/change/status/:id', landInquiryController.updateInquiry);
 
 // Delete Inquiry
 router.delete('/:id', landInquiryController.deleteInquiry);

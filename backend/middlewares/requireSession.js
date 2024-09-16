@@ -19,7 +19,6 @@ const requireSession = async (req, res, next) => {
     if (!session || session.expires < new Date()) {
       return res.status(401).json({ message: "Session expired or invalid" });
     }
-    console.log("logout hora hai")
     req.user = session.user; // Attach the user object to the request
     next();
   } catch (error) {

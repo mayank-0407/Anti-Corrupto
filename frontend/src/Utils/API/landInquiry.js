@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:3000/inquiry';
 
 const sessionToken = getCookie('token');
 
-const header = { headers: { 'Authorization': `Bearer ${sessionToken}` } };
+const header = { headers: { Authorization: `Bearer ${sessionToken}` } };
 
 export const getAllInquiries = async () => {
   try {
@@ -45,19 +45,20 @@ export const createInquiry = async (inquiry) => {
 };
 
 export const getUserInterestedLands = async (clientId) => {
-    try {
-      console.log('In api : ', clientId);
-      const response = await axios.get(`${API_URL}/${clientId}`, header);
-      console.log('In api   :    ', response);
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
-  };
+  try {
+    console.log('In api : ', clientId);
+    const response = await axios.get(`${API_URL}/${clientId}`, header);
+    console.log('In api   :    ', response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const updateInquiryStatus = async (inquiryId, status) => {
   try {
-    const response = await axios.patch(`${API_URL}/${inquiryId}`, { status },null, header);
+    console.log(inquiryId, status);
+    const response = await axios.post(`${API_URL}/change/status/${inquiryId}`, { status }, null, header);
     return response.data;
   } catch (error) {
     throw error;
@@ -66,7 +67,7 @@ export const updateInquiryStatus = async (inquiryId, status) => {
 
 export const deleteInquiry = async (inquiryId) => {
   try {
-    await axios.delete(`${API_URL}/${inquiryId}`,null, header);
+    await axios.delete(`${API_URL}/${inquiryId}`, null, header);
     return { message: 'Inquiry deleted successfully' };
   } catch (error) {
     throw error;
