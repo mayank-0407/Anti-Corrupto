@@ -4,9 +4,11 @@ import { getCookie } from '../cookieSetup';
 const API_URL = 'http://localhost:3000/challan';
 
 const sessionToken = getCookie('token');
-const header = {headers: {
-  'Authorization': sessionToken,  
-}};
+const header = {
+  headers: {
+    Authorization: sessionToken,
+  },
+};
 
 export const addChallan = async (challan) => {
   try {

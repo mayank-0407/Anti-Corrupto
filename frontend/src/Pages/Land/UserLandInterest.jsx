@@ -53,16 +53,15 @@ function UserLandInterest() {
   };
 
   const confirmInterest = async () => {
-
-    if(clientId.id == selectedLand.currentOwner){
+    if (clientId.id == selectedLand.currentOwner) {
       console.log('You are the owner of this land');
       setShowModal(false);
     }
     const data = {
       clientId: clientId.id,
       landId: selectedLand,
-    }
-    try{
+    };
+    try {
       const response = await createInquiry(data);
       console.log('Inquiry response:', response);
       if (response.status == 200) {
@@ -70,7 +69,7 @@ function UserLandInterest() {
       }
       console.log('User confirmed interest in land:', selectedLand);
       setShowModal(false);
-    }catch(error){
+    } catch (error) {
       console.log('Error:', error);
       setShowModal(false);
     }
@@ -134,7 +133,7 @@ function UserLandInterest() {
                 {/* <option value="5">Residential</option> */}
               </select>
             </div>
-            
+
             <input
               type="text"
               className="h-12 ml-2 pl-4 w-full rounded-l-xl border-2 border-r-0 shadow-xl"
@@ -190,9 +189,9 @@ function UserLandInterest() {
         >
           <div>
             <p
-              onClick={() => {
-                navigate(`/dashboard/land/transfer/${land.landId}`);
-              }}
+              // onClick={() => {
+              //   navigate(`/dashboard/land/transfer/${land.landId}`);
+              // }}
               className="px-4 pt-4 text-2xl font-bold"
             >
               {land.landId}
@@ -217,19 +216,21 @@ function UserLandInterest() {
               </div>
             </div>
           </div>
-          <Link to={`/dashboard/land/transfer/${land.id}`}>
+          {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}
               <br></br>
               Current Rate: ₹{land.transferAmount}/-
+              <br></br>
+              Status: {land.status}
             </p>
-          </Link>
-          <button
+          {/* </Link> */}
+          {land.status === 'APPROVED'?<button
             onClick={() => handleInterestedClick(land)}
             className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
           >
-            I am interested to buy
-          </button>
+            Pay The Dues
+          </button>:<></>}
         </div>
       ))}
       {/* Modal Section */}

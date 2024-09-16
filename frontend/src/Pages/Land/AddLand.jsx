@@ -53,7 +53,7 @@ const AddLand = () => {
       }
     } else {
       console.log('Error in adding land');
-      alert("Error in adding land");
+      alert('Error in adding land');
     }
   };
 

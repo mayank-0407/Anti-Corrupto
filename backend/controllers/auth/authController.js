@@ -28,7 +28,7 @@ const signUpController = async (req, res) => {
 			data: { name, email, hashedPassword, role },
 		});
 		
-		return res.status(201).json({ message: "User registered successfully", user });
+		return res.status(200).json({ message: "User registered successfully", user });
 	} catch (err) {
 		console.log("hi1");
 		return res.status(500).json({ message: "Internal server error", details: err.message });
@@ -240,7 +240,7 @@ const getUserEmailDetails = async (req, res) => {
 		else
 			return res.status(500).json({ error: "No user found", details: e.message });
 	} catch (e) {
-		return res.status(500).json({ error: "Session Expired", details: e.message });
+		return res.status(500).json({ error: "No Email Found", details: e.message });
 	}
 };
 
@@ -251,4 +251,5 @@ module.exports = {
 	refreshAccessTokenController,
 	checkValidSession,
 	getUserDetails,
+	getUserEmailDetails,
 };

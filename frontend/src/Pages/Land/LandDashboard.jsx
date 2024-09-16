@@ -15,18 +15,17 @@ import { createInquiry } from '../../Utils/API/landInquiry';
 
 function LandDashboard() {
   const [isLoggedd, setisLoggedd] = useState(false);
-  // const { checkIfWalletIsConnect } = useContext(LandContext);
   const [lands, setLands] = useState([]);
   const [sortBy, setSortBy] = useState('');
   const [clientId, setclientId] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [selectedLand, setSelectedLand] = useState(null);
+  const [userRole, setuserRole] = useState('');
 
   const navigate = useNavigate();
 
   const getLands = async () => {
     const Tocken = getToken();
     const UserDetails = await fetchUserDetails(Tocken);
+    setuserRole(UserDetails.data.role);
     setclientId(UserDetails.data.id);
     const tlands = await getUserLands(UserDetails);
     setLands(tlands);
@@ -42,39 +41,6 @@ function LandDashboard() {
     }
   }, []);
 
-  const handleInterestedClick = (land) => {
-    console.log(land);
-    setSelectedLand(land); // Set selected land
-    setShowModal(true); // Show modal
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedLand(null); // Clear selected land
-  };
-
-  const confirmInterest = async () => {
-    if (clientId == selectedLand.id) {
-      console.log('You are the owner of this land');
-      setShowModal(false);
-    }
-    const data = {
-      clientId: clientId,
-      landId: selectedLand.id,
-    };
-    try {
-      const response = await createInquiry(data);
-      console.log('Inquiry response:', response);
-      if (response.status == 200) {
-        return response;
-      }
-      console.log('User confirmed interest in land:', selectedLand);
-      setShowModal(false);
-    } catch (error) {
-      console.log('Error:', error);
-      setShowModal(false);
-    }
-  };
   return (
     <div className="h-full flex items-center flex-col justify-start bg-cover">
       <HeaderHome />
@@ -134,16 +100,6 @@ function LandDashboard() {
                 {/* <option value="5">Residential</option> */}
               </select>
             </div>
-            {/* <select
-							className="absolute top-0 left-20 h-full w-auto opacity-0 cursor-pointer"
-							style={{ zIndex: 10 }}
-						>
-							<option value="all">All Categories</option>
-							<option value="category1">Location</option>
-							<option value="category2">Area</option>
-							<option value="category3">Type</option>
-							<option value="category4">Price</option>
-						</select> */}
 
             <input
               type="text"
@@ -157,14 +113,26 @@ function LandDashboard() {
           </div>
 
           <div className="mx-12 flex flex-row justify-center ">
-            <button
-              onClick={() => {
-                navigate('/dashboard/land/addland');
-              }}
-              className="flex flex-row  p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
-            >
-              Add New Land
-            </button>
+            {userRole === 'ADMIN' ? (
+              <button
+                onClick={() => {
+                  navigate('/dashboard/land/addland');
+                }}
+                className="flex flex-row p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
+              >
+                Add New Land
+              </button>
+            ) : (
+              // Button for other users to show lands
+              <button
+                onClick={() => {
+                  navigate('/dashboard/land');
+                }}
+                className="flex flex-row p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 justify-center text-white text-nowrap"
+              >
+                Dashboard
+              </button>
+            )}
             <button
               onClick={() => {
                 navigate('/dashboard/land/Market');
@@ -179,7 +147,7 @@ function LandDashboard() {
               }}
               className="flex p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
-             Lands Status
+              Lands Status
             </button>
             <button
               onClick={() => {
@@ -233,46 +201,15 @@ function LandDashboard() {
             </div>
           </div>
           <Link to={`/dashboard/land/enquiries/${land.landId}`}>
-          {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
+            {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}
               <br></br>
               Current Rate: ₹{land.transferAmount}/-
             </p>
           </Link>
-          {/* <button
-            onClick={() => handleInterestedClick(land)}
-            className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
-          >
-            I am interested to buy
-          </button> */}
         </div>
       ))}
-      {/* Modal Section */}
-      {showModal && selectedLand && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-bold mb-4">
-              Confirm Interest in Buying {selectedLand.landId}
-            </h2>
-            <p>Are you sure you want to express interest in purchasing this land?</p>
-            <div className="mt-4 flex justify-end">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-500 text-white rounded-md mr-2"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmInterest}
-                className="px-4 py-2 bg-green-600 text-white rounded-md"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
