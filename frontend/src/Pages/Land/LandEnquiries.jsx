@@ -38,7 +38,8 @@ function LandEnquiries() {
 
     const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns lands
     setLands(tlands); // Update lands state with fetched data
-    // console.log("Lands in get lands in land enquiries : ",tlands);
+    console.log("Lands in get lands in land enquiries : ",tlands);
+    separateData(tlands);
   };
 
   const fetchEmail = async (clientId) => {
@@ -49,13 +50,16 @@ function LandEnquiries() {
       console.error('Error fetching user details:', error);
       return null;
     }
+    console.log('User Details:', userDetails);
   };
 
   // Function to filter data and append required fields
-  const separateData = async () => {
+  const separateData = async (tlands) => {
     const newData = [];
 
-    for (const land of lands) {
+    console.log("Lands in separateData in land enquiries : ",tlands);
+
+    for (const land of tlands) {
       const email = await fetchEmail(land.clientId); // Sequentially fetch email for each clientId
       newData.push({
         id: land.id,
@@ -73,7 +77,7 @@ function LandEnquiries() {
     if (checkLoginSession) {
       setisLoggedd(true);
       getLands(); // Fetch lands and emails
-      separateData();
+      // separateData();
       console.log('Lands in LandEnquiries.jsx : ', lands);
       console.log('updated lands in LandEnquiries.jsx : ', filteredLandData);
     } else {
@@ -95,10 +99,11 @@ function LandEnquiries() {
   const handleApprove = async () => {
     try {
       const response = await updateInquiryStatus(selectedLand.id, 'APPROVED');
+      console.log('Response:', response);
       if(response.status === 200)
-        console.log(response.data.message);
+        console.log(response);
       else{
-        console.log(response.data.error);
+        console.log(response);
       }
     } catch (error) {
       console.error('Error approving land:', error);

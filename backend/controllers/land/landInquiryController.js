@@ -98,7 +98,6 @@ exports.updateInquiry = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
   console.log(id, status);
-
   try {
     const updatedInquiry = await prisma.landInquiry.update({
       where: { id },

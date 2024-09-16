@@ -76,13 +76,13 @@ const LandProvider = ({ children }) => {
     console.log('tlands in context : ', tlands);
     for (let i = 0; i < tlands.length; i++) {
       const land = tlands[i];
-      console.log("land in 1st loop", land);
-      console.log("transations  in 1st loop", structuredTransactions);
+      console.log('land in 1st loop', land);
+      console.log('transations  in 1st loop', structuredTransactions);
       for (let j = 0; j < structuredTransactions.length; j++) {
         const transaction = structuredTransactions[j];
-        console.log("transaction in 2nd loops ", transaction);
-        console.log("identi land", land.landIdentificationNumber);
-        console.log("identi transact", transaction.landIdentificationNumber);
+        console.log('transaction in 2nd loops ', transaction);
+        console.log('identi land', land.landIdentificationNumber);
+        console.log('identi transact', transaction.landIdentificationNumber);
 
         if (land.landIdentificationNumber === transaction.landIdentificationNumber) {
           if (true) {
@@ -220,49 +220,58 @@ const LandProvider = ({ children }) => {
   };
 
   const transferLandfunc = async (formData) => {
-    if (true) {
+    try {
       if (window.ethereum) {
-        const { landId, currentOwnerAddress, transferAmount } = formData;
+        const { landId, transferAmount } = formData;
+
+        const accounts = await ethereum.request({
+          method: 'eth_requestAccounts',
+        });
 
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
 
+        console.log(provider);
+        console.log(landId);
+
         const landContract = new ethers.Contract(landAddress, landABI, signer);
         const exchangeRate = '50735.67';
+        console.log(exchangeRate);
 
-        const parsedAmount = ethers.parseEther(transferAmount);
+        // const parsedAmount = ethers.parseEther(transferAmount);
+        console.log(transferAmount);
+        const amountToTransfer = transferAmount * 0.000000000000000001;
+        // const amountToSend = await ethers.parseEther(amountToTransfer.toString());
+        const amountToSend = await ethers.parseUnits(transferAmount, "wei");
+        console.log('Amount to send', amountToSend);
 
-        await ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [
-            {
-              from: currentAccount,
-              to: currentOwnerAddress,
-              gas: '0x5208',
-              value: parsedAmount.toString(16),
-            },
-          ],
-        });
-        // console.log("parsedAmount : ", parsedAmount.toString(16));
+        const transactionOptions = {
+          value: amountToSend,
+        };
+        console.log(transactionOptions);
 
-        const transactionHash = await landContract.transferLand(
+        const transactionHash = await landContract.requestLandTransfer(
           landId,
-          currentOwnerAddress,
-          String(parsedAmount)
+          accounts[0],
+          transactionOptions
         );
         setIsLoading(true);
         console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
+        if(transactionHash.hash){
+          return 200;
+        }else{
+          return 200;
+        }
       } else {
         console.log('No ethereum object');
       }
+    } catch (error) {
+      console.log(error);
+      throw new Error('Error transferring land');
     }
-    // catch (error) {
-    //   console.log(error);
-    //   throw new Error("Error transferring land");
-    // }
   };
 
   useEffect(() => {
