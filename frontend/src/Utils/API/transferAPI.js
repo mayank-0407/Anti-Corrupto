@@ -1,10 +1,16 @@
 import axios from 'axios';
+import { getCookie } from '../cookieSetup';
 
 const BASE_URL = 'http://localhost:3000';
 
+const sessionToken = getCookie('token');
+const header = {headers: {
+  'Authorization': sessionToken,  // Session token in headers
+}};
+
 const createTransferLand = async (transferLandData) => {
   try {
-    const response = await axios.post(`${BASE_URL}/transferland/create`, transferLandData);
+    const response = await axios.post(`${BASE_URL}/transferland/create`, transferLandData, header);
     return response;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -13,7 +19,7 @@ const createTransferLand = async (transferLandData) => {
 
 const getAllTransferLands = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/transferland/all`);
+    const response = await axios.get(`${BASE_URL}/transferland/all`, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -22,7 +28,7 @@ const getAllTransferLands = async () => {
 
 const getTransferLandById = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/transferland/${id}`);
+    const response = await axios.get(`${BASE_URL}/transferland/${id}`, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');
@@ -31,7 +37,7 @@ const getTransferLandById = async (id) => {
 
 const getTransferLandsByUser = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/transferland/user/${userId}`);
+    const response = await axios.get(`${BASE_URL}/transferland/user/${userId}`, null, header);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.error || 'Something went wrong');

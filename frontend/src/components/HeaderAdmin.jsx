@@ -29,7 +29,7 @@ function HeaderAdmin() {
       <div className="p-4 flex flex-row justify-between items-center">
         <div className="pl-2 flex flex-row justify-center items-center text-gray-700 rounded-lg font-bold hover:text-gray-900 ">
           <img src={logo} alt="Image" className="h-12" />
-          <NavLink to={'/dashboard'}>Anti-Corruptō</NavLink>
+          <NavLink to={'/'}>Anti-Corruptō</NavLink>
         </div>
 
         <ul className="h-5/6 flex flex-row justify-center space-x-8  items-center">

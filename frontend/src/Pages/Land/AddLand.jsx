@@ -17,6 +17,7 @@ const AddLand = () => {
   const [dimensionOfLand, setDimensionOfLand] = useState('');
   const [landIdentificationNumber, setLandIdentificationNumber] = useState('');
   const [landType, setLandType] = useState('');
+  const [landPrice, setlandPrice] = useState(0);
 
   const navigate = useNavigate();
 
@@ -27,33 +28,32 @@ const AddLand = () => {
 
     const myToken = getToken();
     const thisUser = await fetchUserDetails(myToken);
+
     setMyUser(thisUser.data.id);
 
-    let tformData = {
+    let formData = {
       location: location,
       area: area,
       dimensionOfLand: dimensionOfLand,
       landIdentificationNumber: landIdentificationNumber,
       landType: landType,
-    };
-
-    const tempid = await addLandToBlockchain(tformData);
-    console.log(tempid);
-    let formDataDB = {
-      location: location,
-      area: area,
-      dimensionOfLand: dimensionOfLand,
-      landIdentificationNumber: landIdentificationNumber,
-      landType: landType,
+      landPrice: landPrice,
       ownerId: thisUser.data.id,
     };
-    // console.log(formData);
-    const res = await addLand(formDataDB);
-    console.log('Res : ', res);
-    if (res.status === 200) {
-      navigate('/dashboard/land');
+
+    const transactionStatus = await addLandToBlockchain(formData);
+    if (transactionStatus === 200) {
+      // console.log(formData);
+      const res = await addLand(formData);
+      console.log('Res : ', res);
+      if (res.status === 200) {
+        navigate('/dashboard/land');
+      } else {
+        console.log(res.data.message);
+      }
     } else {
-      console.log(res.data.message);
+      console.log('Error in adding land');
+      alert("Error in adding land");
     }
   };
 
@@ -149,6 +149,21 @@ const AddLand = () => {
                     required
                   />
                 </div>
+                <div className="mb-4">
+                  <label htmlFor="landPrice" className="block mb-2 text-left font-semibold">
+                    Land Price
+                  </label>
+                  <input
+                    type="text"
+                    name="landPrice"
+                    id="landPrice"
+                    value={landPrice}
+                    onChange={(e) => setlandPrice(e.target.value)}
+                    placeholder="Enter the Land Price!"
+                    className="w-full p-2 border border-gray-300 rounded-2xl mb-2 bg-blue-50 text-sm opacity-50"
+                    required
+                  />
+                </div>
                 <div className="mb-4 ">
                   <label htmlFor="landType" className="block mb-2 text-left font-semibold">
                     LandType
@@ -164,11 +179,11 @@ const AddLand = () => {
                     <option value="" disabled selected>
                       Select Land Type
                     </option>
-                    <option value="1">Government</option>
-                    <option value="2">Commercial</option>
-                    <option value="3">Agricultural</option>
-                    <option value="4">Industrial</option>
-                    <option value="5">Residential</option>
+                    <option value="0">Government</option>
+                    <option value="1">Commercial</option>
+                    <option value="2">Agricultural</option>
+                    <option value="3">Industrial</option>
+                    <option value="4">Residential</option>
                   </select>
                 </div>
                 {iserror ? (

@@ -1,6 +1,6 @@
 import cookie from 'js-cookie';
 import axios from 'axios';
-import { isSessionValid } from './API/authAPI';
+import { isSessionValid, logoutUser } from './API/authAPI';
 
 const API_URL = 'http://localhost:3000/auth';
 export const setCookie = (key, value) => {
@@ -19,9 +19,14 @@ export const setSessionToken = (token) => {
   setCookie('token', token);
 };
 
-export const logOut = () => {
-  removeCookie('token');
-  return true;
+export const logOut = async () => {
+  const sessionId = getCookie('token');
+  if(logoutUser(sessionId)){
+    console.log("logged out");
+    removeCookie('token');
+    return true;
+  }
+  return false;
 };
 
 export const isLogin = () => {

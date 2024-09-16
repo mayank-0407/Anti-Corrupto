@@ -31,7 +31,7 @@ const Login = () => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
-      navigate('/dashboard');
+      navigate('/');
     } else {
       setisLoggedd(false);
       navigate('/login');

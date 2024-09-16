@@ -3,8 +3,16 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgresql://postgres:123@localhost:5432/capstone?schema=public"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN // 0
+  USER // 1
+  POLICE // 3
+  REGISTRAR // 4
 }
 
 model User {
@@ -20,6 +28,7 @@ model User {
   scope              String?
   id_token           String?
   session_state      String?
+  role               Role                @default(USER)
   createdAt          DateTime            @default(now())
   updatedAt          DateTime            @updatedAt
   sessions           Session[]
@@ -29,6 +38,7 @@ model User {
   ownedLands         Land[]              @relation("LandOwner")
   transferredLands   TransferLand[]      @relation("PrevOwner")
   acquiredLands      TransferLand[]      @relation("CurrentOwner")
+  inquiries          LandInquiry[]       @relation("UserInquiries")
 }
 
 model Session {
@@ -110,6 +120,7 @@ model Land {
   currentPrice             String?
   boughtPrice              String?
   transferHistory          TransferLand[]
+  inquiries                LandInquiry[]  @relation("LandInquiries") // Relation to LandInquiry for tracking inquiries
 }
 
 model TransferLand {
@@ -133,4 +144,25 @@ model LandCase {
   caseDate        DateTime
   transferLand    TransferLand @relation(fields: [transferLandId], references: [id], onDelete: Cascade)
   transferLandId  String
+}
+
+model LandInquiry {
+  id String @id @default(cuid())
+
+  clientId String
+  client   User   @relation(name: "UserInquiries", fields: [clientId], references: [id], onDelete: Cascade)
+
+  landId String
+  land   Land   @relation(name: "LandInquiries", fields: [landId], references: [id], onDelete: Cascade)
+
+  inquiryDate DateTime @default(now())
+
+  status InquiryStatus @default(PENDING)
+}
+
+enum InquiryStatus {
+  PENDING // Inquiry is pending approval by the owner or intermediary
+  APPROVED // Inquiry has been approved
+  REJECTED // Inquiry has been rejected
+  COMPLETED // Transaction completed
 }

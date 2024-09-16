@@ -6,7 +6,9 @@ const challanRouter = require('./routers/vehicle/challanRouter');
 const insuranceRouter = require('./routers/vehicle/insuranceRouter');
 const repairRouter = require('./routers/vehicle/repairRouter');
 const landRouter = require('./routers/land/landRouter');
+const landInquiryRouter = require('./routers/land/landInquiryRouter');
 const transferlandRouter = require('./routers/land/transferlandRouter');
+
 const landcase = require('./routers/land/landcaseRouter');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -35,6 +37,7 @@ app.use('/', repairRouter);
 app.use('/land', landRouter);
 app.use('/transferland', transferlandRouter);
 app.use('/case', landcase);
+app.use('/inquiry',landInquiryRouter);
 
 const port = 3000;
 

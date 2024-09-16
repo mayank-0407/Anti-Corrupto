@@ -90,7 +90,7 @@ function HeaderHome() {
       {/* <div className="p-4 flex flex-row justify-between items-center"> */}
       <div className="flex flex-row text-gray-700 justify-center items-center rounded-lg font-bold hover:text-gray-900 ">
         <img src={logo} alt="Image" className="h-12" />
-        <NavLink to={'/dashboard'}>Anti-Corruptō</NavLink>
+        <NavLink to={'/'}>Anti-Corruptō</NavLink>
       </div>
 
       <ul className="px-4 flex flex-row justify-end space-x-8  items-center">
@@ -98,7 +98,7 @@ function HeaderHome() {
           <button>About</button>
         </li>
         <li className=" hover:text-blue-600">
-          <NavLink to={'/dashboard'}>
+          <NavLink to={'/'}>
             <button>Features</button>
           </NavLink>
         </li>

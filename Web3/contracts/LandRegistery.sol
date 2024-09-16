@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract LandRegistry {
+contract LandRegistery {
     address public owner;
     uint256 public landCount = 0;
 

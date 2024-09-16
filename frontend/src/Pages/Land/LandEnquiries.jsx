@@ -5,15 +5,15 @@ import { BiCategory } from 'react-icons/bi';
 import { FaCaretDown } from 'react-icons/fa';
 import { TypeAnimation } from 'react-type-animation';
 import { setSessionToken, isLogin, getCookie, getToken } from '../../Utils/cookieSetup';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { LandContext } from '../../context/LandContext';
 import { Link } from 'react-router-dom';
 import { getUserLands } from '../../Utils/API/landAPI';
-import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
+import { fetchUserDetails, fetchUserEmail, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
-import { createInquiry } from '../../Utils/API/landInquiry';
+import { createInquiry, getInquiryLandsById } from '../../Utils/API/landInquiry';
 
-function LandDashboard() {
+function LandEnquiries() {
   const [isLoggedd, setisLoggedd] = useState(false);
   // const { checkIfWalletIsConnect } = useContext(LandContext);
   const [lands, setLands] = useState([]);
@@ -21,60 +21,70 @@ function LandDashboard() {
   const [clientId, setclientId] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedLand, setSelectedLand] = useState(null);
+  const [filteredData, setFilteredData] = useState([]);
 
+  const { landId } = useParams();
   const navigate = useNavigate();
 
+  // Add fetching lands with the email associated with each user
   const getLands = async () => {
     const Tocken = getToken();
     const UserDetails = await fetchUserDetails(Tocken);
     setclientId(UserDetails.data.id);
-    const tlands = await getUserLands(UserDetails);
-    setLands(tlands);
+    const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns email
+    console.log('tlands:', tlands);
+    setLands(tlands); // Ensure the API returns 'email' for each land inquiry
   };
+
+  const fetchEmail = async (clientId) => {
+    try {
+      console.log('clientId:', clientId);
+      const userDetails = await fetchUserEmail(clientId);
+      console.log('userDetails:', userDetails);
+      return userDetails.data.email;
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      return null;
+    }
+  };
+
+  // Function to filter data and append required fields
+  const separateData = async () => {
+    const newData = await Promise.all(
+      lands.map(async (item) => {
+        const email = await fetchEmail(item.clientId); // Fetch email for each clientId
+        return {
+          clientId: item.clientId,
+          status: item.status,
+          email: email,
+        };
+      })
+    );
+    setFilteredData(newData);
+  };
+
   useEffect(() => {
     const checkLoginSession = isLogin();
     if (checkLoginSession) {
       setisLoggedd(true);
-      getLands();
+      getLands(); // Fetch lands and emails
+      separateData();
+      console.log("filteredData:", filteredData);
     } else {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, []);
+  }, [lands]);
 
-  const handleInterestedClick = (land) => {
-    console.log(land);
-    setSelectedLand(land); // Set selected land
-    setShowModal(true); // Show modal
+  const [buyerList, setBuyerList] = useState(null);
+
+  const handleStatusChange = (buyerId) => {
+    const updatedBuyers = buyerList.map((buyer) =>
+      buyer.id === buyerId ? { ...buyer, status: 'Approved' } : buyer
+    );
+    setBuyerList(updatedBuyers);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedLand(null); // Clear selected land
-  };
-
-  const confirmInterest = async () => {
-    if (clientId == selectedLand.id) {
-      console.log('You are the owner of this land');
-      setShowModal(false);
-    }
-    const data = {
-      clientId: clientId,
-      landId: selectedLand.id,
-    };
-    try {
-      const response = await createInquiry(data);
-      console.log('Inquiry response:', response);
-      if (response.status == 200) {
-        return response;
-      }
-      console.log('User confirmed interest in land:', selectedLand);
-      setShowModal(false);
-    } catch (error) {
-      console.log('Error:', error);
-      setShowModal(false);
-    }
-  };
   return (
     <div className="h-full flex items-center flex-col justify-start bg-cover">
       <HeaderHome />
@@ -131,19 +141,8 @@ function LandDashboard() {
                 <option value="2">Price</option>
                 <option value="3">Area</option>
                 <option value="4">Location</option>
-                {/* <option value="5">Residential</option> */}
               </select>
             </div>
-            {/* <select
-							className="absolute top-0 left-20 h-full w-auto opacity-0 cursor-pointer"
-							style={{ zIndex: 10 }}
-						>
-							<option value="all">All Categories</option>
-							<option value="category1">Location</option>
-							<option value="category2">Area</option>
-							<option value="category3">Type</option>
-							<option value="category4">Price</option>
-						</select> */}
 
             <input
               type="text"
@@ -179,102 +178,57 @@ function LandDashboard() {
               }}
               className="flex p-4 px-36 mr-8 w-16 rounded-md bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
-             Lands Status
+              Lands Status
             </button>
             <button
               onClick={() => {
-                navigate('/dashboard/landcases');
+                navigate('/dashboard/land/enquiries');
               }}
               className="flex p-4 px-36 rounded-md w-16 bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >
-              Cases
+              Enquiries
             </button>
           </div>
         </div>
       </div>
 
-      <p className="text-xl mt-8 m-4 font-bold">My Lands</p>
+      <p className="text-xl mt-8 m-4 font-bold">Enquiries</p>
 
-      {lands.map((land, index) => (
-        <div
-          key={index}
-          className="flex flex-col w-2/3 h-72 bg-slate-700 rounded-lg m-4 object-fill bg-cover  justify-between shadow-2xl"
-          style={{
-            backgroundImage: `linear-gradient(to left, rgba(0, 0, 0, 0), rgb(255, 255, 255)), url(https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D})`,
-          }}
-        >
-          <div>
-            <p
-              onClick={() => {
-                navigate(`/dashboard/land/enquiries/${land.id}`);
-              }}
-              className="px-4 pt-4 text-2xl font-bold hover:cursor-pointer"
-            >
-              {land.id}
-            </p>
-            {land.landType === 0 ? (
-              <p className="pl-4 ">Government</p>
-            ) : land.landType == 1 ? (
-              <p className="pl-4 ">Commercial</p>
-            ) : land.landType == 2 ? (
-              <p className="pl-4 ">Agricultural</p>
-            ) : land.landType == 3 ? (
-              <p className="pl-4 ">Industrial</p>
-            ) : (
-              <p className="pl-4 ">Residential</p>
-            )}
-            <p className="pl-4 ">Dimension : {land.dimensionOfLand}</p>
-            <div className="flex flex-row">
-              <p className="pl-4 ">{land.area},</p>
-              <div className="flex flex-row items-center">
-                <MdLocationPin className="ml-1" />
-                <p>{land.location}</p>
-              </div>
-            </div>
-          </div>
-          <Link to={`/dashboard/land/enquiries/${land.landId}`}>
-          {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
-            <p className="p-4 text-lg font-bold">
-              Owner: {land.currentOwner}
-              <br></br>
-              Current Rate: ₹{land.transferAmount}/-
-            </p>
-          </Link>
-          {/* <button
-            onClick={() => handleInterestedClick(land)}
-            className="p-2 m-4 w-50 bg-slate-600 hover:bg-slate-800 text-white"
-          >
-            I am interested to buy
-          </button> */}
-        </div>
-      ))}
-      {/* Modal Section */}
-      {showModal && selectedLand && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-8 rounded-lg shadow-lg max-w-lg w-full">
-            <h2 className="text-2xl font-bold mb-4">
-              Confirm Interest in Buying {selectedLand.landId}
-            </h2>
-            <p>Are you sure you want to express interest in purchasing this land?</p>
-            <div className="mt-4 flex justify-end">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-500 text-white rounded-md mr-2"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmInterest}
-                className="px-4 py-2 bg-green-600 text-white rounded-md"
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <div className="flex flex-col w-3/4 mx-auto mt-8 bg-slate-700 rounded-lg p-4 shadow-2xl">
+        <h1 className="text-2xl font-bold text-white mb-4">Buyers List</h1>
+        <table className="min-w-full bg-slate-800 rounded-lg">
+          <thead>
+            <tr>
+              <th className="py-2 text-left text-white px-4">Buyer ID</th>
+              <th className="py-2 text-left text-white px-4">Buyer Email</th>
+              <th className="py-2 text-left text-white px-4">Status</th>
+              <th className="py-2 text-left text-white px-4">Change Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {lands.map((land) => (
+              <tr key={land.id} className="odd:bg-slate-700 even:bg-slate-600">
+                <td className="py-3 px-4 text-white">{land.clientId}</td>
+                <td className="py-3 px-4 text-white">{land.email}</td>{' '}
+                {/* Displaying the email here */}
+                <td className="py-3 px-4 text-white">{land.status}</td>
+                <td className="py-3 px-4">
+                  {land.status !== 'Approved' && (
+                    <button
+                      onClick={() => handleStatusChange(land.id)}
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Approve
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
 
-export default LandDashboard;
+export default LandEnquiries;
