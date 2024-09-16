@@ -4,20 +4,26 @@ import { Link } from 'react-router-dom';
 function Services() {
   function ServiceIcon({ iconSrc, title, thislink }) {
     return (
-      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4 px-2 transition duration-300 ease-in-out hover:scale-110 bg-slate-100 flex item-center justify-center">
-        <div className="bg-transparent rounded-lg overflow-hidden hover:shadow-lg">
-          <div className="px-4 py-2 space-y-2 bg-transparent border-2 ">
-            <Link to={thislink}>
-              <img src={iconSrc} alt={title} className="mx-auto h-40 w-30 text-black" />
-              <h1 className="text-center text-xl font-medium mt-2">{title}</h1>
+      <div className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-6 px-4 transition-transform duration-300 ease-in-out hover:scale-105 flex justify-center">
+        <div
+          className=" rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out overflow-hidden bg-cover "
+          style={{
+            backgroundImage: `url("https://img.freepik.com/free-vector/seamless-white-interlaced-rounded-arc-patterned-background_53876-97975.jpg?t=st=1726463373~exp=1726466973~hmac=c49043de1b7a2ad8f527ea803fca1c9d566dbcd2376dae01fdc2f37d065b4ed1&w=996")`,
+          }}
+        >
+          <div className="p-4 text-center">
+            <Link to={thislink} className="flex flex-col items-center">
+              <img src={iconSrc} alt={title} className="h-24 w-24 mb-3" />
+              <h1 className="text-lg font-semibold text-gray-800">{title}</h1>
             </Link>
           </div>
         </div>
       </div>
     );
   }
+
   return (
-    <div className="flex flex-wrap justify-center space-x-2 bg-slate-100">
+    <div className="flex flex-wrap justify-center p-6">
       <ServiceIcon
         iconSrc="https://www.svgrepo.com/show/341206/traffic-event.svg"
         title="Traffic"

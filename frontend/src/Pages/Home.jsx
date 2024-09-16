@@ -5,10 +5,12 @@ import Updates from '../components/home/Updates';
 import ConnectToApp from '../components/home/ConnectToApp';
 import ServiceIcon from '../components/home/Services';
 import Footer from '../components/footer';
+import TextFrontPage from '../components/home/TextFrontPage';
+import MobileApp from '../components/home/MobileApp';
 
 const Home = () => {
   return (
-    <div className="h-screen w-screen bg-slate-100 font-thin">
+    <div className="h-screen w-screen  font-thin">
       <div className="flex sticky z-50 top-0">
         <Navbar />
       </div>
@@ -16,17 +18,21 @@ const Home = () => {
         <Carousel />
       </div>
       {/* <Updates /> */}
-      <div className="bg-slate-100 pr-10 pl-10">
-        <div className="mx-[100px] my-5 py-5 ">
-          <h1 className="text-center text-4xl font-bold underline mt-2 font-3xl pb-4 text-cyan-900">
+      <div className=" py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-screen-xl mx-auto my-5">
+          <h1 className="text-center text-3xl md:text-4xl font-bold underline mb-6 text-cyan-900">
             Services
           </h1>
-          <ServiceIcon />
+          <div className="flex flex-wrap justify-center gap-6">
+            <ServiceIcon />
+          </div>
         </div>
       </div>
-
-      <div className="mt-10">
-        <ConnectToApp />
+      <div>
+        <TextFrontPage />
+      </div>
+      <div>
+        <MobileApp />
       </div>
 
       <div className="mt-10 bg-cyan-900">

@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-sky-800 text-white py-4 w-screen">
+    <div className="bg-blue-500 text-white py-4 w-screen">
       <div className="container mx-auto flex justify-between items-center relative px-10">
         <div className="flex items-center">
           <img src="/Logo_1.png" alt="Logo" className="h-8 mr-4" />
@@ -48,7 +48,7 @@ const Navbar = () => {
             <>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-purple-800 rounded-md mr-4 hover:bg-purple-700"
+                className="px-4 py-2 bg-slate-700 rounded-md mr-4 hover:bg-slate-900"
               >
                 Logout
               </button>
