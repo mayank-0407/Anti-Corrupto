@@ -110,10 +110,12 @@ model Repair {
 
 model Land {
   id                       String         @id @default(cuid())
+  landType                 LandType       @default(Government)
+  web3Id                   String?        @unique
   location                 String
   area                     String
   dimensionOfLand          String
-  landIdentificationNumber String
+  landIdentificationNumber String         @unique
   ownerId                  String
   owner                    User           @relation("LandOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   parcelStatus             String?
@@ -121,6 +123,14 @@ model Land {
   boughtPrice              String?
   transferHistory          TransferLand[]
   inquiries                LandInquiry[]  @relation("LandInquiries") // Relation to LandInquiry for tracking inquiries
+}
+
+enum LandType {
+  Government
+  Residential
+  Commercial
+  Agricultural
+  Industrial
 }
 
 model TransferLand {

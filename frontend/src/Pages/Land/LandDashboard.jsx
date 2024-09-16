@@ -6,7 +6,7 @@ import { FaCaretDown } from 'react-icons/fa';
 import { TypeAnimation } from 'react-type-animation';
 import { setSessionToken, isLogin, getCookie, getToken } from '../../Utils/cookieSetup';
 import { useNavigate } from 'react-router-dom';
-// import { LandContext } from '../../context/LandContext';
+import { LandContext } from '../../context/LandContext';
 import { Link } from 'react-router-dom';
 import { getUserLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
@@ -20,15 +20,18 @@ function LandDashboard() {
   const [clientId, setclientId] = useState('');
   const [userRole, setuserRole] = useState('');
 
+  const {  } = useContext(LandContext);
+
   const navigate = useNavigate();
 
   const getLands = async () => {
-    const Tocken = getToken();
-    const UserDetails = await fetchUserDetails(Tocken);
+    const Token = getToken();
+    const UserDetails = await fetchUserDetails(Token);
     setuserRole(UserDetails.data.role);
     setclientId(UserDetails.data.id);
     const tlands = await getUserLands(UserDetails);
     setLands(tlands);
+    console.log('Lands in get lands in dashboard : ', tlands);
   };
   useEffect(() => {
     const checkLoginSession = isLogin();
@@ -180,17 +183,7 @@ function LandDashboard() {
             >
               {land.id}
             </p>
-            {land.landType === 0 ? (
-              <p className="pl-4 ">Government</p>
-            ) : land.landType == 1 ? (
-              <p className="pl-4 ">Commercial</p>
-            ) : land.landType == 2 ? (
-              <p className="pl-4 ">Agricultural</p>
-            ) : land.landType == 3 ? (
-              <p className="pl-4 ">Industrial</p>
-            ) : (
-              <p className="pl-4 ">Residential</p>
-            )}
+            <p className="pl-4 ">{land.landType}</p>
             <p className="pl-4 ">Dimension : {land.dimensionOfLand}</p>
             <div className="flex flex-row">
               <p className="pl-4 ">{land.area},</p>
@@ -208,6 +201,8 @@ function LandDashboard() {
               Current Rate: ₹{land.transferAmount}/-
             </p>
           </Link>
+          {/* <div><Market/></div> */}
+          
         </div>
       ))}
     </div>

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
-import { Link } from 'react-router-dom';
-import logo from '../assets/Anti-Corrupto.png';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { IoMenu } from 'react-icons/io5';
+import logo from '../assets/Anti-Corrupto.png';
+import { setSessionToken, isLogin, logOut } from '../Utils/cookieSetup';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -17,18 +15,14 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { setSessionToken, isLogin, logOut } from '../Utils/cookieSetup';
 
 function HeaderHome() {
   const [isLoggedd, setisLoggedd] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     const checkLoginSession = isLogin();
-    if (checkLoginSession) {
-      setisLoggedd(true);
-    } else {
-      setisLoggedd(false);
-    }
+    setisLoggedd(checkLoginSession);
   }, []);
 
   const handleLogout = () => {
@@ -37,96 +31,130 @@ function HeaderHome() {
     navigate('/');
   };
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
+  const [state, setState] = useState({
     right: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return;
     }
 
     setState({ ...state, [anchor]: open });
   };
 
+  const navLinks = [
+    { text: 'Profile', path: '/profile' },
+    { text: 'My Lands', path: '/dashboard/land' },
+    { text: 'Marketplace', path: '/dashboard/land/Market' },
+    { text: 'Lands Status', path: '/dashboard/land/interested' },
+    { text: 'Cases', path: '/dashboard/land/cases' },
+    { text: 'Connect Wallet', path: '/connect-wallet' },
+    { text: 'Settings', path: '/settings' },
+  ];
+
+  const drawerLinks = [
+    { text: 'About', path: '/about' },
+    { text: 'Features', path: '/features' },
+    { text: 'Services', path: '/services' },
+    { text: 'Contact', path: '/contact' },
+    ...navLinks
+  ];
+
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: 250 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Profile', 'My lands', 'Analytics', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+        {drawerLinks.map((item, index) => (
+          <ListItem key={item.text} disablePadding>
+            <ListItemButton component={NavLink} to={item.path}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
-        {['Connect Wallet', 'Settings', 'Logout'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton onClick={text === 'Logout' ? handleLogout : null}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
+        {isLoggedd ? (
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleLogout}>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
             </ListItemButton>
           </ListItem>
-        ))}
+        ) : (
+          <ListItem disablePadding>
+            <ListItemButton component={NavLink} to="/login">
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
 
   return (
     <div className="p-3 bg-slate-300 w-screen opacity-95 flex flex-row justify-between items-center">
-      {/* <div className=" h-1/6 bg-slate-800 "></div> */}
-
-      {/* <div className="p-4 flex flex-row justify-between items-center"> */}
-      <div className="flex flex-row text-gray-700 justify-center items-center rounded-lg font-bold hover:text-gray-900 ">
-        <img src={logo} alt="Image" className="h-12" />
-        <NavLink to={'/'}>Anti-Corruptō</NavLink>
+      <div className="flex flex-row text-gray-700 justify-center items-center rounded-lg font-bold hover:text-gray-900">
+        <img src={logo} alt="Logo" className="h-12" />
+        <NavLink to="/">Anti-Corruptō</NavLink>
       </div>
 
-      <ul className="px-4 flex flex-row justify-end space-x-8  items-center">
-        <li className=" hover:text-blue-600">
-          <button>About</button>
+      <ul className="hidden md:flex px-4 flex-row justify-end space-x-8 items-center">
+        <li className="hover:text-blue-600">
+          <NavLink to="/about">About</NavLink>
         </li>
-        <li className=" hover:text-blue-600">
-          <NavLink to={'/'}>
-            <button>Features</button>
-          </NavLink>
+        <li className="hover:text-blue-600">
+          <NavLink to="/features">Features</NavLink>
         </li>
-        <li className=" hover:text-blue-600 ">
-          <button>Services</button>
+        <li className="hover:text-blue-600">
+          <NavLink to="/services">Services</NavLink>
         </li>
-        <li className=" hover:text-blue-600">
-          <button>Contact</button>
+        <li className="hover:text-blue-600">
+          <NavLink to="/contact">Contact</NavLink>
         </li>
-        {['right'].map((anchor) => (
-          <React.Fragment key={anchor}>
-            <Button onClick={toggleDrawer(anchor, true)}>
-              <IoMenu size={24} color="black" />
-            </Button>
-            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-              {list(anchor)}
-            </Drawer>
-          </React.Fragment>
-        ))}
-        {/* {isLoggedd ? (
-					<div className="border px-5  border-slate-300  bg-slate-800 text-white text-sm rounded-lg p-2 hover:bg-gray-900">
-						<button onClick={() => handleLogout()}>Logout</button>
-					</div>
-				) : (
-					<div className="border px-5  border-slate-300  bg-slate-800 text-white text-sm rounded-lg p-2 hover:bg-gray-900">
-						<NavLink to={"/login"}>Login</NavLink>
-					</div>
-				)} */}
+        {/* Display other links based on login status */}
+        {isLoggedd ? (
+          <li>
+            <Button onClick={handleLogout}>Logout</Button>
+          </li>
+        ) : (
+          <li>
+            <NavLink to="/login">
+              <Button>Login</Button>
+            </NavLink>
+          </li>
+        )}
+      </ul>
+
+      <ul className="flex md:hidden px-4 flex-row justify-end items-center">
+        <li>
+          <Button onClick={toggleDrawer('right', true)}>
+            <IoMenu size={24} color="black" />
+          </Button>
+          <Drawer
+            anchor="right"
+            open={state.right}
+            onClose={toggleDrawer('right', false)}
+          >
+            {list('right')}
+          </Drawer>
+        </li>
       </ul>
     </div>
   );
