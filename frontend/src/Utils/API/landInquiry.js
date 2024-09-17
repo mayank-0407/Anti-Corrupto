@@ -58,7 +58,12 @@ export const getUserInterestedLands = async (clientId) => {
 export const updateInquiryStatus = async (inquiryId, status) => {
   try {
     console.log(inquiryId, status);
-    const response = await axios.post(`${API_URL}/change/status/${inquiryId}`, { status }, null, header);
+    const response = await axios.post(
+      `${API_URL}/change/status/${inquiryId}`,
+      { status },
+      null,
+      header
+    );
     return response.data;
   } catch (error) {
     throw error;

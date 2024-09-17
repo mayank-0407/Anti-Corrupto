@@ -1,12 +1,14 @@
 const { PrismaClient } = require('@prisma/client');
 const { getLandById, updateLand } = require('./landController');
+const { deleteInquiryAfterTransfer } = require('./landInquiryController');
 const prisma = new PrismaClient();
 
 const createTransferLand = async (req, res) => {
   if(true) {
-    var { prevOwnerId, currentOwnerId, landIdBackend, landStatus, transferAmount } = req.body;
-    console.log("hi : ",prevOwnerId, currentOwnerId, landIdBackend, landStatus, transferAmount);
-    if (!prevOwnerId || !currentOwnerId || !landIdBackend || !landStatus || !transferAmount) {
+    console.log(req);
+    var { prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount } = req.body;
+    console.log("hi : ",prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount);
+    if (!prevOwnerId || !currentOwnerId || !landIdBackend || !landIdWeb3 || !transferAmount) {
       return res.status(203).json({ message: "Please provide all required fields" });
     }
     
@@ -15,7 +17,7 @@ const createTransferLand = async (req, res) => {
         prevOwnerId,
         currentOwnerId,
         landId:landIdBackend,
-        landStatus,
+        landIdWeb3,
         transferPrice:transferAmount,
       },
     });
@@ -29,6 +31,8 @@ const createTransferLand = async (req, res) => {
             ownerId: currentOwnerId,
         },
     });
+
+    const deleteInquiry = await deleteInquiryAfterTransfer(landIdBackend);
   
     res.status(200).json({ success: true, data: newTransferLand });
   } 

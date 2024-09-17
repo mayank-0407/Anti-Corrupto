@@ -33,11 +33,11 @@ export default function App() {
       console.log(sessionId);
       try {
         const userDetails = await fetchUserDetails(sessionId);
-        console.log("User Details From App.jsx : ",userDetails);
+        console.log('User Details From App.jsx : ', userDetails);
         if (userDetails && userDetails.data) {
           let userRole = userDetails.data.role;
           setRole(userRole);
-          console.log("Role in App.jsx",userRole);
+          console.log('Role in App.jsx', userRole);
         } else {
           setRole(null);
         }

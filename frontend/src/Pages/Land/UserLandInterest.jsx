@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
 import { getUserInterestedLands } from '../../Utils/API/landInquiry';
+import { createTransferLand } from '../../Utils/API/transferAPI';
 
 function UserLandInterest() {
   const [isLoggedd, setisLoggedd] = useState(false);
@@ -68,16 +69,26 @@ function UserLandInterest() {
   };
 
   const confirmInterest = async () => {
-    console.log('Selected Land : ', selectedLand.land.boughtPrice);
+    // console.log('Selected Land : ', selectedLand);
     const formData = {
       landId: selectedLand.land.web3Id,
+      landIdWeb3: selectedLand.land.web3Id,
+      landIdBackend: selectedLand.landId,
+      prevOwnerId: selectedLand.land.ownerId,
+      currentOwnerId: clientId,
       transferAmount: selectedLand.land.boughtPrice,
     };
-    const transactionConfirmations = transferLandfunc(formData);
-    setShowModal(false);
-    if(transactionConfirmations === 200){
-      alert('Land Transfer Successful');
-    }else{
+
+    const transactionConfirmations = await transferLandfunc(formData);
+
+    if (transactionConfirmations === 200) {
+      setShowModal(false);
+      const response = await createTransferLand(formData);
+      console.log('response : ', response);
+      if (response.status == 200) {
+        alert('Land Transfer Successful');
+      } else console.log(response.error);
+    } else {
       console.log('Land Transfer Failed');
     }
   };

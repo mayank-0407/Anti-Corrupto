@@ -20,7 +20,7 @@ function LandDashboard() {
   const [clientId, setclientId] = useState('');
   const [userRole, setuserRole] = useState('');
 
-  const {  } = useContext(LandContext);
+  const {} = useContext(LandContext);
 
   const navigate = useNavigate();
 
@@ -202,7 +202,6 @@ function LandDashboard() {
             </p>
           </Link>
           {/* <div><Market/></div> */}
-          
         </div>
       ))}
     </div>

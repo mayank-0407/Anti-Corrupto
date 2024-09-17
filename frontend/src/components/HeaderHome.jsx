@@ -36,10 +36,7 @@ function HeaderHome() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
 
@@ -61,7 +58,7 @@ function HeaderHome() {
     { text: 'Features', path: '/features' },
     { text: 'Services', path: '/services' },
     { text: 'Contact', path: '/contact' },
-    ...navLinks
+    ...navLinks,
   ];
 
   const list = (anchor) => (
@@ -75,9 +72,7 @@ function HeaderHome() {
         {drawerLinks.map((item, index) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton component={NavLink} to={item.path}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
@@ -147,11 +142,7 @@ function HeaderHome() {
           <Button onClick={toggleDrawer('right', true)}>
             <IoMenu size={24} color="black" />
           </Button>
-          <Drawer
-            anchor="right"
-            open={state.right}
-            onClose={toggleDrawer('right', false)}
-          >
+          <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
             {list('right')}
           </Drawer>
         </li>

@@ -242,7 +242,7 @@ const LandProvider = ({ children }) => {
         console.log(transferAmount);
         const amountToTransfer = transferAmount * 0.000000000000000001;
         // const amountToSend = await ethers.parseEther(amountToTransfer.toString());
-        const amountToSend = await ethers.parseUnits(transferAmount, "wei");
+        const amountToSend = await ethers.parseUnits(transferAmount, 'wei');
         console.log('Amount to send', amountToSend);
 
         const transactionOptions = {
@@ -259,11 +259,12 @@ const LandProvider = ({ children }) => {
         console.log(`Loading - ${transactionHash.hash}`);
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
-        setIsLoading(false);
-        if(transactionHash.hash){
+        if (transactionHash.hash) {
+          console.log("TMKC");
+          setIsLoading(false);
           return 200;
-        }else{
-          return 200;
+        } else {
+          return 400;
         }
       } else {
         console.log('No ethereum object');
