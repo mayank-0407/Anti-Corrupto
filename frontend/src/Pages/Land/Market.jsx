@@ -60,7 +60,7 @@ function Market() {
     const UserDetails = await fetchUserDetails(Tocken);
     setclientId(UserDetails.data.id);
     const tlands = await getAllLands(UserDetails);
-    console.log("Market : ", tlands);
+    console.log('Market : ', tlands);
     setLands(tlands);
   };
   useEffect(() => {

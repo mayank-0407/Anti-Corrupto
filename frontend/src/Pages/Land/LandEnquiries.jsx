@@ -38,7 +38,7 @@ function LandEnquiries() {
 
     const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns lands
     setLands(tlands); // Update lands state with fetched data
-    console.log("Lands in get lands in land enquiries : ",tlands);
+    console.log('Lands in get lands in land enquiries : ', tlands);
     separateData(tlands);
   };
 
@@ -57,7 +57,7 @@ function LandEnquiries() {
   const separateData = async (tlands) => {
     const newData = [];
 
-    console.log("Lands in separateData in land enquiries : ",tlands);
+    console.log('Lands in separateData in land enquiries : ', tlands);
 
     for (const land of tlands) {
       const email = await fetchEmail(land.clientId); // Sequentially fetch email for each clientId
@@ -100,9 +100,8 @@ function LandEnquiries() {
     try {
       const response = await updateInquiryStatus(selectedLand.id, 'APPROVED');
       console.log('Response:', response);
-      if(response.status === 200)
-        console.log(response);
-      else{
+      if (response.status === 200) console.log(response);
+      else {
         console.log(response);
       }
     } catch (error) {

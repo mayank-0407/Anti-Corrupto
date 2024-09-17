@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 exports.createInquiry = async (req, res) => {
   const { clientId, landId } = req.body;
 
-  if(true) {
+  if (true) {
     // Check if an inquiry already exists for this client and land
     console.log(clientId, landId);
     const existingInquiry = await prisma.landInquiry.findFirst({
@@ -30,7 +30,7 @@ exports.createInquiry = async (req, res) => {
     });
 
     res.status(201).json(newInquiry);
-  } 
+  }
   // catch (error) {
   //   res.status(400).json({ error: error.message });
   // }
@@ -104,7 +104,7 @@ exports.updateInquiry = async (req, res) => {
       data: { status },
     });
 
-    res.status(200).json({message : "Approved the Land Status"});
+    res.status(200).json({ message: "Approved the Land Status" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -112,15 +112,27 @@ exports.updateInquiry = async (req, res) => {
 
 // Delete Inquiry
 exports.deleteInquiry = async (req, res) => {
-  const { id } = req.params;
+  const { landId } = req.params;
 
   try {
     await prisma.landInquiry.delete({
-      where: { id },
+      where: { landId },
     });
 
-    res.status(204).send();
+    res.status(200).json({ message: "Inquiry deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+exports.deleteInquiryAfterTransfer = async (landId) => {
+  try {
+    await prisma.landInquiry.delete({
+      where: { landId },
+    });
+
+    return 200;
+  } catch (error) {
+    return 400;
   }
 };

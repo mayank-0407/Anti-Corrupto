@@ -63,12 +63,16 @@ export const updateLand = async (userId, LandId, land) => {
 };
 
 export const addLandIdToDB = async (landid, LandBlockchainId) => {
-  console.log("hi")
+  console.log('hi');
   console.log(landid, LandBlockchainId);
   LandBlockchainId = Number(LandBlockchainId).toString();
   try {
-    const response = await axios.post(`${API_URL}/add/land/id/indb/${landid}`, {LandBlockchainId}, header);
-    return response.data; 
+    const response = await axios.post(
+      `${API_URL}/add/land/id/indb/${landid}`,
+      { LandBlockchainId },
+      header
+    );
+    return response.data;
   } catch (error) {
     throw error;
   }
