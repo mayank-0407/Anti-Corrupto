@@ -260,7 +260,6 @@ const LandProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         if (transactionHash.hash) {
-          console.log("TMKC");
           setIsLoading(false);
           return 200;
         } else {
