@@ -32,5 +32,9 @@ def predict():
         print(f"Error processing request: {e}")
         return jsonify({'error': 'Failed to process request'}), 500
 
+@app.route('/', methods=['GET'])
+def test():
+    return 'Test successful'
+
 if __name__ == '__main__':
     app.run(debug=True)
