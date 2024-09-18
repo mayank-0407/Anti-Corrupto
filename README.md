@@ -15,10 +15,12 @@ systems. The project sets a precedent for responsible and effective administrati
 a more equitable and just society
 
 # To run postgres database
+
 - docker compose up
 - docker exec -it container_id /bin/bash
 
 # How to Run Backend
+
 - npm i
 - npx prisma format
 - npx prisma migrate dev
@@ -26,23 +28,37 @@ a more equitable and just society
 - npx prisma studio
 
 # How to Run Mobile Frontend
+
 - npm i
 - npx expo start
 - a (for android)
 - i (for ios)
 
 # Backend env file
-- DATABASE_URL=postgresql://postgres:123@db:5432/capstone?schema=public
-- ACCESS_TOKEN_PRIVATE_KEY=
-- REFRESH_TOKEN_PRIVATE_KEY=
+
+- DATABASE_URL=postgresql://postgres:123@db:5432/capstone?schema=public // For local database
+- DATABASE_URL="#"
+- DIRECT_URL="#"
+- FRONTEND_BASE_URL="http://localhost:5173" // For local Frontend Deployment
+- FRONTEND_BASE_URL="https://anticorrupto-frontend.vercel.app"
+- Backend_BASE_URL="localhost:3000" // For local Frontend Deployment
+- Backend_BASE_URL="anticorrupto-backend.onrender.com"
+- ACCESS_TOKEN_PRIVATE_KEY=#
+- REFRESH_TOKEN_PRIVATE_KEY=#
 - PORT=3000
 
-
 # How to Run ML Model
+
 - pip3 install -r requirements.txt
 - python main.py
 
-
 # deploy contracts hardhat
+
 npx hardhat run scripts/deploy.js --network sepolia
 (get abhi in artifacts)
+
+# Deployed Links
+
+- FRONTEND LINK : https://anticorrupto-frontend.vercel.app/
+- BACKEND LINK : https://anticorrupto-backend.onrender.com/
+- House Price pred API LINK - https://landpricepredmodel.onrender.com/

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import cookie from 'js-cookie';
 import { getCookie } from '../cookieSetup';
+import { backendURL } from '../config';
 
-const API_URL = 'http://localhost:3000/auth';
+const API_URL = `${backendURL}auth`;
 
 const sessionToken = cookie.get('token');
 

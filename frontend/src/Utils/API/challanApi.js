@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { getCookie } from '../cookieSetup';
+import { backendURL } from '../config';
 
-const API_URL = 'http://localhost:3000/challan';
+const API_URL = `${backendURL}challan`;
 
 const sessionToken = getCookie('token');
 const header = {

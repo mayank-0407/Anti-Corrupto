@@ -1,8 +1,10 @@
 import cookie from 'js-cookie';
 import axios from 'axios';
 import { isSessionValid, logoutUser } from './API/authAPI';
+import { backendURL } from './config';
 
-const API_URL = 'http://localhost:3000/auth';
+const API_URL = `${backendURL}auth`;
+
 export const setCookie = (key, value) => {
   cookie.set(key, value, { expires: 1 });
 };

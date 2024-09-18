@@ -6,7 +6,7 @@ const doc = {
     description: 'API Documentation',
   },
   host: 'localhost:3000',  // Adjust to your app's host
-  schemes: ['http'],
+  schemes: ['http','https'],
 };
 
 const outputFile = './swagger-output.json';  // This is the generated file

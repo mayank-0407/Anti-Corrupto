@@ -20,13 +20,23 @@ const app = express();
 dotenv.config();
 
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: [process.env.FRONTEND_BASE_URL],
   credentials: true,
   optionSuccessStatus: 200,
 };
 
+// const corsOptions = {
+//   origin: 'https://anticorrupto-frontend.vercel.app',
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+//   optionSuccessStatus: 200
+// };
+
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
 
 // Swagger UI route to serve the generated documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
