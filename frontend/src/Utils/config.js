@@ -1,4 +1,4 @@
-// const backendURL = "http://localhost:3000"  // local
-const backendURL = "https://anticorrupto-backend.onrender.com/"  // render
+// const backendURL = 'http://localhost:3000/';
+const backendURL = "https://anticorrupto-backend.onrender.com/"
 
-export {backendURL}
+export { backendURL };

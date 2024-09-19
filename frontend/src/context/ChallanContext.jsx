@@ -29,27 +29,31 @@ const ChallanProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnect();
-  }, [challanCount]);
+  }, []);
 
   const checkIfWalletIsConnect = async () => {
     try {
-      if (!ethereum) return alert('Please install MetaMask.');
+      // if (!ethereum) return alert('Please install MetaMask.');
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
         getUserChallansfunc(accounts[0]);
+        return 200;
       } else {
         console.log('No accounts found');
       }
+      return 400;
     } catch (error) {
       console.log(error);
+      return 400;
     }
   };
 
   const getChallanContract = async () => {
-    if (!ethereum) return alert('Please install MetaMask.');
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
 
     const provider = new ethers.BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
@@ -59,6 +63,8 @@ const ChallanProvider = ({ children }) => {
   };
 
   const addChallanToBlockchain = async (formData) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const challanContract = await getChallanContract();
       const { vehicleId, issueDate, paid, amount, location, reason } = formData;
@@ -83,6 +89,8 @@ const ChallanProvider = ({ children }) => {
   };
 
   const getUserChallansfunc = async (account) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const challanContract = await getChallanContract();
 
@@ -106,6 +114,8 @@ const ChallanProvider = ({ children }) => {
   };
 
   const payChallan = async (formData) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const challanContract = await getChallanContract();
 

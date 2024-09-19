@@ -38,7 +38,8 @@ const VehicleProvider = ({ children }) => {
   };
 
   const getUserVehiclesfunc = async (tempAddress, vehicleContract) => {
-    // console.log("in checkIfWalletIsConnect Connected:", tempAddress);
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const availableVehicles = await vehicleContract.getUserVehicles(tempAddress);
       // console.log("available vehicles : ", availableVehicles);
@@ -63,7 +64,7 @@ const VehicleProvider = ({ children }) => {
 
   const checkIfWalletIsConnect = async () => {
     try {
-      if (!ethereum) return alert('Please install MetaMask.');
+      // if (!ethereum) return alert('Please install MetaMask.');
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
@@ -71,15 +72,20 @@ const VehicleProvider = ({ children }) => {
         setCurrentAccount(accounts[0]);
         const vehicleContract = await getContractInstance();
         getUserVehiclesfunc(accounts[0], vehicleContract);
+        return 200;
       } else {
+        return 400;
         console.log('No accounts found');
       }
     } catch (error) {
+      return 400;
       console.log(error);
     }
   };
 
   const checkIfVehiclesExists = async () => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const vehicleContract = await getContractInstance();
       // console.log(vehicleContract);
@@ -94,6 +100,8 @@ const VehicleProvider = ({ children }) => {
   };
 
   const addVehicleToBlockchain = async (formData) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if(checkWallet != 200) return alert('Please connect/install your wallet first');
     try {
       const vehicleContract = await getContractInstance();
       const {
@@ -132,7 +140,7 @@ const VehicleProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnect();
-  }, [vehicleCount]);
+  }, []);
 
   return (
     <VehicleContext.Provider

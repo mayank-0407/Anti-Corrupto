@@ -33,6 +33,9 @@ const LandProvider = ({ children }) => {
   };
 
   const getUserLandsfunc = async (tempAddress) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if (checkWallet != 200) return alert('Please connect/install your wallet first');
+
     console.log('in checkIfWalletIsConnect Connected:', tempAddress);
     if (true) {
       if (ethereum) {
@@ -68,6 +71,9 @@ const LandProvider = ({ children }) => {
   };
 
   const addLandIdInDB = async (structuredTransactions) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if (checkWallet != 200) return alert('Please connect/install your wallet first');
+
     console.log('hi in addLandIdInDB');
 
     const Token = getToken();
@@ -99,23 +105,51 @@ const LandProvider = ({ children }) => {
 
   const checkIfWalletIsConnect = async () => {
     try {
-      if (!ethereum) return alert('Please install MetaMask.');
+      // if (!ethereum) return alert('Please install MetaMask.');
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
       if (accounts.length) {
         setCurrentAccount(accounts[0]);
         getUserLandsfunc(accounts[0]);
+        return 200;
       } else {
         connectWallet();
         console.log('No accounts found');
       }
+      return 400;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const checkIfWalletIsConnectLogin = async () => {
+    try {
+      if (!ethereum) {
+        alert("Please connect/install your wallet first");
+        return 400
+      };
+
+      const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+      if (accounts.length) {
+        setCurrentAccount(accounts[0]);
+        getUserLandsfunc(accounts[0]);
+        return accounts[0];
+      } else {
+        return connectWalletLogin();
+        console.log('No accounts found');
+      }
+    } catch (error) {
+      return 400;
+      console.log(error);
+    }
+  };
+
   const checkIfLandExists = async () => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if (checkWallet != 200) return alert('Please connect/install your wallet first');
+
     try {
       if (ethereum) {
         // const landContract = createEthereumContract();
@@ -137,7 +171,7 @@ const LandProvider = ({ children }) => {
 
   const connectWallet = async () => {
     try {
-      if (!ethereum) return alert('Please install MetaMask.');
+      // if (!ethereum) return alert('Please install MetaMask.');
 
       const accounts = await ethereum.request({
         method: 'eth_requestAccounts',
@@ -148,8 +182,30 @@ const LandProvider = ({ children }) => {
       throw new Error('No ethereum object');
     }
   };
+  const connectWalletLogin = async () => {
+    try {
+      if (!ethereum) return alert('Please install MetaMask.');
+
+      const accounts = await ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+      setCurrentAccount(accounts[0]);
+      if(accounts[0]){
+        return accounts[0];
+      }else{
+        return 400;
+      }
+    } catch (error) {
+      console.log(error);
+      return 400;
+      throw new Error('No ethereum object');
+    }
+  };
 
   const addLandToBlockchain = async (formData) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if (checkWallet != 200) return alert('Please connect/install your wallet first');
+
     try {
       if (window.ethereum) {
         const { location, area, dimensionOfLand, landIdentificationNumber, landType, landPrice } =
@@ -220,6 +276,9 @@ const LandProvider = ({ children }) => {
   };
 
   const transferLandfunc = async (formData) => {
+    // const checkWallet = checkIfWalletIsConnect();
+    // if (checkWallet != 200) return alert('Please connect/install your wallet first');
+
     try {
       if (window.ethereum) {
         const { landId, transferAmount } = formData;
@@ -275,10 +334,9 @@ const LandProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    connectWallet();
+    // connectWallet();
     checkIfWalletIsConnect();
-    // checkIfLandExists();
-  }, [LandCount]);
+  }, []);
 
   return (
     <LandContext.Provider
@@ -293,6 +351,7 @@ const LandProvider = ({ children }) => {
         formData,
         checkIfWalletIsConnect,
         transferLandfunc,
+        checkIfWalletIsConnectLogin,
       }}
     >
       {children}
