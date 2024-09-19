@@ -3,7 +3,7 @@ import cookie from 'js-cookie';
 import { getCookie } from '../cookieSetup';
 import { backendURL } from '../config';
 
-const API_URL = `${backendURL}auth`;
+const API_URL = `${backendURL}/auth`;
 
 const sessionToken = cookie.get('token');
 

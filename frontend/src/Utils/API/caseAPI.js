@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from '../cookieSetup';
 import { backendURL } from '../config';
 
-const BASE_URL = `${backendURL}case`;
+const BASE_URL = `${backendURL}/case`;
 
 const sessionToken = getCookie('token');
 const header = {
