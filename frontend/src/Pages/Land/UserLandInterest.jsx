@@ -185,7 +185,7 @@ function UserLandInterest() {
             </button>
             <button
               onClick={() => {
-                navigate('/dashboard/landcases');
+                navigate('/dashboard/land/cases');
               }}
               className="flex p-4 px-36 rounded-md w-16 bg-slate-600 hover:bg-slate-800 text-white justify-center text-nowrap"
             >

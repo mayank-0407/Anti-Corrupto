@@ -12,6 +12,7 @@ import AddVehicleChallan from './Pages/Traffic/Challan/AddVehicleChallan';
 import PayingChallan from './Pages/Traffic/Challan/PayingChallan';
 import AddLand from './Pages/Land/AddLand';
 import ViewLand from './Pages/Land/ViewLand';
+import AddCase from './Pages/Land/AddCase';
 import LandDashboard from './Pages/Land/LandDashboard';
 import UserLandInterest from './Pages/Land/UserLandInterest';
 import LandEnquiries from './Pages/Land/LandEnquiries';
@@ -26,18 +27,14 @@ export default function App() {
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Simulate fetching the role (replace with actual API call or logic)
   useEffect(() => {
     const fetchRole = async () => {
       const sessionId = getCookie('token');
-      console.log(sessionId);
       try {
         const userDetails = await fetchUserDetails(sessionId);
-        console.log('User Details From App.jsx : ', userDetails);
         if (userDetails && userDetails.data) {
           let userRole = userDetails.data.role;
           setRole(userRole);
-          console.log('Role in App.jsx', userRole);
         } else {
           setRole(null);
         }
@@ -47,12 +44,11 @@ export default function App() {
       }
       setLoading(false);
     };
-    const userRole = fetchRole(); // You can use async here if needed
-    setRole(userRole);
-    setLoading(false);
+    fetchRole();
   }, []);
 
   if (loading) return <div>Loading...</div>;
+
   return (
     <BrowserRouter className="flex items-center justify-center bg-slate-100">
       <Routes>
@@ -62,39 +58,55 @@ export default function App() {
         <Route path="/dashboard/vehicle" element={<VehiclesPage />} />
         <Route path="/dashboard/vehicle/view/:vehicleId" element={<ViewVehicle />} />
         <Route path="/dashboard/vehicle/:vehicleId/challan" element={<VehicleChallan />} />
-        <Route
-          path="/dashboard/vehicle/:vehicleId/challan/:challanId"
-          element={<PayingChallan />}
-        />
+        <Route path="/dashboard/vehicle/:vehicleId/challan/:challanId" element={<PayingChallan />} />
+        
         {/* Role-based protection for AddVehicle (ADMIN only) */}
         <Route
-          exact
           path="/dashboard/vehicle/add"
           element={
             <ProtectedRoute element={<AddVehicle />} userRole={role} allowedRoles={['ADMIN']} />
           }
         />
-        {/* Role-based protection for AddVehicleChallan (POLICE only) */}
+
+        {/* Role-based protection for AddVehicleChallan (ADMIN only) */}
         <Route
-          exact
           path="/dashboard/vehicle/:vehicleId/challan/add"
           element={
-            <ProtectedRoute
-              element={<AddVehicleChallan />}
-              userRole={role}
-              allowedRoles={['POLICE']}
-            />
+            <ProtectedRoute element={<AddVehicleChallan />} userRole={role} allowedRoles={['ADMIN']} />
           }
         />
+
         <Route path="/dashboard/land" element={<LandDashboard />} />
         <Route path="/dashboard/land/interested" element={<UserLandInterest />} />
-
         <Route path="/dashboard/land/enquiries/:landId" element={<LandEnquiries />} />
-        <Route path="/dashboard/land/addland" element={<AddLand />} />
+
+        {/* Role-based protection for AddLand (ADMIN only) */}
+        <Route
+          path="/dashboard/land/addland"
+          element={
+            <ProtectedRoute element={<AddLand />} userRole={role} allowedRoles={['ADMIN']} />
+          }
+        />
+
         <Route path="/dashboard/land/View" element={<ViewLand />} />
         <Route path="/dashboard/land/Market" element={<Market />} />
         <Route path="/dashboard/land/transfer/:id" element={<TransferLand />} />
-        <Route path="/dashboard/land/cases" element={<Cases />} />
+        
+        {/* Role-based protection for Cases (ADMIN only) */}
+        <Route
+          path="/dashboard/land/cases"
+          element={
+            <ProtectedRoute element={<Cases />} userRole={role} allowedRoles={['ADMIN']} />
+          }
+        />
+
+        {/* Role-based protection for AddCase (ADMIN only) */}
+        <Route
+          path="/dashboard/land/addcase"
+          element={
+            <ProtectedRoute element={<AddCase />} userRole={role} allowedRoles={['ADMIN']} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

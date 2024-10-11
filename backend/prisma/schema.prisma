@@ -45,7 +45,7 @@ model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
-  expires      DateTime
+  expires      DateTime  
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -149,9 +149,9 @@ model TransferLand {
 
 model LandCase {
   id              String       @id @default(cuid())
-  caseStatus      String
+  caseStatus      String        @default("PENDING")
   caseDescription String
-  caseDate        DateTime
+  caseDate        DateTime     @default(now())
   transferLand    TransferLand @relation(fields: [transferLandId], references: [id], onDelete: Cascade)
   transferLandId  String
 }

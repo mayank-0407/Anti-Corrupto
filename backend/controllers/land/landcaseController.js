@@ -5,7 +5,7 @@ const createLandCase = async (req, res) => {
   try {
     const { caseStatus, caseDescription, caseDate, transferLandId } = req.body;
 
-    if (!caseStatus || !caseDescription || !caseDate || !transferLandId) {
+    if (!caseDescription || !transferLandId) {
       return res.status(400).json({ message: "Please provide all required fields" });
     }
 
@@ -24,6 +24,7 @@ const createLandCase = async (req, res) => {
   }
 };
 
+
 const getAllLandCases = async (req, res) => {
   try {
     const landCases = await prisma.landCase.findMany();
@@ -32,6 +33,7 @@ const getAllLandCases = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 const getLandCaseById = async (req, res) => {
   const id = req.params.id;
@@ -45,6 +47,7 @@ const getLandCaseById = async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 };
+
 
 const getLandCasesByUser = async (req, res) => {
   const userId = req.params.userId;
