@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://192.168.18.179:3000/challan"; //home
+const API_URL = "http://172.20.10.3:3000/challan"; //home
 
 export const addChallan = async (challan) => {
 	console.log("Challan from api ", challan);

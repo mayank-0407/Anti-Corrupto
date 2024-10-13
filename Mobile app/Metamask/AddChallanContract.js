@@ -1,16 +1,15 @@
 import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
-import PrimaryButton from "../Components/primaryButton";
+import PrimaryButton from "../components/primaryButton";
 import {
 	useContractRead,
 	useContractWrite,
 	usePrepareContractWrite,
 } from "wagmi";
 import ChallanABI from "./ABI's/ChallanABI.json";
-import Web3 from "./WalleConnect";
+import Web3 from "./WalletConnect";
 import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-import { fetchUserDetails } from "../util/Api";
 import { useNavigation } from "@react-navigation/native";
 import { addChallan } from "../util/challanApi";
 

@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
-import PrimaryButton from "../Components/primaryButton";
+import PrimaryButton from "../components/primaryButton";
 import {
 	useContractRead,
 	useContractWrite,
@@ -10,15 +10,14 @@ import {
 } from "wagmi";
 import { parseEther } from "viem";
 import ChallanABI from "./ABI's/ChallanABI.json";
-import Web3 from "./WalleConnect";
+import Web3 from "./WalletConnect";
 import { addVehicle } from "../util/vehicleApi";
 import { getSessionToken } from "../util/tokenStore";
-import { fetchUserDetails } from "../util/Api";
+import { fetchUserDetails } from "../util/authApi";
 import { useNavigation } from "@react-navigation/native";
 import { updateChallan } from "../util/challanApi";
 
 export default function PayChallanContract({ amount, challan }) {
-
 	const { config } = usePrepareSendTransaction({
 		to: "0x8e6065baccC5B3a9F68DD974F0d06E1D804797B6",
 		value: parseEther(amount.toString()),
