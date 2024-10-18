@@ -126,9 +126,9 @@ const LandProvider = ({ children }) => {
   const checkIfWalletIsConnectLogin = async () => {
     try {
       if (!ethereum) {
-        alert("Please connect/install your wallet first");
-        return 400
-      };
+        alert('Please connect/install your wallet first');
+        return 400;
+      }
 
       const accounts = await ethereum.request({ method: 'eth_accounts' });
 
@@ -190,9 +190,9 @@ const LandProvider = ({ children }) => {
         method: 'eth_requestAccounts',
       });
       setCurrentAccount(accounts[0]);
-      if(accounts[0]){
+      if (accounts[0]) {
         return accounts[0];
-      }else{
+      } else {
         return 400;
       }
     } catch (error) {

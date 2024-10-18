@@ -25,8 +25,9 @@ const Navbar = () => {
     const WalletLinked = getCookie('WalletLinked');
     const WalletAccountNumber = getCookie('WalletAccountNumber');
     setaccountNumberr(WalletAccountNumber);
-    setWalletLogged(WalletLinked);
-  }
+    if(WalletLinked)
+      setWalletLogged(true);
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
