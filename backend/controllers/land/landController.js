@@ -19,15 +19,15 @@ const createLand = async (req, res) => {
       landPrice,
       landType,
     } = req.body;
-    // console.log(
-    //   location,
-    //   area,
-    //   dimensionOfLand,
-    //   landIdentificationNumber,
-    //   ownerId,
-    //   landPrice,
-    //   landType
-    // );
+    console.log(
+      location,
+      area,
+      dimensionOfLand,
+      landIdentificationNumber,
+      ownerId,
+      landPrice,
+      landType
+    );
     if (
       !location ||
       !area ||

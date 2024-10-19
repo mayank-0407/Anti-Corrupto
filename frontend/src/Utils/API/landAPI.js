@@ -47,7 +47,7 @@ export const getOneLand = async (landId) => {
 export const addLand = async (land) => {
   try {
     const response = await axios.post(`${API_URL}/create`, land, header);
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (error) {
     throw error;
