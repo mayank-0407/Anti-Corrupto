@@ -97,6 +97,7 @@ model Challan {
   userId    String?
   location  String
   officerId String?
+  challanIdBlockchain String?
 }
 
 model Repair {

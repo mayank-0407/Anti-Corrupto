@@ -40,3 +40,13 @@ export const getChallansById = async (challanId) => {
     throw error;
   }
 };
+
+export const updateChallanStatus = async (challanId) => {
+  try {
+    console.log("jasndikjnasijdnasijndijansijdnasijndiasndijnas");
+    const response = await axios.post(`${API_URL}/change/challan/status/${challanId}`, header);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

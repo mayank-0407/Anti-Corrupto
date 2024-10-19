@@ -11,7 +11,6 @@ const AddVehicleChallan = () => {
   const {
     formData,
     handleChange,
-    payChallan,
     addChallanToBlockchain,
     checkIfWalletIsConnect,
     getUserChallansfunc,
@@ -29,12 +28,22 @@ const AddVehicleChallan = () => {
   const handleAddChallan = async (e) => {
     e.preventDefault();
     // const amt = parseFloat(amount);
-    const idk = await handleChallanData();
-    const challanData = { vehicleId, amount, reason, location, paid: status };
+    const challanIdFromBlockchain = await handleChallanData();
+    console.log('challanIdFromBlockchain : ', challanIdFromBlockchain);
+    if (!challanIdFromBlockchain)
+      error('Error adding challan to blockchain no challanid from blockchain');
+    const challanData = {
+      challanId: challanIdFromBlockchain,
+      vehicleId,
+      amount,
+      reason,
+      location,
+      paid: status,
+    };
 
     try {
       const challan = await addChallan(challanData);
-      console.log('challan:', challan);
+      console.log('challan from db :', challan);
       if (challan.status === 200) {
         navigate(`/dashboard/vehicle/${vehicleId}/challan`);
       } else {
@@ -45,8 +54,7 @@ const AddVehicleChallan = () => {
     }
   };
   const handleChallanData = async () => {
-    let challanFormData = {
-      challanId: '12345',
+    const challanFormData = {
       vehicleId: vehicleId,
       issueDate: issueDate,
       paid: status,
@@ -56,7 +64,7 @@ const AddVehicleChallan = () => {
     };
     const tempid = await addChallanToBlockchain(challanFormData);
     console.log(tempid);
-    return true;
+    return tempid.toString();
   };
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import ChallanProvider from './context/ChallanContext';
 import LandProvider from './context/LandContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <VeicleProvider>
       <ChallanProvider>
         <LandProvider>
@@ -15,5 +15,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </LandProvider>
       </ChallanProvider>
     </VeicleProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

@@ -7,7 +7,7 @@ const requireRole = require("../../middlewares/requireRole");
 router.post("/add", requireSession, challanController.createChallan);
 router.get("/view", requireSession, challanController.getAllChallans);
 router.get("/view/:id", requireSession, challanController.getChallanById);
-router.put("/:id", requireSession, challanController.updateChallan);
+router.post("/change/challan/status/:id",  challanController.updateChallan);
 router.delete("/:id", requireSession, challanController.deleteChallan);
 
 module.exports = router;
