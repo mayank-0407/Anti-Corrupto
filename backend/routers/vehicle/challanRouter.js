@@ -4,10 +4,10 @@ const challanController = require("../../controllers/vehicle/challanController")
 const requireSession = require("../../middlewares/requireSession");
 const requireRole = require("../../middlewares/requireRole");
 
-router.post("/add", requireSession, requireRole("POLICE"), challanController.createChallan);
+router.post("/add", requireSession, challanController.createChallan);
 router.get("/view", requireSession, challanController.getAllChallans);
 router.get("/view/:id", requireSession, challanController.getChallanById);
-router.put("/:id", requireSession, requireRole("POLICE"), challanController.updateChallan);
-router.delete("/:id", requireSession, requireRole("POLICE"), challanController.deleteChallan);
+router.put("/:id", requireSession, challanController.updateChallan);
+router.delete("/:id", requireSession, challanController.deleteChallan);
 
 module.exports = router;

@@ -34,6 +34,7 @@ export default function App() {
         const userDetails = await fetchUserDetails(sessionId);
         if (userDetails && userDetails.data) {
           let userRole = userDetails.data.role;
+          console.log('User role:', userRole);
           setRole(userRole);
         } else {
           setRole(null);
