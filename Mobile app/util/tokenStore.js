@@ -11,7 +11,9 @@ export async function saveSessionToken(sessionToken) {
 
 export async function getSessionToken() {
 	try {
-		const sessionToken = await SecureStore.getItemAsync("sessionToken");
+		const sessionToken = await SecureStore.getItemAsync("sessionToken", {
+			requireAuthentication: true,
+		});
 		if (sessionToken) {
 			console.log("Session token retrieved successfully:", sessionToken);
 			return sessionToken;
