@@ -16,7 +16,7 @@ const Login = () => {
     let values = { email: email, password: password };
     try {
       const response = await loginUser(values);
-
+      console.log(response);
       if (response.session.sessionToken) {
         setSessionId(response.session.sessionToken);
         setSessionToken(response.session.sessionToken);

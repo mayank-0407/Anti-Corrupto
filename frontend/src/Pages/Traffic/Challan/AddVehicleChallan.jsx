@@ -34,7 +34,7 @@ const AddVehicleChallan = () => {
 
     try {
       const challan = await addChallan(challanData);
-
+      console.log('challan:', challan);
       if (challan.status === 200) {
         navigate(`/dashboard/vehicle/${vehicleId}/challan`);
       } else {

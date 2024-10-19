@@ -6,17 +6,16 @@ const prisma = new PrismaClient();
 const validRoles = ["ADMIN", "USER", "POLICE", "REGISTRAR"];
 
 const signUpController = async (req, res) => {
-	console.log(req.body);	
+
 	try {
 		const { name, email, password, role } = req.body;
 		if (!email || !password || !name || !validRoles.includes(role)) {
 			return res.status(400).json({ message: "Please provide all required fields with a valid role" });
 		}
-
+		
 		const existingUser = await prisma.user.findUnique({
 			where: { email },
 		});
-		console.log("hi");
 		
 		if (existingUser) {
 			return res.status(400).json({ message: "User already exists" });
@@ -38,6 +37,7 @@ const signUpController = async (req, res) => {
 
 const loginController = async (req, res) => {
 	try {
+		
 		const { email, password } = req.body;
 
 		const existingUser = await prisma.User.findUnique({
@@ -49,13 +49,14 @@ const loginController = async (req, res) => {
 		if (!existingUser) {
 			return res.status(203).json({ message: "User not found" });
 		}
-
+		
+		
 		const matched = await bcrypt.compare(password, existingUser.hashedPassword);
-
+		
 		if (!matched) {
 			return res.status(203).json({ message: "Incorrect password" });
 		}
-
+		console.log("hi");
 		const accessToken = generateAccessToken({
 			id: existingUser.id,
 		});
@@ -63,6 +64,7 @@ const loginController = async (req, res) => {
 		const refreshToken = generateRefreshToken({
 			id: existingUser.id,
 		});
+		
 
 		await prisma.User.update({
 			where: {
@@ -73,6 +75,7 @@ const loginController = async (req, res) => {
 				refresh_token: refreshToken,
 			},
 		});
+		
 
 		const session = await prisma.Session.create({
 			data: {
