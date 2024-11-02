@@ -19,7 +19,7 @@ const Navbar = () => {
     setBlockchainVartoStates();
     const checkLoginSession = isLogin();
     setisLoggedd(checkLoginSession);
-  }, []);
+  }, [1]);
 
   const setBlockchainVartoStates = async () => {
     const WalletLinked = getCookie('WalletLinked');

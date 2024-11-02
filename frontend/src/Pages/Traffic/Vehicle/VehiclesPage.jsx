@@ -81,7 +81,7 @@ const VehiclesPage = () => {
                 className="overflow-hidden rounded-lg shadow-md md:flex bg-white"
               >
                 <img
-                  src={vehicle.image}
+                  src={"/car.jpg"}
                   alt={vehicle.name}
                   // height={1}
                   // width={5}

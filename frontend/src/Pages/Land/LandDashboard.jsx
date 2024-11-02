@@ -181,7 +181,7 @@ function LandDashboard() {
               }}
               className="px-4 pt-4 text-2xl font-bold hover:cursor-pointer"
             >
-              {land.id}
+              Land Number : {land.landIdentificationNumber}
             </p>
             <p className="pl-4 ">{land.landType}</p>
             <p className="pl-4 ">Dimension : {land.dimensionOfLand}</p>
