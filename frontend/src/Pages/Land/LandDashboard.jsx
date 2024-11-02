@@ -193,7 +193,7 @@ function LandDashboard() {
               </div>
             </div>
           </div>
-          <Link to={`/dashboard/land/enquiries/${land.landId}`}>
+          <Link to={`/dashboard/land/enquiries/${land.id}`}>
             {/* <Link to={`/dashboard/land/transfer/${land.id}`}> */}
             <p className="p-4 text-lg font-bold">
               Owner: {land.currentOwner}

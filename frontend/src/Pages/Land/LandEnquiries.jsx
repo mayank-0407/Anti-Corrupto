@@ -35,10 +35,11 @@ function LandEnquiries() {
     const Token = getToken(); // Assuming this function fetches a token
     const UserDetails = await fetchUserDetails(Token);
     setclientId(UserDetails.data.id);
-
-    const tlands = await getInquiryLandsById(UserDetails.data); // Assuming this API returns lands
+    // console.log('User Details in get lands in land enquiries : ', UserDetails);
+    // console.log('Land ID CHECKING LAND INQUIRY :',landId)
+    
+    const tlands = await getInquiryLandsById(landId); // Assuming this API returns lands
     setLands(tlands); // Update lands state with fetched data
-    console.log('Lands in get lands in land enquiries : ', tlands);
     separateData(tlands);
   };
 
