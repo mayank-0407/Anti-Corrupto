@@ -46,7 +46,7 @@ export default function App() {
       setLoading(false);
     };
     fetchRole();
-  }, []);
+  }, [10]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -55,6 +55,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/signup" element={<AdminSignup />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard/vehicle" element={<VehiclesPage />} />
         <Route path="/dashboard/vehicle/view/:vehicleId" element={<ViewVehicle />} />

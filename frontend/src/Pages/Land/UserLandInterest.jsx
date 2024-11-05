@@ -12,6 +12,7 @@ import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
 import { getUserInterestedLands } from '../../Utils/API/landInquiry';
 import { createTransferLand } from '../../Utils/API/transferAPI';
+import Navbar from '../../components/Navbar';
 
 function UserLandInterest() {
   const [isLoggedd, setisLoggedd] = useState(false);
@@ -94,7 +95,7 @@ function UserLandInterest() {
   };
   return (
     <div className="h-full flex items-center flex-col justify-start bg-cover">
-      <HeaderHome />
+      <Navbar />
       <div
         className="flex flex-col w-full h-96 md:h-auto bg-slate-700 object-fill bg-cover justify-center items-center"
         style={{

@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 import { createTransferLand } from '../../Utils/API/transferAPI';
 import { getOneLand } from '../../Utils/API/landAPI';
+import Navbar from '../../components/Navbar';
 
 const TransferLand = () => {
   const [error, setError] = useState('');
@@ -93,7 +94,7 @@ const TransferLand = () => {
         )`,
       }}
     >
-      <HeaderAdmin />
+      <Navbar />
       <div className="   m-20 p-10  flex flex-row items-center justify-center rounded-xl backdrop-brightness-90 w-1/3">
         <div className=" w-full flex flex-col md:flex-row  ">
           <div className="  w-full order-2 md:order-1">

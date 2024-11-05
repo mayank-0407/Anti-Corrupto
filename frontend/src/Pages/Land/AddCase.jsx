@@ -6,6 +6,8 @@ import { addLandCase } from '../../Utils/API/landCaseAPI';
 import { getToken, isLogin } from '../../Utils/cookieSetup';
 import HeaderAdmin from '../../components/HeaderAdmin';
 
+import Navbar from '../../components/Navbar';
+
 const AddCase = () => {
   const [error, setError] = useState('');
   const [isError, setIsError] = useState(false);
@@ -66,7 +68,7 @@ const AddCase = () => {
         )`,
       }}
     >
-      <HeaderAdmin />
+      <Navbar />
       <div className="mt-40 w-1/3 m-20 p-4 flex flex-row items-center justify-center rounded-xl backdrop-brightness-90">
         <div className="w-full flex flex-col md:flex-row">
           <div className="w-full order-2 md:order-1">

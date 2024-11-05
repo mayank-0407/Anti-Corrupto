@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { IoMenu } from 'react-icons/io5';
-import logo from '../assets/Anti-Corrupto.png';
+import { MoreVert } from '@mui/icons-material';
+// import logo from '../assets/Anti-Corrupto.png';
 import { setSessionToken, isLogin, logOut } from '../Utils/cookieSetup';
 
 import Box from '@mui/material/Box';
@@ -39,7 +40,6 @@ function HeaderHome() {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -104,9 +104,20 @@ function HeaderHome() {
   );
 
   return (
-    <div className="p-3 bg-slate-300 w-screen opacity-95 flex flex-row justify-between items-center">
+    <div className="p-3 bg-blue-500 w-screen opacity-95 flex flex-row justify-between items-center">
+      {/* Ellipsis icon for mobile sidebar */}
+      <ul className="flex md:hidden px-4 flex-row justify-end items-center">
+        <li>
+          <Button onClick={toggleDrawer('right', true)}>
+            mm
+          </Button>
+          <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
+            {list('right')}
+          </Drawer>
+        </li>
+      </ul>
       <div className="flex flex-row text-gray-700 justify-center items-center rounded-lg font-bold hover:text-gray-900">
-        <img src={logo} alt="Logo" className="h-12" />
+        <img src="./Logo_1.png" alt="Logo" className="h-12" />
         <NavLink to="/">Anti-Corruptō</NavLink>
       </div>
 
@@ -123,7 +134,6 @@ function HeaderHome() {
         <li className="hover:text-blue-600">
           <NavLink to="/contact">Contact</NavLink>
         </li>
-        {/* Display other links based on login status */}
         {isLoggedd ? (
           <li>
             <Button onClick={handleLogout}>Logout</Button>
@@ -131,22 +141,12 @@ function HeaderHome() {
         ) : (
           <li>
             <NavLink to="/login">
-              <Button>Loginasdsad</Button>
+              <Button>Login</Button>
             </NavLink>
           </li>
         )}
       </ul>
 
-      <ul className="flex md:hidden px-4 flex-row justify-end items-center">
-        <li>
-          <Button onClick={toggleDrawer('right', true)}>
-            <IoMenu size={24} color="black" />
-          </Button>
-          <Drawer anchor="right" open={state.right} onClose={toggleDrawer('right', false)}>
-            {list('right')}
-          </Drawer>
-        </li>
-      </ul>
     </div>
   );
 }

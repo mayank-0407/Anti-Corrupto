@@ -16,6 +16,7 @@ import {
   getInquiryLandsById,
   updateInquiryStatus,
 } from '../../Utils/API/landInquiry';
+import Navbar from '../../components/Navbar';
 
 function LandEnquiries() {
   const [isLoggedd, setisLoggedd] = useState(false);
@@ -113,7 +114,7 @@ function LandEnquiries() {
 
   return (
     <div className="h-full flex items-center flex-col justify-start bg-cover">
-      <HeaderHome />
+      <Navbar />
       <div
         className="flex flex-col w-full h-96 md:h-auto bg-slate-700 object-fill bg-cover justify-center items-center"
         style={{

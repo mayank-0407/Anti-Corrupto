@@ -9,12 +9,13 @@ const signUpController = async (req, res) => {
 
 	try {
 		const { name, email, password, role } = req.body;
+		console.log(name, email, password, role);
 		if (!email || !password || !name || !validRoles.includes(role)) {
 			return res.status(400).json({ message: "Please provide all required fields with a valid role" });
 		}
 		
 		const existingUser = await prisma.user.findUnique({
-			where: { email },
+			where: { email:email },
 		});
 		
 		if (existingUser) {
@@ -29,7 +30,7 @@ const signUpController = async (req, res) => {
 		
 		return res.status(200).json({ message: "User registered successfully", user });
 	} catch (err) {
-		console.log("hi1");
+		console.log(err);
 		return res.status(500).json({ message: "Internal server error", details: err.message });
 	}
 };

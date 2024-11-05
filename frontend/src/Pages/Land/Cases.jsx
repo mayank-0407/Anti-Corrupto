@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { getAllLandCases, updateLandCase } from '../../Utils/API/landCaseAPI'; // Import the landCase API
 import { Tooltip } from 'react-tooltip';
+import Navbar from '../../components/Navbar';
 
 const theme = createTheme({
   components: {
@@ -91,7 +92,7 @@ function Cases() {
   return (
     <ThemeProvider theme={theme}>
       <div className="h-screen">
-        <HeaderHome />
+        <Navbar />
         <div
           className="w-screen h-96 rounded flex flex-col items-center justify-center opacity-90"
           style={{

@@ -12,6 +12,7 @@ import { getUserLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import HeaderHome from '../../components/HeaderHome';
 import { createInquiry } from '../../Utils/API/landInquiry';
+import Navbar from '../../components/Navbar';
 
 function LandDashboard() {
   const [isLoggedd, setisLoggedd] = useState(false);
@@ -42,11 +43,11 @@ function LandDashboard() {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, []);
+  }, [10]);
 
   return (
     <div className="h-full flex items-center flex-col justify-start bg-cover">
-      <HeaderHome />
+      <Navbar />
       <div
         className="flex flex-col w-full h-96 md:h-auto bg-slate-700 object-fill bg-cover justify-center items-center"
         style={{

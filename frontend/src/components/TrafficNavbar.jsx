@@ -100,8 +100,10 @@ const Navbar = () => {
                     className="absolute top-0 right-0 bg-white w-64 shadow-lg h-full overflow-y-auto transform transition-transform duration-300 ease-in-out"
                   >
                     <Sidebar>
-                      <SidebarItem text="Traffic" onClick={handleTraffic} />
-                      <SidebarItem text="Land" onClick={handleChallan} />
+                      <SidebarItem text="Dashboard" onClick={handleTraffic} />
+                      <SidebarItem text="Dashboard" onClick={handleTraffic} />
+                      <SidebarItem text="Dashboard" onClick={handleTraffic} />
+                      <SidebarItem text="Challans" onClick={handleChallan} />
                       <SidebarItem text="Logout" onClick={handleLogout} />
                     </Sidebar>
                   </div>

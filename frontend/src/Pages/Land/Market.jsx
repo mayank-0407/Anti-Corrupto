@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { getAllLands } from '../../Utils/API/landAPI';
 import { fetchUserDetails, loginUser } from '../../Utils/API/authAPI';
 import { createInquiry } from '../../Utils/API/landInquiry';
+import Navbar from '../../components/Navbar';
 
 const style = {
   position: 'absolute',
@@ -117,7 +118,7 @@ function Market() {
     <>
       <ThemeProvider theme={theme}>
         <div className="h-screen">
-          <HeaderHome />
+          <Navbar />
           <div
             className="w-screen h-96 rounded flex flex-col items-center justify-center opacity-90"
             style={{

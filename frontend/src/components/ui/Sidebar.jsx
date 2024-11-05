@@ -1,10 +1,25 @@
 import { MoreVertical, ChevronLast, ChevronFirst } from 'lucide-react';
-import { useContext, createContext, useState } from 'react';
+import { useContext, createContext, useState, useEffect } from 'react';
+import { isLogin, logOut, getToken } from '../../Utils/cookieSetup';
+import { fetchUserDetails } from '../../Utils/API/authAPI';
 
 const SidebarContext = createContext();
 
 export default function Sidebar({ children }) {
   const [expanded, setExpanded] = useState(true);
+  const [thisName, setThisname] = useState('');
+  const [thisEmail, setThisEmail] = useState('');
+
+  const getUserDetails = async () => {
+    const myToken = getToken();
+    const thisUser = await fetchUserDetails(myToken);
+    console.log('User Details navbar : ', thisUser);
+    setThisEmail(thisUser.data.email);
+    setThisname(thisUser.data.name);
+  };
+  useEffect(() => {
+    const temp = getUserDetails();
+  }, []);
 
   return (
     <aside className="h-screen no-scrollbar">
@@ -27,20 +42,15 @@ export default function Sidebar({ children }) {
           <ul className="flex-1 px-3">{children}</ul>
         </SidebarContext.Provider>
 
-        <div className="border-t flex p-3">
-          <img
-            src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-            alt=""
-            className="w-10 h-10 rounded-md"
-          />
+        <div className="border-t flex p-3 items-center justify-center">
           <div
             className={`
               flex justify-between items-center
               overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}`}
           >
             <div className="leading-4">
-              <h4 className="font-semibold">John Doe</h4>
-              <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+              <h4 className="font-semibold text-gray-400">{thisName}</h4>
+              <span className="text-xs text-gray-600">{thisEmail}</span>
             </div>
             <MoreVertical size={20} />
           </div>
@@ -50,7 +60,7 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert }) {
+export function SidebarItem({ icon, text, active, alert, onClick }) {
   const { expanded } = useContext(SidebarContext);
 
   return (
@@ -67,9 +77,15 @@ export function SidebarItem({ icon, text, active, alert }) {
     `}
     >
       {icon}
-      <span className={`overflow-hidden transition-all ${expanded ? 'w-52 ml-3' : 'w-0'}`}>
-        {text}
-      </span>
+      <button
+        onClick={onClick}
+        className={`overflow-hidden transition-all duration-300 ease-in-out 
+              ${expanded ? 'w-52 ml-3 px-2 py-2 g-indigo-400 text-black' : 'w-0'}
+              text-left rounded-md`}
+      >
+        {expanded && text}
+      </button>
+
       {alert && (
         <div
           className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? '' : 'top-2'}`}
@@ -77,7 +93,8 @@ export function SidebarItem({ icon, text, active, alert }) {
       )}
 
       {!expanded && (
-        <div
+        <button
+          onClick={onClick}
           className={`
           absolute left-full rounded-md px-2 py-1 ml-6
           bg-indigo-100 text-indigo-800 text-sm
@@ -86,7 +103,7 @@ export function SidebarItem({ icon, text, active, alert }) {
       `}
         >
           {text}
-        </div>
+        </button>
       )}
     </li>
   );
