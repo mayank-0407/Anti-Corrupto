@@ -84,8 +84,7 @@ const ChallanProvider = ({ children }) => {
     const challanContract = await getChallanContract();
     const { vehicleId, issueDate, paid, amount, location, reason } = formData;
 
-    console.log(challanContract);
-    console.log('hi');
+    // console.log(challanContract);
 
     const challanTransaction = await challanContract.issueChallan(
       vehicleId,
@@ -93,7 +92,7 @@ const ChallanProvider = ({ children }) => {
       reason,
       location
     );
-    console.log('hi1');
+
 
     setIsLoading(true);
     console.log(`Loading - ${challanTransaction.hash}`);

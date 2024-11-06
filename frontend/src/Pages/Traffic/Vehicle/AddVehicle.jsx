@@ -31,8 +31,6 @@ const AddVehicle = () => {
       navigate('/login');
     }
     checkIfWalletIsConnect();
-    console.log('print vehicles added: ', formData);
-    console.log(VehicleContext);
   }, []);
 
   const handleBlockchain = async () => {

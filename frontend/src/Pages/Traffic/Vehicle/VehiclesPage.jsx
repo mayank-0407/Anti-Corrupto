@@ -16,9 +16,7 @@ const VehiclesPage = () => {
 
   const getallvehicles = async () => {
     const myToken = getToken();
-    console.log('token', myToken);
     const thisUser = await fetchUserDetails(myToken);
-    console.log('User Details Dashboard : ', thisUser);
     setMyUser(thisUser.data.id);
     const myvehicles = await getUserVehicles(thisUser.data.id);
     setVehicles(myvehicles);

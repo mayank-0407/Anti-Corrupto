@@ -19,15 +19,7 @@ const createLand = async (req, res) => {
       landPrice,
       landType,
     } = req.body;
-    console.log(
-      location,
-      area,
-      dimensionOfLand,
-      landIdentificationNumber,
-      ownerId,
-      landPrice,
-      landType
-    );
+
     if (
       !location ||
       !area ||
@@ -94,23 +86,22 @@ const getLandById = async (req, res) => {
     const land = await prisma.land.findUnique({
       where: { id: landId },
     });
-    console.log("hi : ", land);
-    if (!land) {
-      res.status(203).json({ error: "Land not found" });
-    } else {
-      res.status(200).json(land);
-    }
+if (!land) {
+  res.status(203).json({ error: "Land not found" });
+} else {
+  res.status(200).json(land);
+}
   } catch (error) {
-    res
-      .status(203)
-      .json({ error: "Error fetching land", details: error.message });
-  }
+  res
+    .status(203)
+    .json({ error: "Error fetching land", details: error.message });
+}
 };
 
 const addLandIdToDB = async (req, res) => {
-  console.log("hi in addLandIdToDB");
+
   const landId = req.params.id;
-  const {LandBlockchainId} = req.body;
+  const { LandBlockchainId } = req.body;
   console.log(LandBlockchainId, "--", landId);
   try {
     await prisma.land.update({

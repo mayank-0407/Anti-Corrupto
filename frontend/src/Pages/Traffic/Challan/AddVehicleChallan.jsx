@@ -63,7 +63,6 @@ const AddVehicleChallan = () => {
       reason: reason,
     };
     const tempid = await addChallanToBlockchain(challanFormData);
-    console.log(tempid);
     return tempid.toString();
   };
 

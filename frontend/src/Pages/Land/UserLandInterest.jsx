@@ -85,7 +85,6 @@ function UserLandInterest() {
     if (transactionConfirmations === 200) {
       setShowModal(false);
       const response = await createTransferLand(formData);
-      console.log('response : ', response);
       if (response.status == 200) {
         alert('Land Transfer Successful');
       } else console.log(response.error);

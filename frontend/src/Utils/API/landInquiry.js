@@ -37,7 +37,6 @@ export const getInquiryLandsById = async (landId) => {
 
 export const createInquiry = async (inquiry) => {
   try {
-    console.log(inquiry);
     const response = await axios.post(`${API_URL}`, inquiry, header);
     return response.data;
   } catch (error) {
@@ -47,9 +46,7 @@ export const createInquiry = async (inquiry) => {
 
 export const getUserInterestedLands = async (clientId) => {
   try {
-    console.log('In api : ', clientId);
     const response = await axios.get(`${API_URL}/${clientId}`, header);
-    console.log('In api   :    ', response);
     return response.data;
   } catch (error) {
     throw error;
@@ -58,7 +55,7 @@ export const getUserInterestedLands = async (clientId) => {
 
 export const updateInquiryStatus = async (inquiryId, status) => {
   try {
-    console.log(inquiryId, status);
+
     const response = await axios.post(
       `${API_URL}/change/status/${inquiryId}`,
       { status },

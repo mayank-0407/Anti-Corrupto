@@ -5,7 +5,7 @@ import { backendURL } from '../config';
 const API_URL = `${backendURL}`;
 
 const sessionToken = getCookie('token');
-console.log('Vehicle session token :', sessionToken);
+
 const header = {
   headers: {
     Authorization: sessionToken, // Session token in headers

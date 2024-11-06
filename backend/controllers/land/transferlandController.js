@@ -7,7 +7,7 @@ const createTransferLand = async (req, res) => {
   if(true) {
     console.log(req);
     var { prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount } = req.body;
-    console.log("hi : ",prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount);
+      : ",prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount);
     if (!prevOwnerId || !currentOwnerId || !landIdBackend || !landIdWeb3 || !transferAmount) {
       return res.status(203).json({ message: "Please provide all required fields" });
     }
@@ -23,7 +23,7 @@ const createTransferLand = async (req, res) => {
     });
     
     const getLandById = await prisma.land.findUnique({ where: { id: landIdBackend } });
-    console.log("hi1 : ",getLandById);
+     1 : ",getLandById);
 
     const updateLand = await prisma.land.update({
         where: { id: landIdBackend },

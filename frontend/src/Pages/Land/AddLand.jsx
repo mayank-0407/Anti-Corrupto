@@ -46,11 +46,8 @@ const AddLand = () => {
     if (transactionStatus === 200) {
       // console.log(formData);
       const res = await addLand(formData);
-      console.log('Res : ', res);
       if (res.status === 200) {
         navigate('/dashboard/land');
-      } else {
-        console.log(res.data.message);
       }
     } else {
       console.log('Error in adding land');

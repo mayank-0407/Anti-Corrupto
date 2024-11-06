@@ -37,9 +37,9 @@ export const signUpUser = async (userData) => {
 export const loginUser = async (userData) => {
 	console.log("userData in api: ", userData);
 	try {
-		console.log(API_URL);
+
 		const response = await axios.post(`${API_URL}/login`, userData);
-		console.log("response", response);
+
 		return response.data;
 	} catch (error) {
 		console.log(error);

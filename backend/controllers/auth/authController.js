@@ -9,7 +9,6 @@ const signUpController = async (req, res) => {
 
 	try {
 		const { name, email, password, role } = req.body;
-		console.log(name, email, password, role);
 		if (!email || !password || !name || !validRoles.includes(role)) {
 			return res.status(400).json({ message: "Please provide all required fields with a valid role" });
 		}
@@ -57,7 +56,7 @@ const loginController = async (req, res) => {
 		if (!matched) {
 			return res.status(203).json({ message: "Incorrect password" });
 		}
-		console.log("hi");
+		 ");
 		const accessToken = generateAccessToken({
 			id: existingUser.id,
 		});

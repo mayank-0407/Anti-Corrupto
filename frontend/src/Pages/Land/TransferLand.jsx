@@ -35,7 +35,7 @@ const TransferLand = () => {
 
   const handleNewSubmit = async (e) => {
     e.preventDefault();
-    // console.log("hi");
+    //  ");
 
     const land = await getOneLand(landId);
 

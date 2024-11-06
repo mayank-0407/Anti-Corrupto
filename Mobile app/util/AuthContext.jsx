@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
 
 	useEffect(() => {
 		if (authState !== null) {
-			console.log("Hiding Splash Screen:", authState);
+			 ding Splash Screen:", authState);
 			SplashScreen.hideAsync();
 		}
 	}, [authState]);

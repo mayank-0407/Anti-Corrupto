@@ -45,8 +45,6 @@ function Cases() {
     const fetchCases = async () => {
       try {
         const response = await getAllLandCases();
-        console.log("resp")
-        console.log(response.data);
         setCases(response.data); // Assuming response contains case data
       } catch (error) {
         console.error('Error fetching cases:', error);

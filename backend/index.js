@@ -58,5 +58,4 @@ app.use("/inquiry", landInquiryRouter);
 const port = 3000;
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
-  console.log(`Swagger Docs available at http://localhost:${port}/api-docs`);
 });

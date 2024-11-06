@@ -25,11 +25,9 @@ export const getOneVehicles = async (vehicleId) => {
 };
 
 export const addVehicle = async (vehicle) => {
-	console.log("Vehicles from api ",vehicle);
 	try {
 		const response = await axios.post(`${API_URL}/vehicle/add`, vehicle);
-		console.log("in add api2");
-		// console.log(response);
+
 		return response;
 	} catch (error) {
 		throw error;

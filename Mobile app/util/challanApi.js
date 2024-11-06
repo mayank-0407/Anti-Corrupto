@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "http://172.20.10.3:3000/challan"; //home
 
 export const addChallan = async (challan) => {
-	console.log("Challan from api ", challan);
+
 	try {
 		const response = await axios.post(`${API_URL}/add`, challan);
 		return response;

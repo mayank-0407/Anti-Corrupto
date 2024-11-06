@@ -5,13 +5,13 @@ const prisma = new PrismaClient();
 const createChallan = async (req, res) => {
   try {
     const { amount, reason, vehicleId, challanId } = req.body;
-    console.log("hi1", amount, reason, vehicleId, challanId);
+     1", amount, reason, vehicleId, challanId);
     if (!amount || !reason || !vehicleId) {
       return res
         .status(203)
         .json({ error: "Please provide all required fields" });
     }
-    console.log("hi2");
+     2");
 
     const challan = await prisma.challan.create({
       data: {
@@ -22,7 +22,7 @@ const createChallan = async (req, res) => {
         challanIdBlockchain: challanId,
       },
     });
-    console.log("hi3");
+     3");
 
     res.status(200).json(challan);
   } catch (error) {
@@ -66,7 +66,7 @@ const getChallanById = async (req, res) => {
 // Update challan by ID
 const updateChallan = async (req, res) => {
   const id = req.params.id;
-  console.log("hi update challan bhai");
+    update challan bhai");
   try {
     const challan = await prisma.challan.update({
       where: { id:id },
