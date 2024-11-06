@@ -56,7 +56,7 @@ const loginController = async (req, res) => {
 		if (!matched) {
 			return res.status(203).json({ message: "Incorrect password" });
 		}
-		 ");
+		 
 		const accessToken = generateAccessToken({
 			id: existingUser.id,
 		});
