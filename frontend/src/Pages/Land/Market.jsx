@@ -73,7 +73,7 @@ function Market() {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, []);
+  }, [10]);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -166,6 +166,8 @@ function Market() {
               </div>
             </div>
           </div>
+
+          <div className="flex flex-row justify-center items-center  text-3xl pt-4 font-bold drop-shadow-xl">MarketPlace</div>
 
           <div>
             {lands.map((land, index) => (

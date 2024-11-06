@@ -79,7 +79,7 @@ const AddLand = () => {
         )`,
       }}
     >
-      <Navbar />
+      {/* <Navbar /> */}
       <div className=" mt-40 w-1/3 m-20 p-4 flex flex-row items-center justify-center rounded-xl backdrop-brightness-90">
         <div className=" w-full flex flex-col  md:flex-row">
           <div className=" w-full order-2 md:order-1">

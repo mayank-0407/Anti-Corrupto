@@ -93,7 +93,7 @@ const VehicleChallan = () => {
                       to={`/dashboard/vehicle/${vehicleId}/challan/${challan.id}`}
                       className="inline-block max-w-xs mt-4 px-3 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
                     >
-                      Download Receipt
+                      View Receipt
                     </Link>
                   </div>
                 </div>

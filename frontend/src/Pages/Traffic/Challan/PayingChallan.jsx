@@ -14,13 +14,17 @@ function PayingChallan() {
   const challan = async (challanId) => {
     try {
       const challanData = await getChallansById(challanId);
-      console.log('chalan ki ki', challanData);
-      console.log(challanData.challanIdBlockchain);
+      // console.log('chalan ki ki', challanData);
+      // console.log(challanData.challanIdBlockchain);
       const challanstatus = await payChallan(challanData);
+      // const challanstatus = 200;
       if (challanstatus == 200) {
         await updateChallanStatus(challanData.id);
         navigate('/');
-      } else error('Error paying challan');
+      } else {
+        console.log('Error paying challan');
+        error('Error paying challan');
+      }
       // let metamask_address = '0x2Bf6A37145e08a1E556891D7dE6f5c2cCEAf457C';
       // let f = getUserChallansfunc(metamask_address);
       // console.log('challan in getuserchallanfunc', f);
@@ -38,7 +42,7 @@ function PayingChallan() {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, []);
+  }, [10]);
 
   return <div>PayingChallan</div>;
 }

@@ -86,7 +86,7 @@ function LandEnquiries() {
       setisLoggedd(false);
       navigate('/login');
     }
-  }, []);
+  }, [10]);
 
   const openApproveModal = (land) => {
     setSelectedLand(land);

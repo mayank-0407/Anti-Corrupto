@@ -257,6 +257,7 @@ const LandProvider = ({ children }) => {
               });
             }
           );
+          getUserLandsfunc(currentAccount);
 
           return 200; // Successfully registered
         } catch (error) {

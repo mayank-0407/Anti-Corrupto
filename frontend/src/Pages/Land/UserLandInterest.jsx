@@ -70,7 +70,7 @@ function UserLandInterest() {
   };
 
   const confirmInterest = async () => {
-    // console.log('Selected Land : ', selectedLand);
+    console.log('Selected Land : ', selectedLand);
     const formData = {
       landId: selectedLand.land.web3Id,
       landIdWeb3: selectedLand.land.web3Id,

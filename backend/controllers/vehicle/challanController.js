@@ -69,7 +69,7 @@ const updateChallan = async (req, res) => {
   console.log("hi update challan bhai");
   try {
     const challan = await prisma.challan.update({
-      where: { id },
+      where: { id:id },
       data: { status: true },
     });
     res.status(200).json(challan);
