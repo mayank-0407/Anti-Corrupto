@@ -102,7 +102,6 @@ const addLandIdToDB = async (req, res) => {
 
   const landId = req.params.id;
   const { LandBlockchainId } = req.body;
-  console.log(LandBlockchainId, "--", landId);
   try {
     await prisma.land.update({
       where: { id: landId },

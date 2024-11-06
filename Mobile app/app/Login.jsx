@@ -37,7 +37,6 @@ export default function Login() {
 		Keyboard.dismiss();
 		try {
 			const response = await loginUser(values);
-			console.log("LoginScreentoken:", response.session.sessionToken);
 
 			if (response.session.sessionToken) {
 				saveSessionToken(response.session.sessionToken);

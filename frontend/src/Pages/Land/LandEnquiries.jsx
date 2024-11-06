@@ -52,14 +52,12 @@ function LandEnquiries() {
       console.error('Error fetching user details:', error);
       return null;
     }
-    console.log('User Details:', userDetails);
   };
 
   // Function to filter data and append required fields
   const separateData = async (tlands) => {
     const newData = [];
 
-    console.log('Lands in separateData in land enquiries : ', tlands);
 
     for (const land of tlands) {
       const email = await fetchEmail(land.clientId); // Sequentially fetch email for each clientId
@@ -80,8 +78,7 @@ function LandEnquiries() {
       setisLoggedd(true);
       getLands(); // Fetch lands and emails
       // separateData();
-      console.log('Lands in LandEnquiries.jsx : ', lands);
-      console.log('updated lands in LandEnquiries.jsx : ', filteredLandData);
+
     } else {
       setisLoggedd(false);
       navigate('/login');
@@ -101,11 +98,8 @@ function LandEnquiries() {
   const handleApprove = async () => {
     try {
       const response = await updateInquiryStatus(selectedLand.id, 'APPROVED');
-      console.log('Response:', response);
-      if (response.status === 200) console.log(response);
-      else {
-        console.log(response);
-      }
+
+
     } catch (error) {
       console.error('Error approving land:', error);
     }

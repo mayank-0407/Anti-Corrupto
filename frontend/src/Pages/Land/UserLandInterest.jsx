@@ -58,7 +58,6 @@ function UserLandInterest() {
   }, []);
 
   const handleInterestedClick = (land) => {
-    console.log(land);
     setSelectedLand(land); // Set selected land
 
     setShowModal(true); // Show modal
@@ -70,7 +69,7 @@ function UserLandInterest() {
   };
 
   const confirmInterest = async () => {
-    console.log('Selected Land : ', selectedLand);
+
     const formData = {
       landId: selectedLand.land.web3Id,
       landIdWeb3: selectedLand.land.web3Id,

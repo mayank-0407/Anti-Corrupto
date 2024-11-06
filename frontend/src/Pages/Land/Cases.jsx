@@ -52,7 +52,7 @@ function Cases() {
     };
     fetchCases();
   }, []);
-  console.log(cases)
+
   // Filter cases based on search term
   const filteredCases = cases.filter(
     (landCase) =>

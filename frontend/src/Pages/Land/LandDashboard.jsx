@@ -32,7 +32,6 @@ function LandDashboard() {
     setclientId(UserDetails.data.id);
     const tlands = await getUserLands(UserDetails);
     setLands(tlands);
-    console.log('Lands in get lands in dashboard : ', tlands);
   };
   useEffect(() => {
     const checkLoginSession = isLogin();

@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 const createTransferLand = async (req, res) => {
   if(true) {
-    console.log(req);
     var { prevOwnerId, currentOwnerId, landIdBackend, landIdWeb3, transferAmount } = req.body;
 
     if (!prevOwnerId || !currentOwnerId || !landIdBackend || !landIdWeb3 || !transferAmount) {

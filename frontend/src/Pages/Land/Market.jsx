@@ -61,7 +61,6 @@ function Market() {
     const UserDetails = await fetchUserDetails(Tocken);
     setclientId(UserDetails.data.id);
     const tlands = await getAllLands(UserDetails);
-    console.log('Market : ', tlands);
     setLands(tlands);
   };
   useEffect(() => {
@@ -84,7 +83,6 @@ function Market() {
   const handleClose = () => setOpen(false);
 
   const handleInterestedClick = (land) => {
-    console.log(land);
     setSelectedLand(land); // Set selected land
     setShowModal(true); // Show modal
   };
@@ -95,18 +93,15 @@ function Market() {
   };
 
   const confirmInterest = async () => {
-    console.log(clientId, '---', selectedLand.id);
     const data = {
       clientId: clientId,
       landId: selectedLand.id,
     };
     try {
       const response = await createInquiry(data);
-      console.log('Inquiry response:', response);
       if (response.status == 200) {
         return response;
       }
-      console.log('User confirmed interest in land:', selectedLand);
       setShowModal(false);
     } catch (error) {
       console.log('Error:', error);

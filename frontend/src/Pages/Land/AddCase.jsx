@@ -39,7 +39,6 @@ const AddCase = () => {
       if (res.status === 200) {
         navigate('/dashboard/cases'); // Navigate to cases page after successful addition
       } else {
-        console.log(res);
       }
     } catch (error) {
       console.error('Error adding case:', error);

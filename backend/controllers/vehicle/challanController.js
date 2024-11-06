@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 const createChallan = async (req, res) => {
   try {
     const { amount, reason, vehicleId, challanId } = req.body;
-    console.log("hi1", amount, reason, vehicleId, challanId);
     if (!amount || !reason || !vehicleId) {
       return res
         .status(203)

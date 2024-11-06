@@ -67,9 +67,7 @@ const ChallanProvider = ({ children }) => {
       const challanContract = await getChallanContract();
 
       const challan = await challanContract.getUserLastChallan(account);
-      console.log('your challan in add to db', challan);
       const challanId = challan.challanId;
-      console.log('ChallanId from BlockChain : ', challanId);
 
       return challanId;
     } catch (err) {
@@ -115,7 +113,6 @@ const ChallanProvider = ({ children }) => {
       const challanContract = await getChallanContract();
 
       const challans = await challanContract.getUserChallans(account);
-      console.log('your challans', challans);
       const structuredTransactions = challans.map((challan) => ({
         challanId: challan.challanId,
         vehicleId: challan.vehicleId,
@@ -125,8 +122,6 @@ const ChallanProvider = ({ children }) => {
         reason: challan.reason,
         location: challan.location,
       }));
-      console.log(structuredTransactions);
-      console.log('In get All Transaction');
       setTransactions(structuredTransactions);
     } catch (err) {
       console.log(err);
@@ -141,10 +136,7 @@ const ChallanProvider = ({ children }) => {
 
       const { challanId, vehicleId, issueDate, paid, fine, challanIdBlockchain } = formData;
 
-      console.log(formData);
-      console.log(fine);
       let amt = fine + '';
-      console.log(amt);
       const parsedAmount = ethers.parseEther(amt);
 
       await ethereum.request({
@@ -158,7 +150,7 @@ const ChallanProvider = ({ children }) => {
           },
         ],
       });
-      console.log('parsedAmount : ', parsedAmount);
+
 
       const challanTransaction = await challanContract.payChallan(challanIdBlockchain);
       setIsLoading(true);

@@ -64,7 +64,6 @@ const AddLand = () => {
       navigate('/login');
     }
     checkIfWalletIsConnect();
-    console.log('print Land added: ', formData);
   }, []);
 
   return (

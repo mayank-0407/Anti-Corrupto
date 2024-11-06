@@ -36,7 +36,6 @@ const LandProvider = ({ children }) => {
     // const checkWallet = checkIfWalletIsConnect();
     // if (checkWallet != 200) return alert('Please connect/install your wallet first');
 
-    console.log('in checkIfWalletIsConnect Connected:', tempAddress);
     if (true) {
       if (ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -57,7 +56,6 @@ const LandProvider = ({ children }) => {
           currentOwner: transaction.currentOwner,
         }));
 
-        console.log('All Transactions : ', structuredTransactions);
         setTransactions(structuredTransactions);
 
         addLandIdInDB(structuredTransactions);
@@ -74,26 +72,18 @@ const LandProvider = ({ children }) => {
     // const checkWallet = checkIfWalletIsConnect();
     // if (checkWallet != 200) return alert('Please connect/install your wallet first');
 
-    console.log('hi in addLandIdInDB');
 
     const Token = getToken();
     const UserDetails = await fetchUserDetails(Token);
     const tlands = await getUserLands(UserDetails); // Assuming this API returns an array of land objects
-    console.log('tlands in context : ', tlands);
     for (let i = 0; i < tlands.length; i++) {
       const land = tlands[i];
-      console.log('land in 1st loop', land);
-      console.log('transations  in 1st loop', structuredTransactions);
       for (let j = 0; j < structuredTransactions.length; j++) {
         const transaction = structuredTransactions[j];
-        console.log('transaction in 2nd loops ', transaction);
-        console.log('identi land', land.landIdentificationNumber);
-        console.log('identi transact', transaction.landIdentificationNumber);
 
         if (land.landIdentificationNumber === transaction.landIdentificationNumber) {
           if (true) {
             const response = await addLandIdToDB(land.id, transaction.landId);
-            console.log('API Response:', response);
           }
           // catch (error) {
           //   console.error('Error sending landId:', error);
@@ -291,24 +281,20 @@ const LandProvider = ({ children }) => {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
 
-        console.log(provider);
-        console.log(landId);
 
         const landContract = new ethers.Contract(landAddress, landABI, signer);
         const exchangeRate = '50735.67';
-        console.log(exchangeRate);
 
         // const parsedAmount = ethers.parseEther(transferAmount);
-        console.log(transferAmount);
+
         const amountToTransfer = transferAmount * 0.000000000000000001;
         // const amountToSend = await ethers.parseEther(amountToTransfer.toString());
         const amountToSend = await ethers.parseUnits(transferAmount, 'wei');
-        console.log('Amount to send', amountToSend);
+
 
         const transactionOptions = {
           value: amountToSend,
         };
-        console.log(transactionOptions);
 
         const transactionHash = await landContract.requestLandTransfer(
           landId,

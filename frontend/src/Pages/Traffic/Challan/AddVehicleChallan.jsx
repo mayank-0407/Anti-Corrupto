@@ -29,7 +29,7 @@ const AddVehicleChallan = () => {
     e.preventDefault();
     // const amt = parseFloat(amount);
     const challanIdFromBlockchain = await handleChallanData();
-    console.log('challanIdFromBlockchain : ', challanIdFromBlockchain);
+    // console.log('challanIdFromBlockchain : ', challanIdFromBlockchain);
     if (!challanIdFromBlockchain)
       error('Error adding challan to blockchain no challanid from blockchain');
     const challanData = {
@@ -43,7 +43,6 @@ const AddVehicleChallan = () => {
 
     try {
       const challan = await addChallan(challanData);
-      console.log('challan from db :', challan);
       if (challan.status === 200) {
         navigate(`/dashboard/vehicle/${vehicleId}/challan`);
       } else {
@@ -77,8 +76,6 @@ const AddVehicleChallan = () => {
     }
 
     checkIfWalletIsConnect();
-    console.log('print vehicles added: ', formData);
-    console.log(ChallanContext);
   }, []);
 
   return (
