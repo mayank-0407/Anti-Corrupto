@@ -46,7 +46,7 @@ export default function App() {
       setLoading(false);
     };
     fetchRole();
-  }, [10]);
+  }, []);
 
   if (loading) return <div>Loading...</div>;
 
