@@ -14,6 +14,18 @@ stamp duty evasion and undervaluation, the project aims to restore public trust 
 systems. The project sets a precedent for responsible and effective administration, ultimately fostering
 a more equitable and just society
 
+# Description To Land Chain ( Subpart of Anticorrupto ):
+Anti corrupto implements decentralized land registration system
+- Blockchain-based Transactions: The system utilizes blockchain technology to create a secure and tamper-proof record of land ownership and transfers. This ensures:
+- Immutability: Once a transaction is recorded on the blockchain, it cannot be altered or deleted.
+- Transparency: Everyone with permission can access the land registry and verify ownership history.
+- Machine Learning for Price Detection: An ML model analyzes various factors to estimate the fair market value of land in a specific location. This helps identify transactions with significantly lower declared values, potentially indicating tax evasion.
+- Automated Inquiry System: If the ML model detects a significant discrepancy between the declared value and the estimated market value, an automated inquiry is raised. This eliminates human intervention and reduces the possibility of bribery.
+
+Used Polygon/Sepolia Ethereum Blockchain for testing and deploying solidity smart contracts
+
+![image](https://github.com/mayank-0407/Anticurropto-HACKOWASP6/assets/95279293/24ca309e-e5f6-4c63-9759-72d6fc29786e)
+
 # To run postgres database
 
 - docker compose up
@@ -62,3 +74,35 @@ npx hardhat run scripts/deploy.js --network sepolia
 - FRONTEND LINK : https://anticorrupto-frontend.vercel.app/
 - BACKEND LINK : https://anticorrupto-backend.onrender.com/
 - House Price pred API LINK - https://landpricepredmodel.onrender.com/
+
+# Start Contribution
+### Update existing branch
+```
+git checkout main
+git pull origin main
+```
+### Create a new branch
+```
+git checkout -b feature/my-feature
+```
+### Make desired changes in code
+### Commit changes
+```
+git add .
+git commit -m "Add feature XYZ"
+```
+### Pushing changes
+```
+git push -u origin feature/my-feature
+```
+### Now review the changes and you are all set to make your Pull Request 🥳
+
+ 
+<h2 align = "center">Our Contributors ❤️</h2>
+<div align = "center">
+ <h3>Thank you for contributing to our repository</h3>
+
+![Contributors](https://contrib.rocks/image?repo=vishavsingla/Anti-Corrupto)
+
+</div>
+
