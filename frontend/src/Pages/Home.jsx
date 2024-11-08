@@ -20,7 +20,7 @@ const Home = () => {
       {/* <Updates /> */}
       <div className=" py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-screen-xl mx-auto my-5">
-          <h1 className="text-center text-3xl md:text-4xl font-bold underline mb-6 text-cyan-900">
+          <h1 className="text-center text-3xl md:text-4xl font-bold mb-6 text-blue-500">
             Services
           </h1>
           <div className="flex flex-wrap justify-center gap-6">

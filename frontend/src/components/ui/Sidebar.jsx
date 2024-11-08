@@ -60,50 +60,61 @@ export default function Sidebar({ children }) {
   );
 }
 
-export function SidebarItem({ icon, text, active, alert, onClick }) {
+export function SidebarItem({ icon, text, active, alert, onClick, subItems = [] }) {
   const { expanded } = useContext(SidebarContext);
+  const [isSubListOpen, setIsSubListOpen] = useState(false);
+
+  const handleToggleSubList = () => {
+    setIsSubListOpen((prev) => !prev);
+  };
 
   return (
     <li
       className={`
-        relative flex items-center py-2 px-3 my-1
+        relative flex flex-col items-start py-2 px-3 my-1
         font-medium rounded-md cursor-pointer
         transition-colors group
-        ${
-          active
-            ? 'bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800'
-            : 'hover:bg-indigo-50 text-gray-600'
-        }
-    `}
+        ${active ? 'bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800' : 'hover:bg-indigo-50 text-gray-600'}
+      `}
     >
-      {icon}
-      <button
-        onClick={onClick}
-        className={`overflow-hidden transition-all duration-300 ease-in-out 
-              ${expanded ? 'w-52 ml-3 px-2 py-2 g-indigo-400 text-black' : 'w-0'}
-              text-left rounded-md`}
-      >
-        {expanded && text}
-      </button>
+      <div className="flex items-center w-full">
+        {icon}
+        <button
+          onClick={onClick || handleToggleSubList}
+          className={`overflow-hidden transition-all duration-300 ease-in-out
+            ${expanded ? 'w-52 ml-3 px-2 py-2 text-left text-black' : 'w-0'}
+          `}
+        >
+          {expanded && text}
+        </button>
+        {subItems.length > 0 && (
+          <button
+            onClick={handleToggleSubList}
+            className="ml-auto text-gray-600"
+          >
+            {isSubListOpen ? '▲' : '▼'}
+          </button>
+        )}
+      </div>
+
+      {isSubListOpen && subItems.length > 0 && (
+        <ul className={`pl-8 transition-all ${expanded ? 'block' : 'hidden'}`}>
+          {subItems.map((subItem, index) => (
+            <li
+              key={index}
+              onClick={subItem.onClick}
+              className="py-1 px-2 text-gray-500 hover:bg-indigo-50 rounded-md cursor-pointer"
+            >
+              {subItem.text}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {alert && (
         <div
           className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? '' : 'top-2'}`}
         />
-      )}
-
-      {!expanded && (
-        <button
-          onClick={onClick}
-          className={`
-          absolute left-full rounded-md px-2 py-1 ml-6
-          bg-indigo-100 text-indigo-800 text-sm
-          invisible opacity-20 -translate-x-3 transition-all
-          group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
-      `}
-        >
-          {text}
-        </button>
       )}
     </li>
   );
